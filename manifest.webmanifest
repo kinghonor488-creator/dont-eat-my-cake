@@ -1,0 +1,30 @@
+{
+  "name": "别偷吃我的蛋糕",
+  "short_name": "别偷吃我的蛋糕",
+  "description": "可爱的厨房塔防小游戏：用厨房小伙伴拦住来偷吃蛋糕的团子，可以离线玩。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fbe1ea",
+  "theme_color": "#fbe1ea",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

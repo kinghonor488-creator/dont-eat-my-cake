@@ -292,7 +292,7 @@ body{margin:0}
 <script>
 (() => {
 'use strict';
-const W = 880, H = 500, LX = 70, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
+const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
 const ctx = cv.getContext('2d');
@@ -380,13 +380,13 @@ Object.assign(ZDEF, {
   football: { name: '头盔团子',   hp: 270,  armor: 1400, armorType: 'football', speed: 26, cost: 6,
               lore: '戴着外卖头盔一路狂奔，又硬又快。冰冻果冻、冰淇淋能让它慢下来，冰箱贴磁铁能吸走头盔。' },
   zomboni:  { name: '推车团子',   hp: 1400, armor: 0,    armorType: null,       speed: 12, cost: 7,
-              lore: '推着购物车，碰到小伙伴直接碾过去，挡不住它。要在它碰到之前就把它喂饱。' },
-  digger:   { name: '地鼠团子',   hp: 270,  armor: 300,  armorType: 'helmet',   speed: 22, cost: 4,
+              lore: '推着购物车，碰到普通小伙伴直接碾过去；撞上防守墙会停下来一下下地撞，正好趁机把它喂饱。' },
+  digger:   { name: '地鼠团子',   hp: 135,  armor: 0,    armorType: 'helmet',   speed: 22, cost: 4,
               lore: '从地下一路钻到最左边，再冒出来掉头往右走，专啃小伙伴的背后。朝前打的小伙伴打不到它，双色冰棒能前后一起打。' },
   dancer:   { name: '跳舞团子',   hp: 500,  armor: 0,    armorType: null,       speed: 16, cost: 6,
               lore: '一进场就跳一段舞，召唤 4 个伴舞团子围在身边。' },
-  garg:     { name: '面包熊',     hp: 4000, armor: 0,    armorType: null,       speed: 10, cost: 10,
-              lore: '超大超耐打，一巴掌就拍扁面前的小伙伴。掉到一半血时，会把背上的小团子扔进后排。' },
+  garg:     { name: '面包熊',     hp: 3000, armor: 0,    armorType: null,       speed: 10, cost: 10,
+              lore: '超大超耐打，擀面杖每一下都很重，防守墙也只能扛五六下。掉到一半血时，会把背上的小团子扔进后排。' },
   imp:      { name: '小团子',     hp: 150,  armor: 0,    armorType: null,       speed: 28, cost: 99,
               lore: '面包熊背上的小不点，被扔出去以后跑得飞快。' },
 });
@@ -400,10 +400,10 @@ const ZINFO = {
   shield:  { color: '#f7ecd9', badge: '盾', badgeColor: '#c98a4a', trait: '砧板挡住正面射来的糖豆', counters: ['laserbean', 'magnetnut', 'beeflower', 'mortar', 'chompsquash', 'cherrypepper'] },
   pole:     { color: '#e6f4ff', badge: '跳', badgeColor: '#5fb3e8', trait: '撑筷子跳过第一个小伙伴，跳不过防守墙', counters: ['peanut', 'cherrynut', 'torchnut', 'frostnut', 'magnetnut'] },
   football: { color: '#ffe0d1', badge: '快', badgeColor: '#ff7a59', trait: '戴头盔狂奔，又硬又快', counters: ['icemine', 'snowrepeater', 'magnetnut', 'clockflower', 'laserbean'] },
-  zomboni:  { color: '#e2f3e8', badge: '碾', badgeColor: '#4fae8a', trait: '推车直接碾碎小伙伴，挡不住', counters: ['chompsquash', 'icemine', 'laserbean', 'cherrypepper', 'clockflower'] },
+  zomboni:  { color: '#e2f3e8', badge: '碾', badgeColor: '#4fae8a', trait: '碾碎普通小伙伴，撞上防守墙会停下', counters: ['peanut', 'cherrynut', 'chompsquash', 'icemine', 'laserbean'] },
   digger:   { color: '#f5e6d3', badge: '钻', badgeColor: '#a8673a', trait: '第 15 波以后才出现，钻到最左边再掉头，从背后啃小伙伴', counters: ['twinpop', 'beeflower', 'lightningvine', 'mortar'] },
   dancer:   { color: '#f3e3ff', badge: '舞', badgeColor: '#b69cf0', trait: '一进场就召唤 4 个伴舞', counters: ['cherrypepper', 'icemelon', 'gatlingpea', 'mortar'] },
-  garg:     { color: '#f3d2a2', badge: '巨', badgeColor: '#c2601e', trait: '超耐打，一巴掌拍扁小伙伴，半血扔小团子', counters: ['icemine', 'chompsquash', 'clockflower', 'laserbean', 'cherrypepper'] },
+  garg:     { color: '#f3d2a2', badge: '巨', badgeColor: '#c2601e', trait: '超耐打，每锤很重，防守墙能扛五六下，半血扔小团子', counters: ['icemine', 'chompsquash', 'clockflower', 'laserbean', 'cherrypepper'] },
   imp:      { color: '#fff6ee', badge: null, trait: '面包熊扔出来的小团子，跑得很快', counters: ['gatlingpea', 'twinpop', 'beeflower'] },
   balloon: { color: '#fff4c2', badge: '飞', badgeColor: '#ff9e3d', trait: '飘在空中，直射的糖豆打不到', counters: ['beeflower', 'lightningvine', 'mortar', 'icemelon', 'chompsquash'] },
 };
@@ -612,7 +612,7 @@ let S, CFG, running = false, paused = false, speed = 1, beltDirty = false;
 
 function makeCfg(base) {
   // diff：每波团子数量的倍率；hpMul：团子血量和护甲的倍率（冒险前几关和部分小游戏设为 1）
-  const cfg = Object.assign({ startSun: 150, skySun: true, speedMul: 1, gapMul: 1, flags: [], flagEvery: 0, diff: 1.5, hpMul: 1.2 }, base);
+  const cfg = Object.assign({ startSun: 150, skySun: true, speedMul: 1, gapMul: 1, flags: [], flagEvery: 0, diff: 1.3, hpMul: 1.1 }, base);
   if (cfg.night) cfg.skySun = false;
   return cfg;
 }
@@ -676,6 +676,8 @@ function buildWave(i) {
 }
 
 /* ================= 逻辑 ================= */
+// 面包熊每一锤的伤害：防守墙（4800 血）能扛 5～6 下，普通小伙伴一锤就倒
+const HEAVY_HIT = 850;
 const PLANT_HP_MUL = 2; // 所有小伙伴血量的倍率（图鉴里的耐久已按倍率写好）
 function makePlant(type) {
   const d = PLANTS[type];
@@ -769,7 +771,7 @@ function spawnZombie(type, atRow, atX) {
     S.lastRow = row;
   }
   // 无尽类模式：团子血量随波数上涨，每波 +4%
-  const d = ZDEF[type], hm = (CFG.hpMul || 1) * (CFG.waves === Infinity ? 1 + S.waveNum * 0.04 : 1);
+  const d = ZDEF[type], hm = (CFG.hpMul || 1) * (CFG.waves === Infinity ? 1 + S.waveNum * 0.03 : 1);
   S.zombies.push({
     type, row, x: atX != null ? atX : W + 20 + rnd(0, 30), hp: d.hp * hm, armor: d.armor * hm, maxArmor: d.armor * hm,
     armorType: d.armorType, speed: d.speed * CFG.speedMul, pole: !!d.pole, jumping: 0,
@@ -783,7 +785,7 @@ function spawnZombie(type, atRow, atX) {
     S.metTypes[type] = true;
     const info = ZINFO[type];
     const names = info.counters.filter(k => PLANTS[k]).slice(0, 3).map(k => PLANTS[k].name).join('、');
-    toast(`新团子：${d.name}　${info.trait}　克制：${names}`);
+    S.tip = { text: `新团子：${d.name}　${info.trait}　克制：${names}`, t: 0 };
   }
   if (!save.seen[type]) {
     save.seen[type] = true; persist();
@@ -872,7 +874,7 @@ function floatText(x, y, text, color = '#fff3d1', size = 20) {
   S.texts.push({ x: Math.max(half, Math.min(W - half, x)), y: Math.max(TOP + size + 32, y), text, color, size, t: 0 });
 }
 // 团子脚下的 y 坐标（含换行动画和气球高度）
-function zombieY(z) { return cellCY(z.row) + 32 + (z.rowShift || 0) - (z.fly ? 60 : 0); }
+function zombieY(z) { return cellCY(z.row) + 32 + (z.rowShift || 0) - (z.fly ? 24 : 0); }
 function zombieAhead(r, px) {
   return S.zombies.some(z => z.row === r && !z.dead && !z.under && z.x > px - 10 && z.x < VIS_X);
 }
@@ -1125,6 +1127,7 @@ function update(dt) {
     if (before > 0 && S.cd[k] === 0 && cardEls[k]) { const b = cardEls[k].b; b.classList.remove('ready'); void b.offsetWidth; b.classList.add('ready'); }
   }
   if (S.banner) { S.banner.t += dt; if (S.banner.t > 3.2) S.banner = null; }
+  if (S.tip) { S.tip.t += dt; if (S.tip.t > 5) S.tip = null; }
   if (S.sun >= 2000) unlockAch('rich');
   S.dartCd = Math.max(0, S.dartCd - dt);
 
@@ -1535,19 +1538,19 @@ function update(dt) {
       continue;
     }
     const tg = z.fly || z.under ? null : findTarget(z);
-    if (tg && z.type === 'zomboni') {
-      // 冰车直接碾碎小伙伴，不停下
+    if (tg && z.type === 'zomboni' && ROLE_OF[tg.p.type] !== 'def') {
+      // 推车直接碾碎普通小伙伴，不停下；碰到防守墙就停下来一下下地撞
       killPlant(z.row, tg.c);
       floatText(cellCX(tg.c), cellCY(z.row) - 30, '咔嚓！', '#fff3d1', 22);
       S.shake = Math.max(S.shake, 4); sfx('slam');
-    }
-    if (tg && z.type === 'garg') {
-      // 巨人：举锤 1.2 秒，一下砸烂小伙伴
+    } else if (tg && (z.type === 'garg' || z.type === 'zomboni')) {
+      // 面包熊（和撞上防守墙的推车）：每 1.2 秒砸一下，每下 HEAVY_HIT 伤害
       z.eating = true;
       z.smashT += dt;
       if (z.smashT >= 1.2) {
         z.smashT = 0;
-        killPlant(z.row, tg.c);
+        tg.p.hp -= HEAVY_HIT; tg.p.hurt = 0.3;
+        if (tg.p.hp <= 0) killPlant(z.row, tg.c);
         S.shake = Math.max(S.shake, 9);
         floatText(cellCX(tg.c), cellCY(z.row) - 30, '咚！', '#fff3d1', 28);
         for (let i = 0; i < 12; i++) part({ x: cellCX(tg.c) + rnd(-30, 30), y: cellCY(z.row) + 30, vx: rnd(-140, 140), vy: rnd(-200, -60), life: 0.6, size: rnd(3, 6), color: '#8a6a3e' });
@@ -2302,7 +2305,7 @@ function drawZombie(z, ox, oy) {
   }
   if (z.landT > 0 && z.fromX != null) { const k = 1 - z.landT / 0.7; x = z.fromX + (z.x - z.fromX) * k; y -= Math.sin(k * Math.PI) * 110; }
   else if (z.landT > 0) y -= 60 * (z.landT / 0.4);
-  if (z.fly && ox == null) y -= 60;
+  if (z.fly && ox == null) y -= 24;
   if (z.jumping > 0) y -= Math.sin((1 - z.jumping / 0.8) * Math.PI) * 55;
   if (z.hitJ > 0 && !z.dead) x += rnd(-2, 2);
   // 往右走的团子左右翻转
@@ -2324,10 +2327,10 @@ function drawZombie(z, ox, oy) {
   const body = zi.color;
   // 气球
   if (z.fly) {
-    line(x + 2, by - ry, x + 8, by - ry - 40, '#d9b8c4', 1.5);
-    ell(x + 10, by - ry - 58, 15, 18, '#ffb3c7', '#d77a93', 2);
-    ell(x + 5, by - ry - 64, 4, 6, 'rgba(255,255,255,.6)');
-    poly([x + 7, by - ry - 40, x + 13, by - ry - 40, x + 10, by - ry - 36], '#d77a93');
+    line(x + 2, by - ry, x + 8, by - ry - 14, '#d9b8c4', 1.5);
+    ell(x + 10, by - ry - 30, 14, 16, '#ffb3c7', '#d77a93', 2);
+    ell(x + 5, by - ry - 35, 4, 5.5, 'rgba(255,255,255,.6)');
+    poly([x + 7, by - ry - 14, x + 13, by - ry - 14, x + 10, by - ry - 10], '#d77a93');
   }
   // 小旗子
   if (z.type === 'flag') {
@@ -2385,7 +2388,7 @@ function drawZombie(z, ox, oy) {
     g.fillStyle = '#ff8a5c'; g.fill(); g.strokeStyle = '#c2501e'; g.lineWidth = 2.5; g.stroke();
     line(x, hy - 15, x, hy + 1, '#fffaf4', 4);
     rr(x - 22, hy - 2, 14, 5, 2); g.fillStyle = 'rgba(160,210,240,.85)'; g.fill();
-  } else if (z.armor > 0 && z.armorType === 'helmet') {
+  } else if (z.type === 'digger' || (z.armor > 0 && z.armorType === 'helmet')) {
     g.beginPath(); g.arc(x, hy + 2, 15, Math.PI * 1.05, Math.PI * 1.95); g.closePath();
     g.fillStyle = '#ffd56a'; g.fill(); g.strokeStyle = '#c9902a'; g.lineWidth = 2; g.stroke();
     ell(x - 12, hy - 4, 4, 3.5, '#fffaf0', '#c9902a', 1.2);
@@ -2566,7 +2569,8 @@ function drawLawn() {
   // 左边：蛋糕台
   g.fillStyle = '#fff3ea'; g.fillRect(0, TOP, LX, CH * ROWS);
   for (let i = 0; i < ROWS; i++) { g.fillStyle = i % 2 ? '#ffe9de' : '#fff3ea'; g.fillRect(0, TOP + i * CH, LX, CH); }
-  drawCake(LX / 2 - 4, TOP + CH * 2.5 + 30, 0.95);
+  // 蛋糕放在最左边，扫地机器人在它右边一列（x 约 58～94），两者不重叠
+  drawCake(30, TOP + CH * 2.5 + 30, 0.8);
   // 野餐布
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
     g.fillStyle = (r + c) % 2 ? '#ffd9e5' : '#fffaf6';
@@ -2749,6 +2753,8 @@ function draw() {
   g.save();
   if (S.shake > 0) g.translate(rnd(-S.shake, S.shake) * 0.5, rnd(-S.shake, S.shake) * 0.5);
   drawLawn();
+  // 顶栏先画，第一排的团子和气球可以盖在顶栏上面，不会被挡住
+  if (!S.demo) drawHUD();
   if (CFG && CFG.night && !S.demo) { g.fillStyle = 'rgba(16,24,64,.42)'; g.fillRect(0, TOP, W, CH * ROWS); }
   if (CFG && CFG.bowling && !S.demo) {
     g.fillStyle = 'rgba(227,38,58,.12)'; g.fillRect(LX, TOP, CW * 3, CH * ROWS);
@@ -2881,7 +2887,17 @@ function draw() {
     } else drawSun(s.x, s.y, t, s.life < 2 ? 0.4 + 0.6 * Math.abs(Math.sin(s.life * 8)) : 1);
   }
   g.restore();
-  if (!S.demo) drawHUD();
+  // 新团子提示：画在画面底部，半透明，点击会穿过它
+  if (S.tip && !S.demo) {
+    const a = Math.min(1, S.tip.t * 4, (5 - S.tip.t) * 2);
+    g.save(); g.globalAlpha = Math.max(0, a) * 0.92;
+    g.font = `15px ${FONT}`;
+    const tw = Math.min(W - 40, g.measureText(S.tip.text).width + 32);
+    rr(W / 2 - tw / 2, H - 46, tw, 30, 15); g.fillStyle = 'rgba(120,50,80,.78)'; g.fill();
+    g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fffaf4';
+    g.fillText(S.tip.text, W / 2, H - 31, W - 60);
+    g.restore();
+  }
   // 飘字画在顶栏上层，永远不会被挡住
   for (const tx of S.texts) {
     const k = tx.t;
@@ -3157,7 +3173,7 @@ function showMenu() {
 function advCfg(i) {
   const L = LEVELS[i];
   return makeCfg({ mode: 'adventure', idx: i, label: `冒险 ${L.id}`, pool: L.pool, waves: L.waves, flags: L.flags, base: L.base, grow: L.grow,
-    startSun: L.startSun || 150, diff: L.diff || 1.5, hpMul: L.hpMul || 1.2, night: L.night, fog: L.fog, graves: L.graves, conveyor: L.conveyor,
+    startSun: L.startSun || 150, diff: L.diff || 1.3, hpMul: L.hpMul || 1.1, night: L.night, fog: L.fog, graves: L.graves, conveyor: L.conveyor,
     plants: L.conveyor ? [] : unlockedPlants() });
 }
 function miniCfg(m) { return makeCfg(Object.assign({ mode: 'mini', id: m.id, label: `小游戏：${m.name}`, plants: m.cfg.conveyor ? [] : PICKABLE.slice() }, m.cfg)); }
@@ -3173,7 +3189,7 @@ function showMinigames() {
 function chalCfg(c) { return makeCfg(Object.assign({ mode: 'challenge', id: c.id, label: `挑战：${c.name}`, plants: PICKABLE.slice() }, c.cfg)); }
 function endlessCfg() { return makeCfg({ mode: 'endless', label: '无尽模式', pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 1, grow: 0.6, startSun: 300, plants: PICKABLE.slice() }); }
 // 甜品盲盒：无尽模式，开局 400 方糖，每 10 波一次旗帜波
-function luckyCfg() { return makeCfg({ mode: 'lucky', label: '甜品盲盒', pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 0.8, grow: 0.55, startSun: 400, diff: 1.5, hpMul: 1.3, plants: ['luckybox', 'goldbox'] }); }
+function luckyCfg() { return makeCfg({ mode: 'lucky', label: '甜品盲盒', pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 0.8, grow: 0.55, startSun: 400, diff: 1.3, hpMul: 1.15, plants: ['luckybox', 'goldbox'] }); }
 
 function showLevels() {
   const chapters = [
@@ -3437,15 +3453,15 @@ function throwDart(x, y) {
   for (const z of S.zombies) {
     if (!z.fly || z.dead) continue;
     const zy = zombieY(z);
-    const d = Math.min(Math.hypot(z.x - x, zy - 20 - y), Math.hypot(z.x + 10 - x, zy - 100 - y));
+    const d = Math.min(Math.hypot(z.x - x, zy - 20 - y), Math.hypot(z.x + 10 - x, zy - 72 - y));
     if (d < bd) { bd = d; best = z; }
   }
   if (!best) { floatText(x, y, '这里没有气球', '#fffaf4', 16); sfx('cant'); return; }
   S.sun -= DART_COST; S.dartCd = DART_CD; S.selected = null;
   const zy = zombieY(best);
-  for (let i = 0; i < 6; i++) part({ x: best.x + 10, y: zy - 100, vx: rnd(-200, 200), vy: rnd(-200, 100), grav: 300, life: 0.4, size: rnd(3, 5), color: i % 2 ? '#ffb3c7' : '#ffffff', shape: 'sparkle' });
+  for (let i = 0; i < 6; i++) part({ x: best.x + 10, y: zy - 72, vx: rnd(-200, 200), vy: rnd(-200, 100), grav: 300, life: 0.4, size: rnd(3, 5), color: i % 2 ? '#ffb3c7' : '#ffffff', shape: 'sparkle' });
   hurtZombie(best, 15);
-  S.fx.push({ type: 'ring', x: best.x + 10, y: zy - 100, t: 0, dur: 0.35, color: '#ff9ec0', r: 60 });
+  S.fx.push({ type: 'ring', x: best.x + 10, y: zy - 72, t: 0, dur: 0.35, color: '#ff9ec0', r: 60 });
   sfx('pop');
 }
 

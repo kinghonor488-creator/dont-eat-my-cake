@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<title>别偷吃我的蛋糕</title>
+<title>蛋糕守护小分队</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
@@ -466,7 +466,7 @@ button{font:inherit;color:inherit}
 .shareside p{margin:0}
 .nickin,.pastein{font:15px/1.3 var(--body);color:var(--ink);background:#fff;border:2px solid #f3b6c9;border-radius:10px;padding:8px 10px;width:100%;box-sizing:border-box;user-select:text;-webkit-user-select:text}
 .pastein{resize:none}
-.sharelink{font:11px/1.3 ui-monospace,monospace;color:#9a6a7c;background:#fff3f6;border-radius:8px;padding:6px 8px;word-break:break-all;flex:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;user-select:text;-webkit-user-select:text}
+.sharelink{font:11px/1.3 ui-monospace,monospace;color:#9a6a7c;background:#fff3f6;border-radius:8px;padding:0 8px;border:6px solid #fff3f6;border-left:0;border-right:0;word-break:break-all;flex:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;user-select:text;-webkit-user-select:text}
 @keyframes mpop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
 .mbox h2{margin:0;font:400 22px/1.15 var(--display);color:#d0567f;padding-right:40px}
 .mclose{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:700 18px/1 var(--body);box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e;cursor:pointer;z-index:3}
@@ -745,7 +745,7 @@ button{font:inherit;color:inherit}
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="别偷吃我的蛋糕">
+<meta name="apple-mobile-web-app-title" content="蛋糕守护小分队">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <style>
@@ -783,8 +783,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.27-0455·f10e9d 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.27-0455·f10e9d';
+// 版本号：打包时 build.py 会把 2026.11.27-0457·c8843d 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.27-0457·c8843d';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -4847,9 +4847,9 @@ function friendGoal(o) {
   return `${o.n} 用这套阵容 ${starText(o.s)} 通关了 ${LEVELS[o.idx].id}，拿到 ${o.s} 颗星就算赢！`;
 }
 function shareText(o) {
-  if (o.t === 'p') return `我在《别偷吃我的蛋糕！》摆了一个 ${o.l} 的残局，不能再种小伙伴，你能守住吗？`;
-  if (o.l === 'E') return `我在《别偷吃我的蛋糕！》无尽模式撑到了第 ${o.w} 波，用同样的阵容你能超过我吗？`;
-  return `我在《别偷吃我的蛋糕！》用这套阵容 ${starText(o.s)} 通关了冒险 ${o.l}，你也来试试！`;
+  if (o.t === 'p') return `我在《蛋糕守护小分队》摆了一个 ${o.l} 的残局，不能再种小伙伴，你能守住吗？`;
+  if (o.l === 'E') return `我在《蛋糕守护小分队》无尽模式撑到了第 ${o.w} 波，用同样的阵容你能超过我吗？`;
+  return `我在《蛋糕守护小分队》用这套阵容 ${starText(o.s)} 通关了冒险 ${o.l}，你也来试试！`;
 }
 // 战绩图：720×920 的分享卡片
 function drawShareCard(o) {
@@ -4863,7 +4863,7 @@ function drawShareCard(o) {
   rrect(36, 36, 648, 848, 40); x.fillStyle = '#fffaf4'; x.fill(); x.lineWidth = 6; x.strokeStyle = '#f39ab5'; x.stroke();
   x.textAlign = 'center'; x.textBaseline = 'middle';
   const txt = (t, y, size, color, max = 600) => { let sz = size; x.font = `${sz}px ${FONT}`; while (x.measureText(t).width > max && sz > 14) { sz -= 2; x.font = `${sz}px ${FONT}`; } x.fillStyle = color; x.fillText(t, 360, y); };
-  txt('别偷吃我的蛋糕！', 112, 56, '#e0678f');
+  txt('蛋糕守护小分队', 112, 56, '#e0678f');
   const tag = o.t === 'p' ? '残局挑战' : '好友挑战';
   x.font = `28px ${FONT}`; const tw = x.measureText(tag).width + 48;
   rrect(360 - tw / 2, 158, tw, 50, 25); x.fillStyle = o.t === 'p' ? '#b69cf0' : '#f47aa3'; x.fill();
@@ -4936,7 +4936,7 @@ function openShare(o) {
         el('p', {}, o.t === 'p' ? '朋友会从第 1 波开始，用你现在摆好的阵守这一关，而且不能再种新的小伙伴。' : '朋友点开链接，就能用同样的关卡和阵容开局，打完会和你的成绩比一比。'),
         nickIn, linkBox,
         el('div', { class: 'btnrow' },
-          navigator.share ? btn('分享链接', () => { navigator.share({ title: '别偷吃我的蛋糕！', text: shareText(o), url }).catch(() => {}); }) : null,
+          navigator.share ? btn('分享链接', () => { navigator.share({ title: '蛋糕守护小分队', text: shareText(o), url }).catch(() => {}); }) : null,
           btn('复制链接', () => copyText(shareText(o) + ' ' + url), navigator.share ? 'alt' : ''),
           btn('保存图片', () => { const a = el('a', { href: img.src, download: 'cake-challenge.png' }); document.body.append(a); a.click(); a.remove(); toast('手机上也可以长按图片保存'); }, 'alt')),
         el('p', { class: 'muted' }, '小提示：先保存图片，再把链接一起发过去，朋友更容易点开。')))), 'wide');
@@ -5370,7 +5370,7 @@ function showMenu() {
     el('div', { class: 'topbar' }, dailyBar, el('div', { class: 'grow' }), ...walletPills(),
       el('button', { class: 'rbtn', 'aria-label': '设置', onclick: () => { sfx('select'); showSettings(); } }, icon('gear'))),
     el('div', { class: 'hub-main' },
-      el('div', { class: 'hub-logo' }, el('div', { class: 'logo2' }, '别偷吃', el('br'), '我的蛋糕', el('em', {}, '！')), el('div', { class: 'hub-sub' }, '甜品店保卫战 · 原创塔防'), stall),
+      el('div', { class: 'hub-logo' }, el('div', { class: 'logo2' }, '蛋糕守护', el('br'), el('em', {}, '小分队')), el('div', { class: 'hub-sub' }, '甜品店保卫战 · 原创塔防'), stall),
       el('div', { class: 'hub-menu' },
         el('button', { class: 'cta', onclick: () => { sfx('select'); showLevels(); } },
           iconCanvas('plant', allDone ? 'chocolava' : L.reward, 58),
@@ -5699,7 +5699,7 @@ function showSettings() {
   } }, '重置进度');
   let taps = 0;
   const ver = el('p', { class: 'muted', onclick: () => { if (++taps >= 7 && !save.dev) { save.dev = true; persist(); toast('开发者测试模式已打开'); showSettings(); } } },
-    '《别偷吃我的蛋糕！》体验版 · 全部角色、关卡和美术都是原创');
+    '《蛋糕守护小分队》体验版 · 全部角色、关卡和美术都是原创');
   const verLine = el('p', { style: 'margin:0;font:400 18px/1.2 var(--display);color:#d0567f' }, `当前版本：${BUILD_LABEL}`);
   const dev = save.dev ? el('div', { class: 'btnrow' }, el('span', { class: 'muted' }, '开发者测试（上架前删除）：'),
     btn('+1000 钻石', () => { save.gems += 1000; persist(); refreshWallet(); }, 'small gem'),

@@ -706,6 +706,28 @@ button{font:inherit;color:inherit}
 
 /* 大屏幕整体放大界面（手机上 --uiz 是 1） */
 .hub,.page,.mbox,.panel,#bank,#itemTray,#toast{zoom:var(--uiz,1)}
+
+/* 章节、星星、宝箱 */
+.chtabs{display:flex;gap:6px;overflow-x:auto;flex:0 1 auto;min-width:0;padding:3px}
+.chtab{position:relative;flex:none;font:400 14px/1 var(--display);padding:7px 10px;border-radius:999px;border:2px solid #fff;background:rgba(255,250,244,.94);color:#b24d73;box-shadow:0 0 0 2px #f3b3c8;cursor:pointer;white-space:nowrap}
+.chtab.on{background:linear-gradient(#ffb8d0,#f47aa3);color:#fff;box-shadow:0 0 0 2px #e77ca0}
+.chtab:disabled{opacity:.55;cursor:not-allowed}
+.chap small{font-size:11px;opacity:.9}
+.lnode .lstar{font:700 13px/1 var(--body);color:#f2b01e;text-shadow:0 1px 0 #fff,0 0 3px #fff;letter-spacing:1px}
+.lnode .ltag{font:400 11px/1 var(--display);color:#fff;background:rgba(122,86,170,.8);border-radius:999px;padding:2px 7px}
+.lnode.soon.go .disc{background:radial-gradient(circle at 35% 30%,#ffc2d8,#ff86b0 60%,#ee5f90);color:#fff;font-size:30px;box-shadow:0 0 0 3px #fff,0 5px 0 3px #c2607e}
+.lscrub .lbl.star{color:#d99a2b;font-family:var(--body);font-weight:700}
+.chest{position:relative;flex:none;display:flex;align-items:center;gap:2px;padding:2px 6px 2px 2px;border-radius:999px;border:2px solid #fff;background:#fff;box-shadow:0 0 0 1.5px #f3b3c8;font:700 11px/1 var(--body);color:#9a6a7e;cursor:pointer}
+.chest .ico{width:22px;height:22px}
+.chest.ready{background:linear-gradient(#fff3c9,#ffd56a);color:#8a5a12;box-shadow:0 0 0 2px #e8a93a;animation:dotpop 1.4s ease-in-out infinite}
+.chest.got{opacity:.5;filter:grayscale(.6)}
+.starsrow{display:flex;justify-content:center;gap:10px;margin:2px 0}
+.bigstar{font-size:44px;line-height:1;color:#e6dde1;text-shadow:0 3px 0 #cfc3c8;animation:starpop .45s cubic-bezier(.2,1.6,.4,1) both}
+.bigstar.on{color:#ffcf3f;text-shadow:0 3px 0 #d99a2b,0 0 14px rgba(255,214,90,.8)}
+@keyframes starpop{from{transform:scale(0) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+.starconds{list-style:none;padding:0!important;margin:0;font-size:13px;color:#9a8a90}
+.starconds li.ok{color:#b0701a}
+
 @media (prefers-reduced-motion:reduce){.card,.tool,#toast{transition:none}.card.ready{animation:none}}
 </style>
 
@@ -752,8 +774,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.26-2356·732124 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.26-2356·732124';
+// 版本号：打包时 build.py 会把 2026.11.27-0308·fd5d4e 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.27-0308·fd5d4e';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -948,9 +970,58 @@ const CHALLENGES = [
   { id: 'c3', name: '速战速决', desc: '一群接一群，间隔减半。',
     cfg: { pool: ALL_POOL, waves: 12, flags: [6, 12], base: 0.9, grow: 0.5, startSun: 400, gapMul: 0.55 } },
 ];
+
+/* ---------- 冒险章节：第 1 章是上面手写的 20 关，第 2～4 章按规则生成 ---------- */
+// stars：本章星星达到 need 颗可以领的宝箱；scene 是附带解锁的战斗场景
+const CHAPTERS = [
+  { n: 1, name: '甜蜜厨房', desc: '每通关一关解锁一位新的小伙伴',
+    stars: [{ need: 20, give: { coins: 800, ticket: 2 } }, { need: 40, give: { gems: 60, flashPick: 1 } }, { need: 60, give: { goldPick: 1 }, scene: 'mint' }] },
+  { n: 2, name: '月光夜市', desc: '夜里天上不掉方糖，要多种荷包蛋花',
+    stars: [{ need: 20, give: { coins: 1000, ticket: 3 } }, { need: 40, give: { gems: 80, flashPick: 1 } }, { need: 60, give: { goldPick: 1 }, scene: 'lavender' }] },
+  { n: 3, name: '雾雾烘焙坊', desc: '奶油雾挡住右边，电动打蛋器的电光能吹散雾',
+    stars: [{ need: 20, give: { coins: 1200, ticket: 3 } }, { need: 40, give: { gems: 100, flashPick: 1 } }, { need: 60, give: { goldPick: 1 }, scene: 'lemon' }] },
+  { n: 4, name: '饼干罐乐园', desc: '饼干罐挡住格子，大波团子来时会从罐子里钻出来',
+    stars: [{ need: 20, give: { coins: 1500, ticket: 5 } }, { need: 40, give: { gems: 120, flashPick: 1 } }, { need: 60, give: { goldPick: 1 }, scene: 'sakura' }] },
+];
+const CH_NAMES = {
+  2: ['夜市开张', '灯笼小路', '棉花糖摊', '烤红薯香', '月亮饼干', '萤火虫', '夜光果冻', '星星糖', '夜猫团子', '烟花前夜',
+      '摩天轮', '旋转木马', '夜宵时间', '奶茶排队', '套圈游戏', '捞金鱼', '糖画师傅', '月下野餐', '打烊之前', '月光大决战'],
+  3: ['晨雾面包', '雾里看花', '面团发酵', '奶油雾', '烤箱预热', '黄油融化', '传送带烘焙', '面粉飞扬', '蒸汽布丁', '迷雾舒芙蕾',
+      '雾中寻宝', '肉桂卷', '抹茶雾', '焦糖雾', '雾夜烘焙', '双重迷雾', '雾与月光', '面包山', '最后一炉', '迷雾大决战'],
+  4: ['饼干罐', '罐子摇摇', '曲奇小镇', '巧克力豆', '罐罐迷宫', '姜饼人家', '传送带曲奇', '罐子开会', '华夫格子', '饼干城堡',
+      '奶油夹心', '罐子满满', '糖霜屋顶', '杏仁小路', '黄油曲奇', '罐子雨', '饼干列车', '罐中秘密', '终点之前', '饼干罐大决战'],
+};
+for (const L of LEVELS) L.chapter = L.chapter || 1;
+for (let c = 2; c <= 4; c++) for (let j = 1; j <= 20; j++) {
+  const boss = j === 10 || j === 20;
+  // ↓ 难度数值：以 1-20（26 波、基础 2.1、增长 0.84、血量 ×1.1）为参照，第 4 章最后一关大约是它的 1.3 倍血量
+  const waves = j === 20 ? 26 : 16 + Math.floor(j / 2);
+  const flags = [6, 12, 18, 24].filter(f => f < waves).concat([waves]);
+  const pool = boss || j > 16 ? ALL_POOL
+    : j > 12 ? [...P5, 'pole', 'football', 'dancer', 'zomboni', 'hide', 'mochi2', 'nurse', 'digger']
+    : j > 8 ? [...P5, 'pole', 'football', 'dancer', 'zomboni', 'hide', 'mochi2']
+    : j > 4 ? [...P5, 'pole', 'football', 'dancer'] : [...P5, 'pole'];
+  const night = c === 2 || (c === 3 && j >= 16);
+  const L = {
+    id: `${c}-${j}`, name: CH_NAMES[c][j - 1], chapter: c, pool, waves, flags,
+    base: +(1.5 + (c - 2) * 0.1 + j * 0.02).toFixed(2), grow: +(0.66 + (c - 2) * 0.04 + j * 0.005).toFixed(3),
+    diff: 1.3, hpMul: +([1.05, 1.12, 1.2][c - 2] + j * [0.006, 0.008, 0.01][c - 2]).toFixed(3),
+    night, fog: c === 3 || (c === 4 && j >= 11 && j % 2 === 1), graves: c === 4 ? 2 + Math.floor(j / 5) : 0,
+    startSun: night ? 200 : 150,
+    give: j === 20 ? { goldPick: 1, gems: 50 } : j === 10 ? { flashPick: 1, coins: 300 } : j % 5 === 0 ? { ticket: 3, coins: 200 } : { coins: 150 },
+  };
+  if (j === 7 && c >= 3) { L.conveyor = { items: MINIGAMES[1].cfg.conveyor.items, interval: 3.2 }; L.night = false; L.startSun = 0; }
+  LEVELS.push(L);
+}
+const chapterOf = i => LEVELS[i].chapter || 1;
+function chapterLevels(ch) { return LEVELS.map((L, i) => i).filter(i => chapterOf(i) === ch); }
+function chapterStars(ch) { return chapterLevels(ch).reduce((a, i) => a + (save.stars[i] || 0), 0); }
+function chapterOpen(ch) { return levelOpen(chapterLevels(ch)[0]); }
 const ACH = [
   { id: 'first',     name: '开张大吉',   desc: '通关冒险 1-1' },
   { id: 'master',    name: '甜点大师',   desc: '通关冒险 1-20' },
+  { id: 'ch4',       name: '甜品店传奇', desc: '通关冒险 4-20' },
+  { id: 'stars',     name: '摘星星',     desc: '任意一章拿满 60 颗星' },
   { id: 'luckywin',  name: '开盒达人',   desc: '甜品盲盒撑过第 15 波' },
   { id: 'legend',    name: '欧皇附体',   desc: '从盲盒里开出传说小伙伴' },
   { id: 'unlucky',   name: '倒霉蛋',     desc: '一局里开出 3 只团子' },
@@ -970,7 +1041,8 @@ const SAVE_KEY = 'cake-save-v1';
 const defaultSave = () => ({ cleared: [], chal: {}, seen: {}, ach: {}, kills: 0, bestWave: 0, sfx: true, music: true, pick: [], boxGot: {}, luckyWin: false, luckyBest: 0, mini: {}, tutorialDone: false,
   coins: 0, gems: 0, cards: {}, cardNew: {}, bond: {}, items: { dart: 0, sugar: 0, freeze: 0, heal: 0, robot: 0, bomb: 0, ticket: 0, flashPick: 0, goldPick: 0 },
   gacha: { pulls: 0, pf: 0, pg: 0, log: [] }, daily: { date: '', prog: {}, got: {}, free: false, bonus: false }, starter: false, dev: false, v2: false,
-  born: 0, bought: {}, scenes: { pink: true }, scene: 'pink', mapHint: false });
+  born: 0, bought: {}, scenes: { pink: true }, scene: 'pink', mapHint: false,
+  stars: {}, chClaim: {}, lastCh: 0 });
 let save = defaultSave();
 try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (s) save = Object.assign(defaultSave(), s); } catch (e) {}
 // 新版本加的嵌套字段：旧存档补齐默认值
@@ -1238,6 +1310,8 @@ function battleRewards(won, first) {
 if (!save.v2) { save.v2 = true; save.gems += Object.keys(save.ach).filter(id => ACH.some(a => a.id === id)).length * ACH_GEMS + save.cleared.length * 20; persist(); }
 // 第一次打开的时间（新手特惠 7 天倒计时从这里算）；场景存档补齐
 if (!save.born) { save.born = Date.now(); persist(); }
+// 以前通关的关卡没有星星记录：先算 1 颗星，重玩可以拿更多
+for (const i of save.cleared) if (!save.stars[i]) save.stars[i] = 1;
 if (!save.scenes.pink) save.scenes.pink = true;
 if (!SCENES[save.scene]) save.scene = 'pink';
 
@@ -1389,7 +1463,7 @@ function newState(cfg, deck) {
     cd, selected: null, nextSky: 5, lastRow: -1, banner: null, bannerFor: {},
     waveNum: 0, nextWaveT: 18, pending: [], over: false, ending: 0, hover: null,
     shake: 0, flashA: 0, mowerUsed: false, demo: false,
-    cardMul: Object.fromEntries(PLANT_ORDER.map(k => [k, cardMul(k)])), newCards: [], itemsUsed: 0,
+    cardMul: Object.fromEntries(PLANT_ORDER.map(k => [k, cardMul(k)])), newCards: [], itemsUsed: 0, lost: 0,
   };
   // 进度条：预先算出每一波的时间
   if (cfg.waves !== Infinity) {
@@ -1769,10 +1843,11 @@ function burnRow(r) {
   S.shake = Math.max(S.shake, 10); S.flashA = 0.4;
   sfx('burn');
 }
-function killPlant(r, c) {
+function killPlant(r, c, eaten) {
   const p = S.plants[r][c];
   S.plants[r][c] = null;
   if (!p) return;
+  if (eaten) S.lost++;
   if (p.type === 'cherrynut') explodeFire(r, c);
   else for (let i = 0; i < 8; i++)
     part({ x: cellCX(c) + rnd(-12, 12), y: cellCY(r) + rnd(-10, 20), vx: rnd(-80, 80), vy: rnd(-220, -80), life: 0.6, size: rnd(3, 5), color: '#ffd1e1', shape: 'rect', vr: rnd(-10, 10) });
@@ -2410,7 +2485,7 @@ function update(dt) {
     const tg = z.fly || z.under ? null : findTarget(z);
     if (tg && z.type === 'zomboni' && ROLE_OF[tg.p.type] !== 'def') {
       // 推车直接碾碎普通小伙伴，不停下；碰到防守墙就停下来一下下地撞
-      killPlant(z.row, tg.c);
+      killPlant(z.row, tg.c, true);
       floatText(cellCX(tg.c), cellCY(z.row) - 30, '咔嚓！', '#fff3d1', 22);
       S.shake = Math.max(S.shake, 4); sfx('slam');
     } else if (tg && (z.type === 'garg' || z.type === 'zomboni')) {
@@ -2420,7 +2495,7 @@ function update(dt) {
       if (z.smashT >= 1.2) {
         z.smashT = 0;
         tg.p.hp -= HEAVY_HIT; tg.p.hurt = 0.3;
-        if (tg.p.hp <= 0) killPlant(z.row, tg.c);
+        if (tg.p.hp <= 0) killPlant(z.row, tg.c, true);
         S.shake = Math.max(S.shake, 9);
         floatText(cellCX(tg.c), cellCY(z.row) - 30, '咚！', '#fff3d1', 28);
         for (let i = 0; i < 12; i++) part({ x: cellCX(tg.c) + rnd(-30, 30), y: cellCY(z.row) + 30, vx: rnd(-140, 140), vy: rnd(-200, -60), life: 0.6, size: rnd(3, 6), color: '#8a6a3e' });
@@ -2447,7 +2522,7 @@ function update(dt) {
           z.row = nr; z.garlicT = 0; z.eating = false; z.x -= 4;
           floatText(z.x - 10, cellCY(nr) - 50, '呸！', '#e8ffd0', 20);
           tg.p.hp -= 30; tg.p.hurt = 0.1;
-          if (tg.p.hp <= 0) killPlant(oldRow, tg.c);
+          if (tg.p.hp <= 0) killPlant(oldRow, tg.c, true);
           continue;
         }
       }
@@ -2458,7 +2533,7 @@ function update(dt) {
         z.chompT = 0.45; sfx('chomp');
         part({ x: cellCX(tg.c) + 14, y: cellCY(z.row) + 4, vx: rnd(-40, 60), vy: rnd(-160, -80), life: 0.45, size: 3, color: '#7fc04a', shape: 'rect', vr: 8 });
       }
-      if (tg.p.hp <= 0) killPlant(z.row, tg.c);
+      if (tg.p.hp <= 0) killPlant(z.row, tg.c, true);
     } else {
       z.eating = false;
       z.x += (z.dir === 1 ? 1 : -1) * z.speed * k * dt;
@@ -3659,14 +3734,15 @@ function drawZomboni(z, x, y, burnt) {
   if (z.frozen > 0 && !z.dead) { rr(x - 46, y - 112, 100, 116, 8); g.fillStyle = 'rgba(150,215,255,.42)'; g.fill(); }
 }
 function drawGrave(x, y, ratio) {
+  // 饼干罐：粉色罐身 + 奶油盖子，被打得越多裂得越厉害；团子会从里面钻出来
   shadow(x, y + 2, 24);
-  g.beginPath();
-  g.moveTo(x - 20, y); g.lineTo(x - 20, y - 40); g.arc(x, y - 40, 20, Math.PI, 0); g.lineTo(x + 20, y); g.closePath();
-  g.fillStyle = '#8a8f93'; g.fill(); g.strokeStyle = '#4b5257'; g.lineWidth = 2.5; g.stroke();
-  line(x, y - 50, x, y - 26, '#5c6166', 3); line(x - 8, y - 42, x + 8, y - 42, '#5c6166', 3);
-  if (ratio < 0.66) line(x - 14, y - 52, x - 6, y - 36, '#3f464b', 2);
-  if (ratio < 0.33) line(x + 15, y - 30, x + 6, y - 14, '#3f464b', 2);
-  ell(x, y, 26, 6, '#5b3a1c');
+  rr(x - 20, y - 46, 40, 46, 12); g.fillStyle = '#ffd9e5'; g.fill(); g.strokeStyle = '#c2607e'; g.lineWidth = 2.5; g.stroke();
+  rr(x - 23, y - 54, 46, 12, 6); g.fillStyle = '#fffaf4'; g.fill(); g.strokeStyle = '#c2607e'; g.lineWidth = 2; g.stroke();
+  ell(x, y - 58, 6, 4, '#ff9ec0', '#c2607e', 1.5);
+  for (const [dx, dy] of [[-9, -30], [6, -22], [-2, -12], [9, -36]]) { ell(x + dx, y + dy, 5, 4, '#e8b27a', '#b07a40', 1.2); ell(x + dx - 1, y + dy - 1, 1, 1, '#7a4a20'); }
+  ell(x - 11, y - 40, 3, 6, 'rgba(255,255,255,.6)');
+  if (ratio < 0.66) line(x - 14, y - 46, x - 6, y - 30, '#a8465f', 2);
+  if (ratio < 0.33) line(x + 15, y - 24, x + 6, y - 8, '#a8465f', 2);
 }
 
 // 场地：料理台上铺着粉白格子野餐布，左边是要守护的大蛋糕，右边是厨房门口的地砖
@@ -4036,7 +4112,7 @@ function draw() {
   drawLawn(t);
   // 顶栏先画，第一排的团子和气球可以盖在顶栏上面，不会被挡住
   if (!S.demo) drawHUD();
-  if (CFG && CFG.night && !S.demo) { g.fillStyle = 'rgba(16,24,64,.42)'; g.fillRect(0, TOP, W, CH * ROWS); }
+  if (CFG && CFG.night && !S.demo) { g.fillStyle = 'rgba(70,50,120,.34)'; g.fillRect(0, TOP, W, CH * ROWS); for (let i = 0; i < 24; i++) { g.globalAlpha = 0.4 + 0.6 * Math.abs(Math.sin(t * 1.5 + i)); ell(LX + (i * 173) % (CW * COLS), TOP + (i * 97) % (CH * ROWS), 1.6, 1.6, '#fff6c9'); } g.globalAlpha = 1; }
   if (CFG && CFG.bowling && !S.demo) {
     g.fillStyle = 'rgba(227,38,58,.12)'; g.fillRect(LX, TOP, CW * 3, CH * ROWS);
     line(LX + CW * 3, TOP + 4, LX + CW * 3, TOP + CH * ROWS - 4, '#e3263a', 4);
@@ -4163,12 +4239,13 @@ function draw() {
   }
   // 浓雾：盖住右边四列，闪电会暂时照亮
   if (CFG && CFG.fog && !S.demo) {
-    const a = 0.88 * (1 - Math.min(1, S.fogClear));
+    // 奶油雾会慢慢变浓变淡，偶尔能看清；打蛋器的电光能吹散
+    const a = (0.62 + 0.28 * Math.sin(S.t * 0.35)) * (1 - Math.min(1, S.fogClear));
     if (a > 0.01) {
       g.save(); g.globalAlpha = a;
       for (let r = 0; r <= ROWS; r++) for (let i = 0; i < 6; i++) {
         const fx = LX + CW * 5 - 20 + i * 70 + Math.sin(S.t * 0.4 + r + i) * 12, fy = TOP + r * CH + Math.cos(S.t * 0.3 + i) * 8;
-        ell(fx, fy, 70, 48, i % 2 ? '#c9d1d6' : '#b8c2c8');
+        ell(fx, fy, 70, 48, i % 2 ? '#fff4f7' : '#f6e1ea');
       }
       g.restore();
     }
@@ -4541,7 +4618,7 @@ function showStarter() {
 /* ---------- 冒险：关卡地图 ---------- */
 function advCfg(i) {
   const L = LEVELS[i];
-  return makeCfg({ mode: 'adventure', idx: i, label: `冒险 ${L.id}`, back: showLevels, pool: L.pool, waves: L.waves, flags: L.flags, base: L.base, grow: L.grow,
+  return makeCfg({ mode: 'adventure', idx: i, label: `冒险 ${L.id}`, back: () => showLevels(L.chapter || 1), pool: L.pool, waves: L.waves, flags: L.flags, base: L.base, grow: L.grow,
     startSun: L.startSun || 150, diff: L.diff || 1.3, hpMul: L.hpMul || 1.1, night: L.night, fog: L.fog, graves: L.graves, conveyor: L.conveyor,
     plants: L.conveyor ? [] : unlockedPlants() });
 }
@@ -4649,7 +4726,8 @@ function showGuide() {
       el('li', {}, '团子从右边一路走向左边的蛋糕，在它们碰到蛋糕前把它们喂饱。团子一走进画面，小伙伴就会开始攻击。'),
       el('li', {}, '点上方卡片选小伙伴，再点餐桌放下。卡片变暗表示方糖不够或者还在冷却。'),
       el('li', {}, '小伙伴受伤了，可以再放一个同种的上去，直接换成满血的新伙伴。'),
-      el('li', {}, '每行最左边的扫地机器人能救你一次，用掉就没了。锅铲可以收回放错的小伙伴。'))),
+      el('li', {}, '每行最左边的扫地机器人能救你一次，用掉就没了。锅铲可以收回放错的小伙伴。'),
+      el('li', {}, '冒险模式共 4 章 80 关。每关最多 3 颗星：守住 1 颗、扫地机器人一台没动 1 颗、被吃掉的小伙伴不超过 2 个 1 颗；每章攒够 20 / 40 / 60 颗星能开宝箱，60 星宝箱还送战斗场景。'))),
     sec('方糖', el('ul', {},
       el('li', {}, '天上会掉方糖，荷包蛋花也会产方糖，点一下就能收起来。'),
       el('li', {}, '开局先多放几朵荷包蛋花，后面才有足够的方糖放厉害的小伙伴。'))),
@@ -5078,19 +5156,23 @@ function dragScroll(box, onStart) {
     e.preventDefault();
   }, { passive: false });
 }
-function showLevels() {
-  const n = LEVELS.length, gap = 118, pad = 132; // 两头留宽一点，不被左右箭头挡住
+function starText(n) { return '★'.repeat(n) + '☆'.repeat(3 - n); }
+function showLevels(ch) {
   const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
-  const done = save.cleared.length;
+  ch = ch || save.lastCh || (firstOpen === -1 ? CHAPTERS.length : chapterOf(firstOpen));
+  if (!chapterOpen(ch)) ch = 1;
+  if (save.lastCh !== ch) { save.lastCh = ch; persist(); }
+  const C = CHAPTERS[ch - 1], ids = chapterLevels(ch), n = ids.length;
+  const gap = 118, pad = 132;
   const width = pad * 2 + gap * n;
   const xs = [], ys = [];
-  for (let i = 0; i <= n; i++) { xs.push(pad + i * gap); ys.push(52 + Math.sin(i * 1.15 + 0.4) * 24); }
+  for (let k = 0; k <= n; k++) { xs.push(pad + k * gap); ys.push(50 + Math.sin(k * 1.15 + 0.4 + ch) * 22); }
   const inner = el('div', { class: 'lmap-in', style: `width:${width}px` });
   const NS = 'http://www.w3.org/2000/svg';
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('viewBox', `0 0 ${width} 100`);
   svg.setAttribute('preserveAspectRatio', 'none');
-  const seg = (a, b) => { let dp = `M ${xs[a]} ${ys[a]}`; for (let i = a + 1; i <= b; i++) { const mx = (xs[i - 1] + xs[i]) / 2; dp += ` C ${mx} ${ys[i - 1]}, ${mx} ${ys[i]}, ${xs[i]} ${ys[i]}`; } return dp; };
+  const seg = (a, b) => { let dp = `M ${xs[a]} ${ys[a]}`; for (let k = a + 1; k <= b; k++) { const mx = (xs[k - 1] + xs[k]) / 2; dp += ` C ${mx} ${ys[k - 1]}, ${mx} ${ys[k]}, ${xs[k]} ${ys[k]}`; } return dp; };
   const path = (d, stroke, w, dash) => {
     const p = document.createElementNS(NS, 'path');
     p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', stroke); p.setAttribute('stroke-width', w);
@@ -5099,28 +5181,57 @@ function showLevels() {
     return p;
   };
   svg.append(path(seg(0, n - 1), 'rgba(255,255,255,.92)', 16), path(seg(0, n - 1), '#f39ab5', 5, '1 13'), path(seg(n - 1, n), 'rgba(255,255,255,.7)', 10, '2 10'));
-  inner.append(svg, el('span', { class: 'chap' }, `第一章 · 甜蜜厨房 · 共 ${n} 关`));
-  LEVELS.forEach((L, i) => {
-    const open = levelOpen(i), cleared = save.cleared.includes(i);
-    inner.append(el('button', { class: 'lnode' + (cleared ? ' done' : '') + (i === firstOpen ? ' cur' : ''), style: `left:${xs[i]}px;top:${ys[i]}%`, disabled: !open,
-      'aria-label': `${L.id} ${open ? L.name : '未解锁'}`, onclick: () => { sfx('select'); startFlow(advCfg(i)); } },
-      el('span', { class: 'disc' }, open ? L.id : '', open ? null : el('span', { class: 'lock' }, '🔒'), cleared ? el('span', { class: 'ok' }, '✓') : null,
-        el('span', { class: 'rwb', title: cleared ? `已获得${PLANTS[L.reward].name}` : '通关奖励' }, iconCanvas('plant', L.reward, 30, { locked: !cleared && i !== firstOpen }))),
-      el('span', { class: 'lname' }, open ? L.name : '？？？')));
+  inner.append(svg, el('span', { class: 'chap' }, `第${'一二三四'[ch - 1]}章 · ${C.name}`, el('small', {}, ' ' + C.desc)));
+  ids.forEach((i, k) => {
+    const L = LEVELS[i], open = levelOpen(i), cleared = save.cleared.includes(i), st = save.stars[i] || 0;
+    const rwIcon = L.reward ? iconCanvas('plant', L.reward, 30, { locked: !cleared && i !== firstOpen })
+      : itemIcon(Object.keys(L.give).find(x => x !== 'coins' && x !== 'gems') || 'ticket', 26);
+    if (!L.reward && !Object.keys(L.give).some(x => x !== 'coins' && x !== 'gems')) { rwIcon.className = 'ico coin'; }
+    const tags = [L.night ? '夜' : '', L.fog ? '雾' : '', L.graves ? '罐' : '', L.conveyor ? '传送带' : ''].filter(Boolean).join(' · ');
+    inner.append(el('button', { class: 'lnode' + (cleared ? ' done' : '') + (i === firstOpen ? ' cur' : ''), style: `left:${xs[k]}px;top:${ys[k]}%`, disabled: !open,
+      'aria-label': `${L.id} ${open ? L.name : '未解锁'}${cleared ? `，${st} 星` : ''}`, onclick: () => { sfx('select'); startFlow(advCfg(i)); } },
+      el('span', { class: 'disc' }, open ? L.id : '', open ? null : el('span', { class: 'lock' }, '🔒'),
+        el('span', { class: 'rwb', title: cleared ? '已领取通关奖励' : '第一次通关奖励' }, rwIcon)),
+      cleared ? el('span', { class: 'lstar' }, starText(st)) : null,
+      el('span', { class: 'lname' }, open ? L.name : '？？？'),
+      tags && open ? el('span', { class: 'ltag' }, tags) : null));
   });
-  inner.append(el('div', { class: 'lnode soon', style: `left:${xs[n]}px;top:${ys[n]}%` }, el('span', { class: 'disc' }, '?'), el('span', { class: 'lname' }, '第二章 · 敬请期待')));
+  // 章末：下一章入口
+  const nextOpen = ch < CHAPTERS.length && chapterOpen(ch + 1);
+  inner.append(el('button', { class: 'lnode soon' + (nextOpen ? ' go' : ''), style: `left:${xs[n]}px;top:${ys[n]}%`, disabled: !nextOpen,
+    onclick: () => { sfx('select'); showLevels(ch + 1); } },
+    el('span', { class: 'disc' }, ch < CHAPTERS.length ? (nextOpen ? '›' : '🔒') : '?'),
+    el('span', { class: 'lname' }, ch < CHAPTERS.length ? (nextOpen ? `前往第${'一二三四'[ch]}章` : `通关 ${ch}-20 解锁第${'一二三四'[ch]}章`) : '更多章节 敬请期待')));
   const map = el('div', { class: 'lmap' }, inner);
   const centerOn = x => smoothScroll(map, x - map.clientWidth / 2);
   const left = el('button', { class: 'larrow l', 'aria-label': '往前看', onclick: () => { sfx('select'); smoothScroll(map, map.scrollLeft - map.clientWidth * 0.7); } }, '‹');
   const right = el('button', { class: 'larrow r', 'aria-label': '往后看', onclick: () => { sfx('select'); smoothScroll(map, map.scrollLeft + map.clientWidth * 0.7); } }, '›');
   const dots = el('div', { class: 'ldots' });
   const win = el('span', { class: 'lwin' });
-  LEVELS.forEach((L, i) => dots.append(el('button', { class: 'ldot' + (save.cleared.includes(i) ? ' done' : levelOpen(i) ? ' open' : '') + (i === firstOpen ? ' cur' : ''),
-    'aria-label': `看 ${L.id} ${L.name}`, title: `${L.id} ${L.name}`, onclick: () => { sfx('select'); centerOn(xs[i]); } })));
-  dots.append(el('button', { class: 'ldot soon', 'aria-label': '第二章 敬请期待', title: '第二章 敬请期待', onclick: () => centerOn(xs[n]) }), win);
-  const hint = save.mapHint ? null : el('div', { class: 'lhint' }, `👈 左右滑动，查看全部 ${n} 关 👉`);
+  ids.forEach((i, k) => { const L = LEVELS[i]; dots.append(el('button', { class: 'ldot' + (save.cleared.includes(i) ? ' done' : levelOpen(i) ? ' open' : '') + (i === firstOpen ? ' cur' : ''),
+    'aria-label': `看 ${L.id} ${L.name}`, title: `${L.id} ${L.name}`, onclick: () => { sfx('select'); centerOn(xs[k]); } })); });
+  dots.append(el('button', { class: 'ldot soon', 'aria-label': '章末', onclick: () => centerOn(xs[n]) }), win);
+  // 本章星星和宝箱
+  const got = chapterStars(ch);
+  const chests = C.stars.map((x, m) => {
+    const key = `${ch}-${m}`, claimed = !!save.chClaim[key], ready = got >= x.need && !claimed;
+    return el('button', { class: 'chest' + (claimed ? ' got' : ready ? ' ready' : ''), 'aria-label': `${x.need} 星宝箱`, onclick: () => {
+      sfx('select');
+      const give = Object.assign({}, x.give);
+      const sceneTxt = x.scene ? `，以及战斗场景「${SCENES[x.scene].name}」` : '';
+      if (claimed) { toast(`这个宝箱已经领过啦`); return; }
+      if (!ready) { openModal(el('div', { class: 'cstage', style: 'gap:10px;text-align:center' }, el('h2', { style: 'padding:0' }, `${x.need} 星宝箱`), el('p', {}, `本章累计 ${x.need} 颗星可以打开，现在 ${got} 颗。`),
+        el('div', { class: 'rewards', style: 'justify-content:center' }, ...giveNodes(give)), x.scene ? el('p', { class: 'muted' }, `还会解锁战斗场景「${SCENES[x.scene].name}」`) : null), 'narrow'); return; }
+      save.chClaim[key] = true; grantAll(give);
+      if (x.scene) save.scenes[x.scene] = true;
+      persist(); refreshWallet(); sfx('unlock');
+      showGot(`第${'一二三四'[ch - 1]}章 ${x.need} 星宝箱${sceneTxt}`, give, () => showLevels(ch));
+    } }, icon('gift'), el('b', {}, `${x.need}★`), ready ? dotEl(1) : null);
+  });
+  const scrub = el('div', { class: 'lscrub' }, el('span', { class: 'lbl' }, `已通关 ${ids.filter(i => save.cleared.includes(i)).length}/${n}`), dots,
+    el('span', { class: 'lbl star' }, `★ ${got}/${n * 3}`), ...chests);
+  const hint = save.mapHint ? null : el('div', { class: 'lhint' }, `👈 左右滑动，查看本章全部 ${n} 关 👉`);
   const stage = el('div', { class: 'lstage' }, map, left, right, hint);
-  const scrub = el('div', { class: 'lscrub' }, el('span', { class: 'lbl' }, '关卡总览'), dots, el('span', { class: 'lbl' }, `已通关 ${done}/${n}`));
   map._onScroll = () => {
     const max = map.scrollWidth - map.clientWidth;
     left.disabled = map.scrollLeft <= 2; right.disabled = map.scrollLeft >= max - 2;
@@ -5129,8 +5240,16 @@ function showLevels() {
     win.style.width = Math.max(14, map.clientWidth / map.scrollWidth * dw) + 'px';
   };
   dragScroll(map, () => { if (hint && hint.isConnected) { hint.remove(); save.mapHint = true; persist(); } });
-  openPage(page('冒险模式', showMenu, el('div', { class: 'lwrap' }, stage, scrub), { bodyCls: 'flexcol' }), IMG.levels, showLevels);
-  const target = firstOpen === -1 ? n - 1 : firstOpen;
+  const tabs = el('div', { class: 'chtabs' }, ...CHAPTERS.map(Cx => {
+    const op = chapterOpen(Cx.n);
+    return el('button', { class: 'chtab' + (Cx.n === ch ? ' on' : ''), disabled: !op, onclick: () => { sfx('select'); showLevels(Cx.n); } },
+      op ? `${'一二三四'[Cx.n - 1]} ★${chapterStars(Cx.n)}` : `${'一二三四'[Cx.n - 1]} 🔒`, op && Cx.stars.some((x, m) => chapterStars(Cx.n) >= x.need && !save.chClaim[`${Cx.n}-${m}`]) ? dotEl(1) : null);
+  }));
+  const pg = page('冒险模式', showMenu, el('div', { class: 'lwrap' }, stage, scrub), { bodyCls: 'flexcol' });
+  pg.querySelector('.ptitle').after(tabs);
+  openPage(pg, IMG.levels, () => showLevels(ch));
+  const curK = ids.indexOf(firstOpen);
+  const target = curK >= 0 ? curK : (ids.some(i => !save.cleared.includes(i)) ? 0 : n - 1);
   requestAnimationFrame(() => { map.scrollLeft = Math.max(0, xs[target] - map.clientWidth / 2); map._onScroll(); });
 }
 
@@ -5428,21 +5547,36 @@ function gameOver(won) {
   sfx('win');
   for (let i = 0; i < 40; i++) part({ x: rnd(LX, W), y: TOP - 10, vx: rnd(-40, 40), vy: rnd(0, 120), grav: 150, life: rnd(1.2, 2), size: rnd(3, 6), color: ['#ffd23f', '#ff9ec0', '#7fd14a', '#7fd3ff', '#fff3d1'][i % 5], shape: 'rect', vr: rnd(-8, 8) });
   if (CFG.mode === 'adventure') {
-    const i = CFG.idx, first = !save.cleared.includes(i);
+    const i = CFG.idx, L = LEVELS[i], first = !save.cleared.includes(i);
     if (first) save.cleared.push(i);
+    // 星星：守住 1 颗；扫地机器人一台没动 1 颗；被吃掉的小伙伴不超过 2 个 1 颗
+    const conds = [[true, '守住关卡'], [!S.mowerUsed, '扫地机器人一台没动'], [S.lost <= 2, `被吃掉的小伙伴不超过 2 个（这局 ${S.lost} 个）`]];
+    const st = conds.filter(c => c[0]).length, best = Math.max(st, save.stars[i] || 0), newBest = st > (save.stars[i] || 0);
+    save.stars[i] = best;
     if (i === 0) unlockAch('first');
-    if (LEVELS[i].id === '1-20') unlockAch('master');
+    if (L.id === '1-20') unlockAch('master');
+    if (L.id === '4-20') unlockAch('ch4');
+    if (CHAPTERS.some(C => chapterStars(C.n) >= 60)) unlockAch('stars');
     if (!S.mowerUsed) unlockAch('nomower');
     const rw = battleRewards(true, first);
-    if (first) {
-      const k = LEVELS[i].reward;
+    body.push(el('div', { class: 'starsrow' }, ...[0, 1, 2].map(k => el('span', { class: 'bigstar' + (k < st ? ' on' : ''), style: `animation-delay:${0.25 + k * 0.3}s` }, '★'))),
+      el('ul', { class: 'starconds' }, ...conds.map(c => el('li', { class: c[0] ? 'ok' : '' }, (c[0] ? '★ ' : '☆ ') + c[1]))),
+      newBest && !first ? el('p', { class: 'muted' }, `刷新了这关的最好成绩：${starText(best)}`) : null);
+    setTimeout(() => sfx(st === 3 ? 'gold' : 'ach'), 500);
+    if (first && L.reward) {
+      const k = L.reward;
       body.push(el('div', { class: 'reward' }, iconCanvas('plant', k, 64), el('div', {}, el('b', {}, `获得新小伙伴：${PLANTS[k].name}`), el('p', {}, PLANTS[k].desc))));
-      setTimeout(() => sfx('unlock'), 700);
+      setTimeout(() => sfx('unlock'), 1300);
+    } else if (first && L.give) {
+      grantAll(L.give); persist();
+      body.push(el('div', { class: 'rewards' }, el('b', { style: 'font-family:var(--display);font-weight:400;color:#b0701a' }, '第一次通关奖励'), ...giveNodes(L.give)));
     }
-    body.unshift(el('p', {}, `守住了 ${CFG.waves} 波进攻，喂饱 ${S.kills} 只团子${S.mowerUsed ? '' : '，扫地机器人一台没动'}。`));
+    const ch = L.chapter || 1, C = CHAPTERS[ch - 1], cs = chapterStars(ch);
+    const nextChest = C.stars.find((x, m) => !save.chClaim[`${ch}-${m}`]);
+    body.unshift(el('p', {}, `守住了 ${CFG.waves} 波进攻，喂饱 ${S.kills} 只团子。本章星星 ${cs}/${chapterLevels(ch).length * 3}${nextChest ? (cs >= nextChest.need ? '，有章节宝箱可以领啦！' : `，再拿 ${nextChest.need - cs} 颗开下一个宝箱`) : ''}`));
     body.push(rewardBlock(rw));
     if (i + 1 < LEVELS.length) btns.push(btn(`下一关 ${LEVELS[i + 1].id}`, () => startFlow(advCfg(i + 1))));
-    btns.push(btn('关卡地图', showLevels, 'alt'), btn('主页', showMenu, 'alt'));
+    btns.push(btn('关卡地图', () => showLevels(ch), 'alt'), btn('主页', showMenu, 'alt'));
   } else if (CFG.mode === 'mini') {
     const first = !save.mini[CFG.id];
     save.mini[CFG.id] = true;
@@ -5671,7 +5805,7 @@ fit();
 if (document.fonts && document.fonts.load) document.fonts.load(`20px ${FONT}`).then(() => {}, () => {});
 requestAnimationFrame(frame);
 
-window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, startGame, makePlant, spawnZombie, hurtZombie, canReplace, PLANTS, ZDEF, draw, startFlow, advCfg, chalCfg, endlessCfg, luckyCfg, miniCfg, MINIGAMES, rollBox, showMenu, showLevels, showAlmanac, save: () => save, LEVELS,
+window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, startGame, makePlant, spawnZombie, hurtZombie, canReplace, PLANTS, ZDEF, draw, startFlow, advCfg, chalCfg, endlessCfg, luckyCfg, miniCfg, MINIGAMES, rollBox, showMenu, showLevels, showAlmanac, save: () => save, LEVELS, CHAPTERS, chapterStars,
   doGacha, pullOnce, grantCard, showGacha, showAlbum, showShop, showDaily, showSettings, showCard, showModes, useItem, renderTray, ensureDaily, battleRewards, cardTier, BOND, PITY, drawIcon, iconCanvas, openShop, SCENES, NEWBIE_PACKS, DAILY_PACKS, grantAll, gachaPay };
 })();
 </script>

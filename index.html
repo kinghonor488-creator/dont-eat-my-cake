@@ -774,8 +774,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.27-0308·fd5d4e 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.27-0308·fd5d4e';
+// 版本号：打包时 build.py 会把 2026.11.27-0438·4381f9 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.27-0438·4381f9';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -1655,6 +1655,54 @@ function hitRing(x, y, color) {
   S.fx.push({ type: 'ring', x, y, t: 0, dur: 0.32, color });
   for (let i = 0; i < 3; i++) part({ x, y, vx: rnd(-120, 80), vy: rnd(-140, 40), grav: 200, life: 0.35, size: rnd(3, 5), color: i ? color : '#ffffff', shape: 'sparkle', vr: 8 });
 }
+
+// ---------- 闪卡 / 金卡小伙伴的专属攻击特效 ----------
+// 金卡：金色光晕 + 金色彗尾，命中冒金星，喂饱时金光四射
+// 闪卡：彩虹拖尾 + 彩虹环，命中冒彩色星星，喂饱时彩虹圈炸开
+function projTier(src) { return src && S && !S.demo && S.cardMul && S.cardMul[src] > 1 ? cardTier(src) : null; }
+function tierColor(tier) { return tier === 'gold' ? (Math.random() < 0.55 ? '#ffd56a' : '#fff3c4') : RAINBOW[Math.floor(Math.random() * 6)]; }
+// 画在子弹下面：光晕和拖尾。dir 是飞行方向（1 往右，-1 往左）
+function tierTrail(x, y, tier, r = 11, dir = 1) {
+  g.save();
+  if (tier === 'gold') {
+    const lg = g.createLinearGradient(x - dir * r * 3.4, y, x, y);
+    lg.addColorStop(0, 'rgba(255,214,110,0)'); lg.addColorStop(1, 'rgba(255,214,110,.8)');
+    g.fillStyle = lg; g.beginPath(); g.moveTo(x, y - r * 0.7); g.lineTo(x - dir * r * 3.4, y); g.lineTo(x, y + r * 0.7); g.closePath(); g.fill();
+    const gr = g.createRadialGradient(x, y, 1, x, y, r * 1.7);
+    gr.addColorStop(0, 'rgba(255,244,190,.95)'); gr.addColorStop(0.5, 'rgba(255,205,90,.55)'); gr.addColorStop(1, 'rgba(255,205,90,0)');
+    g.fillStyle = gr; g.beginPath(); g.arc(x, y, r * 1.7, 0, Math.PI * 2); g.fill();
+  } else {
+    g.globalAlpha = 0.6;
+    for (let i = 0; i < 6; i++) { const yy = y - r * 0.5 + i * r * 0.2; line(x - dir * r * 3, yy, x, yy, RAINBOW[i], r * 0.22); }
+    g.globalAlpha = 0.95; g.lineWidth = 2.5;
+    const sp = (S ? S.t : 0) * 8;
+    for (let i = 0; i < 6; i++) { g.strokeStyle = RAINBOW[i]; g.beginPath(); g.arc(x, y, r * 1.25, sp + i * Math.PI / 3, sp + (i + 1) * Math.PI / 3); g.stroke(); }
+  }
+  g.restore();
+  if (Math.random() < 0.45) part({ x: x - dir * rnd(4, 12), y: y + rnd(-5, 5), vx: -dir * rnd(10, 40), vy: rnd(-30, 10), grav: 0, life: 0.35, size: rnd(2, 3.5), color: tierColor(tier), shape: 'sparkle', vr: 6 });
+}
+// 命中：同一只团子 0.15 秒内只冒一次，免得粒子太多
+function tierHit(z, tier) {
+  if (Math.abs(S.t - (z.tierAt ?? -9)) < 0.15) return;
+  z.tierAt = S.t;
+  const x = z.x + rnd(-8, 8), y = zombieY(z) - 50 + rnd(-10, 10);
+  if (tier === 'gold') S.fx.push({ type: 'ring', x, y, t: 0, dur: 0.3, color: '#ffc94a', r: 30 });
+  else S.fx.push({ type: 'prism', x, y, t: 0, dur: 0.35, r: 30 });
+  for (let i = 0; i < 5; i++) part({ x, y, vx: rnd(-140, 140), vy: rnd(-160, 40), grav: 120, life: 0.4, size: rnd(3, 5.5), color: tierColor(tier), shape: 'sparkle', vr: 8 });
+}
+// 喂饱：更大的专属效果，偶尔飘一句字
+function tierKill(z, tier) {
+  const x = z.x, y = zombieY(z) - 50;
+  if (tier === 'gold') {
+    S.fx.push({ type: 'goldburst', x, y, t: 0, dur: 0.7 });
+    for (let i = 0; i < 14; i++) part({ x, y, vx: rnd(-200, 200), vy: rnd(-280, -60), grav: 380, life: rnd(0.6, 1), size: rnd(3.5, 6.5), color: i % 3 ? '#ffd56a' : '#fff3c4', shape: i % 2 ? 'sparkle' : 'circle', vr: rnd(-8, 8) });
+    if (Math.random() < 0.4) floatText(x, y - 50, '金卡一击！', '#ffd56a', 18);
+  } else {
+    S.fx.push({ type: 'prism', x, y, t: 0, dur: 0.6, r: 70 });
+    for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; part({ x, y, vx: Math.cos(a) * 200, vy: Math.sin(a) * 200 - 40, grav: 60, life: 0.7, size: rnd(3.5, 6), color: RAINBOW[i % 6], shape: 'sparkle', vr: 6 }); }
+    if (Math.random() < 0.4) floatText(x, y - 50, '闪亮一击！', '#e3c8ff', 18);
+  }
+}
 // 招牌命中特效：和子弹本身的特点相关，范围更大更显眼
 const RAINBOW = ['#ff9ec0', '#7fd3ff', '#ffe36b', '#9be07a', '#d79bff', '#ff8a5c'];
 function impact(kind, x, y) {
@@ -1756,6 +1804,8 @@ function hurtZombie(z, dmg, opt = {}) {
   z.flash = 0.1; z.hitJ = Math.max(z.hitJ || 0, 0.08);
   z.dmgAcc = (z.dmgAcc || 0) + (before - Math.max(0, z.hp) - z.armor);
   if (opt.dot) z.dmgDot = true;
+  const tierK = projTier(src);
+  if (tierK && !opt.dot) tierHit(z, tierK);
 
   if (z.hp <= 0) {
     flushDamage(z);
@@ -1771,6 +1821,7 @@ function hurtZombie(z, dmg, opt = {}) {
     // 吃饱了：冒出几颗爱心
     for (let i = 0; i < 9; i++) part({ shape: i % 3 ? 'heart' : 'sparkle', x: z.x + rnd(-16, 16), y: zombieY(z) - 40, vx: rnd(-90, 90), vy: rnd(-200, -80), grav: 40, life: rnd(0.7, 1.2), size: rnd(4, 8), color: ['#ff6b8a', '#ff9ec0', '#ffd56a'][i % 3], vr: rnd(-6, 6) });
     S.fx.push({ type: 'star', x: z.x, y: zombieY(z) - 40, t: 0, dur: 0.45 });
+    if (tierK) tierKill(z, tierK);
     S.shake = Math.max(S.shake, 1.5);
     if (Math.random() < 0.35) floatText(z.x, zombieY(z) - 70, '吃饱啦~', '#ffe0ea', 16);
     return true;
@@ -1780,6 +1831,8 @@ function hurtZombie(z, dmg, opt = {}) {
 function shoot(r, x, y, kind) {
   S.peas.push({ src: CUR_SRC, row: r, x, y, kind, dmg: kind === 'fire' ? 40 : 20 });
   muzzle(x + 6, y, kind === 'fire' ? '#ffb12b' : kind === 'ice' ? '#bfe9ff' : '#c8f59a');
+  const tierK = projTier(CUR_SRC);
+  if (tierK) for (let i = 0; i < 4; i++) part({ x: x + 6, y, vx: rnd(60, 220), vy: rnd(-90, 90), grav: 0, life: 0.25, size: rnd(3, 5), color: tierColor(tierK), shape: 'sparkle' });
   sfx('shoot');
 }
 function comboCheck(n) { if (n >= 5) unlockAch('combo'); }
@@ -4065,6 +4118,22 @@ function drawFx(f) {
   } else if (f.type === 'shock') {
     ell(f.x, f.y, 20 + k * f.r, 14 + k * f.r * 0.62, null, `rgba(255,255,255,${0.9 * (1 - k)})`, 8 * (1 - k) + 1);
     ell(f.x, f.y, 10 + k * f.r * 0.7, 8 + k * f.r * 0.45, null, `rgba(255,158,192,${0.8 * (1 - k)})`, 5 * (1 - k) + 1);
+  } else if (f.type === 'prism') {
+    // 彩虹圈：六段彩色弧一边转一边扩散
+    const rr2 = 6 + k * f.r;
+    g.save(); g.globalAlpha = 1 - k; g.lineWidth = 6 * (1 - k) + 1;
+    for (let i = 0; i < 6; i++) { g.strokeStyle = RAINBOW[i]; g.beginPath(); g.ellipse(f.x, f.y, rr2, rr2 * 0.8, 0, i * Math.PI / 3 + k * 3, (i + 1) * Math.PI / 3 + k * 3); g.stroke(); }
+    g.restore();
+  } else if (f.type === 'goldburst') {
+    // 金光四射：八道金色光芒 + 金环
+    g.save(); g.globalAlpha = 1 - k; g.translate(f.x, f.y); g.rotate(k * 0.8);
+    for (let i = 0; i < 8; i++) {
+      const a = i * Math.PI / 4, r1 = 10 + k * 30, r2 = 30 + k * 70;
+      g.beginPath(); g.moveTo(Math.cos(a - 0.1) * r1, Math.sin(a - 0.1) * r1); g.lineTo(Math.cos(a) * r2, Math.sin(a) * r2); g.lineTo(Math.cos(a + 0.1) * r1, Math.sin(a + 0.1) * r1); g.closePath();
+      g.fillStyle = i % 2 ? '#fff3c4' : '#ffd56a'; g.fill();
+    }
+    ell(0, 0, 14 + k * 50, 14 + k * 50, null, '#ffc94a', 5 * (1 - k) + 1);
+    g.restore();
   } else if (f.type === 'star') {
     g.save(); g.globalAlpha = 1 - k; g.translate(f.x, f.y); g.rotate(k * 2); g.scale(0.4 + k * 1.2, 0.4 + k * 1.2);
     g.fillStyle = '#ffd56a';
@@ -4172,6 +4241,8 @@ function draw() {
     }
   }
   for (const p of S.peas) {
+    const tierK = projTier(p.src);
+    if (tierK) tierTrail(p.x, p.y, tierK, p.kind === 'boomer' ? 15 : 11, p.dir || (p.kind === 'boomer' && p.back ? -1 : 1));
     if (p.kind === 'fire' && p.burn) {
       ell(p.x - 14, p.y, 14, 5, 'rgba(255,150,60,.45)');
       ell(p.x, p.y, 9, 9, '#ffb347', '#c2601e', 1.8);
@@ -4213,6 +4284,8 @@ function draw() {
     const shell = l.kind === 'shell';
     const lx = l.sx + (l.tx - l.sx) * k, ly = l.sy + (ty - l.sy) * k - Math.sin(k * Math.PI) * (shell ? 200 : 120);
     ell(lx, cellCY(l.row) + 30, 10 * (0.5 + k * 0.5), 4, 'rgba(0,0,0,.15)');
+    const tierK = projTier(l.src);
+    if (tierK) tierTrail(lx, ly, tierK, 15, 1);
     g.save(); g.translate(lx, ly); g.rotate(k * 6);
     if (shell) {
       ell(0, 4, 13, 8, '#fffaf6', '#d77a93', 2); ell(0, -2, 9, 6, '#fffaf6', '#d77a93', 2); ell(0, -8, 5, 4, '#ffd1e1', '#d77a93', 1.5);
@@ -4226,12 +4299,16 @@ function draw() {
   }
   for (const ro of S.rollers) {
     ell(ro.x, cellCY(ro.row) + 34, 22, 6, 'rgba(120,60,80,.18)');
+    const tierK = projTier(ro.kind);
+    if (tierK) tierTrail(ro.x, ro.y, tierK, 20, 1);
     g.save(); g.translate(ro.x, ro.y); g.rotate(ro.spin);
     donut(0, 0, 22, ro.kind === 'bombnut');
     g.restore();
   }
   for (const b of S.bees) {
     const flap = Math.sin(S.t * 60) * 3;
+    const tierK = projTier(b.src);
+    if (tierK) tierTrail(b.x, b.y, tierK, 8, 1);
     ell(b.x - 2, b.y - 6, 5, 3 + flap * 0.3, 'rgba(255,255,255,.75)');
     ell(b.x + 3, b.y - 6, 5, 3 - flap * 0.3, 'rgba(255,255,255,.75)');
     ell(b.x, b.y, 7, 5, '#ffd23f', '#2b1d10', 1.5);
@@ -4739,7 +4816,7 @@ function showGuide() {
     sec('金币、钻石和卡片', el('ul', {},
       el('li', {}, '每局都能拿金币：喂饱一只团子 1 金币，守住关卡还有额外奖励；第一次通关送钻石。'),
       el('li', {}, '金币用来扭蛋，能扭到小伙伴的闪卡、金卡和对局道具；钻石可以兑换金币、礼包，或者直接自选卡片。'),
-      el('li', {}, `带闪卡的小伙伴攻击、产出、耐久 +${Math.round((CARD_BONUS.flash - 1) * 100)}%，金卡 +${Math.round((CARD_BONUS.gold - 1) * 100)}%，在餐桌上会闪闪发光。`),
+      el('li', {}, `带闪卡的小伙伴攻击、产出、耐久 +${Math.round((CARD_BONUS.flash - 1) * 100)}%，金卡 +${Math.round((CARD_BONUS.gold - 1) * 100)}%，在餐桌上会闪闪发光；打出去的攻击也不一样：闪卡带彩虹拖尾和彩虹圈，金卡带金色彗尾，喂饱团子时金光四射。`),
       el('li', {}, `多用某个小伙伴也能拿卡：它累计参与喂饱 ${BOND.flash} 只团子送闪卡，${BOND.gold} 只送金卡。`),
       el('li', {}, '主页上的甜品小店里有新手特惠、每日特惠礼包，还能买不同的战斗场景（餐桌布）。'))),
     sec('团子和克制方法', el('div', { class: 'intel' }, ...zrows)),

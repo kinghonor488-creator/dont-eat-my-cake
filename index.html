@@ -747,6 +747,9 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
+// 版本号：打包时 build.py 会把 2026.11.26-2321·801d33 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.26-2321·801d33';
+const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
 const ctx = cv.getContext('2d');
@@ -5281,6 +5284,7 @@ function showSettings() {
   let taps = 0;
   const ver = el('p', { class: 'muted', onclick: () => { if (++taps >= 7 && !save.dev) { save.dev = true; persist(); toast('开发者测试模式已打开'); showSettings(); } } },
     '《别偷吃我的蛋糕！》体验版 · 全部角色、关卡和美术都是原创');
+  const verLine = el('p', { style: 'margin:0;font:400 18px/1.2 var(--display);color:#d0567f' }, `当前版本：${BUILD_LABEL}`);
   const dev = save.dev ? el('div', { class: 'btnrow' }, el('span', { class: 'muted' }, '开发者测试（上架前删除）：'),
     btn('+1000 钻石', () => { save.gems += 1000; persist(); refreshWallet(); }, 'small gem'),
     btn('+10000 金币', () => { save.coins += 10000; persist(); refreshWallet(); }, 'small gold'),
@@ -5289,7 +5293,7 @@ function showSettings() {
     el('h2', {}, '声音'), el('div', { class: 'btnrow' }, tog('音效', 'sfx'), tog('音乐', 'music', () => Sound.music(save.music ? 'menu' : null))),
     el('h2', {}, '战斗场景'), el('div', { class: 'scenes' }, ...SCENE_ORDER.map(k => sceneCard(k, showSettings))),
     el('h2', {}, '存档'), el('p', { class: 'muted' }, '进度保存在这台设备的浏览器里，换设备或清除网站数据会丢失。'), el('div', { class: 'btnrow' }, resetChip),
-    el('h2', {}, '关于'), ver, dev)), IMG.menu, showSettings);
+    el('h2', {}, '关于'), verLine, el('p', { class: 'muted' }, '离线安装的版本联网打开时会自动检查更新，有新版本会提示刷新。'), ver, dev)), IMG.menu, showSettings);
 }
 
 /* ---------- 对局里的道具 ---------- */
@@ -5643,7 +5647,14 @@ window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, start
 </script>
 <script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  navigator.serviceWorker.register('sw.js').then(reg => reg.update()).catch(() => {});
+  let hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController) { hadController = true; return; }
+    const t = document.getElementById('toast');
+    if (t) { t.textContent = '有新版本，正在刷新…'; t.classList.add('show'); }
+    setTimeout(() => location.reload(), 900);
+  });
 }
 </script>
 </body>

@@ -1,6 +1,6 @@
 // 离线缓存：先用缓存秒开，同时在后台拉取新版本，下次打开生效
-const CACHE = 'cake-defense-6137507ec8';
-const CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-180.png', './icons/icon-192.png', './icons/icon-512.png'];
+const CACHE = 'cake-defense-8fe3b75316';
+const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./img/album_bg.jpg", "./img/card_back.jpg", "./img/card_flash.webp", "./img/card_gold.webp", "./img/gacha_bg.jpg", "./img/gacha_machine.webp", "./img/ico_album.webp", "./img/ico_bag.webp", "./img/ico_capsule.webp", "./img/ico_coin.webp", "./img/ico_gear.webp", "./img/ico_gem.webp", "./img/ico_gift.webp", "./img/ico_tasks.webp", "./img/levels_bg.jpg", "./img/menu_bg.jpg", "./img/shop_banner.jpg"];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));

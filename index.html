@@ -250,6 +250,366 @@ button{font:inherit;color:inherit}
   #side .tool{width:34px;height:40px;flex:none}
   .logo .l1{font-size:52px}
 }
+
+/* ================= 皮肤：对局栏、弹出面板、按钮（奶油 + 草莓粉，白色描边） ================= */
+#bank{background:linear-gradient(180deg,#ffb7cf,#f490b3);border:3px solid #fff;border-radius:16px;box-shadow:0 0 0 2px #e27fa2,0 4px 0 2px #c2607e}
+#sunbox{background:radial-gradient(circle at 50% 35%,#fffaf0,#ffe6b0);border:2px solid #fff;box-shadow:0 0 0 2px #e8b64a;border-radius:12px}
+#sunNum{color:#b0701a}
+.card,.tool{border:2px solid #fff;box-shadow:0 0 0 2px #e48aa9;border-radius:11px}
+.card{background:linear-gradient(#fffdf9,#ffeef4)}
+.card.tg-gold:not(.sel){box-shadow:0 0 0 2px #e8b64a,0 0 9px rgba(232,182,74,.85);background:linear-gradient(#fffaf0,#fff0c4)}
+.card.tg-flash:not(.sel){box-shadow:0 0 0 2px #b48cff,0 0 9px rgba(180,140,255,.85);background:linear-gradient(135deg,#fff,#f3e8ff,#e6f7ff,#fff0f6)}
+.card.sel,.tool.sel{box-shadow:0 0 0 3px #fff,0 0 0 5px #ff6fa0,0 5px 0 3px rgba(160,50,90,.35)}
+#side .tool{background:linear-gradient(#ffa3c4,#e8789f);border:2px solid #fff;box-shadow:0 0 0 2px #c2607e;color:#fff}
+#game{border-radius:12px;box-shadow:0 0 0 3px #fff,0 0 0 6px #f0a3bd,0 8px 22px rgba(160,60,100,.35)}
+.panel{background:linear-gradient(#fffaf4,#fff1f6);border:4px solid #fff;border-radius:24px;box-shadow:0 0 0 3px #f3a6bf,0 7px 0 3px #c2607e,0 16px 36px rgba(120,40,75,.3)}
+.panel h1{color:#d0567f}
+.panel .sub{color:#e0789c}
+.btn{background:linear-gradient(#ffb3cd,#f47aa3);border:2px solid #fff;border-radius:999px;color:#fff;text-shadow:0 1px 0 #c2607e;box-shadow:0 0 0 2px #e77ca0,0 4px 0 2px #c2607e;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.btn.alt{background:linear-gradient(#fff,#ffe9f1);color:#c2507a;text-shadow:none;border-color:#fff;box-shadow:0 0 0 2px #f3b3c8,0 4px 0 2px #e48aa9}
+.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 0 0 2px #e77ca0,0 1px 0 2px #c2607e}
+.btn.alt:active:not(:disabled){box-shadow:0 0 0 2px #f3b3c8,0 1px 0 2px #e48aa9}
+.btn.gem{background:linear-gradient(#d3b4ff,#9b6df0);box-shadow:0 0 0 2px #9b6df0,0 4px 0 2px #6a3fc0;text-shadow:0 1px 0 #6a3fc0}
+.btn.gold{background:linear-gradient(#ffe08a,#e8a93a);box-shadow:0 0 0 2px #d99a2b,0 4px 0 2px #a8701c;text-shadow:0 1px 0 #a8701c}
+.chip{background:linear-gradient(#ffa3c4,#e8789f);border:2px solid #fff;box-shadow:0 0 0 1.5px #c2607e;color:#fff}
+.chip.hot{background:linear-gradient(#ffe08a,#f2b84a);color:#7a4a10;box-shadow:0 0 0 1.5px #c98a2b}
+.chip.light{background:#fff;color:#c2507a;border-color:#fff;box-shadow:0 0 0 2px #f3b3c8}
+.sheet .intel{background:none;padding:0}
+.pbody.flexcol{display:flex;flex-direction:column;overflow:hidden}
+.pbody.flexcol > .deck,.pbody.flexcol > .gacha,.pbody.flexcol > .modes{flex:1 1 auto;min-height:0;height:auto}
+.tab{border-color:#fff;box-shadow:0 0 0 2px #f3b3c8;color:#c2507a;background:#fff}
+.tab.on{background:linear-gradient(#ffb3cd,#f47aa3);color:#fff}
+.tile{border-color:#fff;box-shadow:0 0 0 2px #f6c0d3}
+.tile.on,.tile.cur{box-shadow:0 0 0 3px #ff86b0}
+
+/* ================= 层级界面：主页 → 子页面 → 弹窗 ================= */
+/* 页面铺满浮层：背景图铺到屏幕边缘，内容留在安全区里。尺寸用 --ah（游戏区域高度，竖屏旋转后也正确），不用 vh/vw */
+#overlay.scene{background:var(--scene-bg) center/cover no-repeat,#fbe1ea;align-items:stretch;justify-content:center}
+.hub,.page{width:100%;max-width:1180px;height:100%;min-height:0;display:flex;flex-direction:column;gap:6px;color:var(--ink);animation:pagein .3s cubic-bezier(.2,.9,.25,1)}
+@keyframes pagein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.grow{flex:1 1 auto}
+.ico{display:inline-block;flex:none;background:center/contain no-repeat;vertical-align:middle}
+.ico.coin{background-image:url(img/ico_coin.webp)}
+.ico.gem{background-image:url(img/ico_gem.webp)}
+.ico.album{background-image:url(img/ico_album.webp)}
+.ico.capsule{background-image:url(img/ico_capsule.webp)}
+.ico.bag{background-image:url(img/ico_bag.webp)}
+.ico.tasks{background-image:url(img/ico_tasks.webp)}
+.ico.gift{background-image:url(img/ico_gift.webp)}
+.ico.gear{background-image:url(img/ico_gear.webp)}
+.ico.medal{border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6c9,#ffd56a 45%,#e8a93a);box-shadow:inset 0 -3px 0 #c98a2b,0 0 0 3px #fff;display:inline-grid;place-items:center;color:#fff;font:700 20px/1 var(--body);text-shadow:0 1px 0 #c98a2b}
+.ico.medal::before{content:"★"}
+.ico.cv{background:none;display:inline-grid;place-items:center}
+.ico.cv canvas{width:100%;height:100%}
+
+/* 顶栏：货币 + 设置 */
+.topbar,.pbar{display:flex;align-items:center;gap:8px;flex:none;min-height:40px}
+.pill{position:relative;display:flex;align-items:center;gap:4px;height:32px;padding:0 4px 0 2px;border-radius:999px;background:rgba(255,250,244,.94);border:2px solid #fff;box-shadow:0 0 0 2px #f3b3c8,0 3px 0 2px rgba(194,96,126,.35);color:var(--ink);font:400 16px/1 var(--display);cursor:pointer;font-variant-numeric:tabular-nums;min-width:86px}
+.pill .ico{width:28px;height:28px;margin-left:-6px;filter:drop-shadow(0 2px 0 rgba(194,96,126,.35))}
+.pill b{font-weight:400;flex:1;text-align:center;padding:0 2px}
+.pill .plus{width:20px;height:20px;border-radius:50%;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:700 16px/20px var(--body);text-align:center;box-shadow:inset 0 -2px 0 rgba(160,50,90,.25)}
+.rbtn{position:relative;width:38px;height:38px;flex:none;border-radius:50%;display:grid;place-items:center;background:rgba(255,250,244,.94);border:2px solid #fff;box-shadow:0 0 0 2px #f3b3c8,0 3px 0 2px rgba(194,96,126,.35);cursor:pointer;padding:0}
+.rbtn .ico{width:28px;height:28px}
+.back{height:34px;flex:none;padding:0 14px 0 10px;border-radius:999px;border:2px solid #fff;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:400 17px/1 var(--display);box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e;cursor:pointer;text-shadow:0 1px 0 #c2607e}
+.back:active,.pill:active,.rbtn:active{transform:translateY(2px)}
+.ptitle{margin:0;font:400 clamp(20px,calc(var(--ah,500px)*.062),30px)/1 var(--display);color:#fff;-webkit-text-stroke:1.5px #c2607e;text-shadow:0 3px 0 #c2607e,0 5px 10px rgba(160,60,100,.3);letter-spacing:.03em;white-space:nowrap}
+.pbody{flex:1 1 auto;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 4px 10px}
+.sheet{background:rgba(255,250,244,.95);border:3px solid #fff;border-radius:18px;box-shadow:0 0 0 2px #f6c0d3,0 5px 0 2px rgba(194,96,126,.3);padding:12px 14px;color:var(--ink)}
+.sheet h2{margin:0 0 6px;font:400 19px/1.2 var(--display);color:#d0567f}
+.sheet p{margin:0}
+.muted{color:#9a6a7e;font-size:12px}
+.dot{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;box-sizing:border-box;border-radius:999px;background:#ff4f7b;border:2px solid #fff;color:#fff;font:700 11px/14px var(--body);text-align:center;padding:0 4px;animation:dotpop 1.8s ease-in-out infinite;z-index:2}
+@keyframes dotpop{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+
+/* 主页 */
+.hub-main{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,410px);gap:14px;align-items:stretch}
+.hub-logo{display:flex;flex-direction:column;align-items:flex-start;padding:2px 0 0 6px}
+.logo2{font:400 clamp(30px,min(calc(var(--ah,500px)*.13),calc(var(--aw,900px)*.066)),68px)/1.02 var(--display);white-space:nowrap;color:#fff;letter-spacing:.02em;-webkit-text-stroke:2px #c2607e;text-shadow:0 4px 0 #c2607e,0 9px 18px rgba(160,60,100,.35);transform:rotate(-4deg);transform-origin:left center;animation:logobob 3.6s ease-in-out infinite}
+.logo2 em{font-style:normal;color:#ffd56a}
+@keyframes logobob{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-3deg) translateY(-3px)}}
+.hub-sub{margin-top:12px;font:400 14px/1 var(--display);color:#fff;background:linear-gradient(#ffa9c6,#f37aa2);border:2px solid #fff;border-radius:999px;padding:5px 14px;box-shadow:0 3px 0 #c2607e;letter-spacing:.06em}
+.hub-menu{display:flex;flex-direction:column;justify-content:center;gap:8px;min-height:0}
+.cta{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:22px;border:3px solid #fff;background:linear-gradient(135deg,#ffa3c4,#f46f9d 70%,#ee5f90);color:#fff;box-shadow:0 0 0 2px #e77ca0,0 6px 0 2px #c2607e,0 12px 22px rgba(194,96,126,.35);cursor:pointer;text-align:left;font:inherit}
+.cta::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:ctashine 3.2s ease-in-out infinite}
+@keyframes ctashine{0%,55%{left:-60%}100%{left:130%}}
+.cta canvas{width:58px;height:58px;flex:none;background:rgba(255,255,255,.4);border-radius:16px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+.cta b{display:block;font:400 clamp(22px,calc(var(--ah,500px)*.065),30px)/1 var(--display);text-shadow:0 2px 0 #c2607e}
+.cta small{display:block;margin-top:4px;font-size:12px;opacity:.96}
+.cta .go{margin-left:auto;flex:none;font:400 18px/1 var(--display);background:#fff;color:#ee5f90;border-radius:999px;padding:8px 16px;box-shadow:0 3px 0 #e77ca0}
+.cta:active{transform:translateY(3px);box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e}
+.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mtile{position:relative;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:18px;border:3px solid #fff;color:var(--ink);background:rgba(255,250,244,.95);box-shadow:0 0 0 2px var(--tc,#f3b3c8),0 4px 0 2px var(--tcd,#e48aa9);cursor:pointer;text-align:left;min-width:0;font:inherit}
+.mtile .ico{width:40px;height:40px;filter:drop-shadow(0 2px 0 rgba(194,96,126,.3))}
+.mtile b{display:block;font:400 18px/1.1 var(--display);color:var(--tcd,#d0567f)}
+.mtile small{display:block;font-size:11px;color:#8a5a6e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mtile > span{min-width:0}
+.mtile:active{transform:translateY(3px);box-shadow:0 0 0 2px var(--tc,#f3b3c8),0 1px 0 2px var(--tcd,#e48aa9)}
+.dock{flex:none;display:flex;gap:6px;align-items:flex-end}
+.dbtn{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;width:66px;white-space:nowrap;cursor:pointer;background:none;border:0;padding:0;color:#fff;font:400 13px/1 var(--display);text-shadow:0 1px 0 #c2607e,0 0 5px rgba(194,96,126,.9)}
+.dbtn .ico{width:44px;height:44px;filter:drop-shadow(0 3px 0 rgba(194,96,126,.45))}
+.dbtn:active .ico{transform:translateY(2px)}
+.hub-ver{margin-left:auto;align-self:flex-end;font-size:11px;color:#fff;opacity:.85;text-shadow:0 1px 2px rgba(194,96,126,.9)}
+
+/* 关卡地图 */
+.lmap::-webkit-scrollbar{display:none}
+.lmap{scrollbar-width:none;position:relative;flex:1 1 auto;min-height:0;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;border-radius:18px}
+.lmap-in{position:relative;height:100%;min-height:230px}
+.lmap svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.lnode{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:0;padding:0;cursor:pointer;color:var(--ink);font:inherit}
+.lnode .disc{position:relative;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fff,#ffe6ef 60%,#ffd0e1);border:4px solid #fff;box-shadow:0 0 0 3px #f3a6bf,0 5px 0 3px #d77799;font:400 20px/1 var(--display);color:#d0567f}
+.lnode.done .disc{box-shadow:0 0 0 3px #7fd6ae,0 5px 0 3px #3f9a74;color:#3f9a74;background:radial-gradient(circle at 35% 30%,#fff,#e5fbf1 60%,#c9f2df)}
+.lnode.cur .disc{width:74px;height:74px;font-size:24px;color:#fff;background:radial-gradient(circle at 35% 30%,#ffc2d8,#ff86b0 60%,#ee5f90);box-shadow:0 0 0 3px #fff,0 6px 0 3px #c2607e,0 0 0 10px rgba(255,158,192,.35);animation:curpulse 1.4s ease-in-out infinite}
+@keyframes curpulse{0%,100%{box-shadow:0 0 0 3px #fff,0 6px 0 3px #c2607e,0 0 0 6px rgba(255,158,192,.45)}50%{box-shadow:0 0 0 3px #fff,0 6px 0 3px #c2607e,0 0 0 16px rgba(255,158,192,0)}}
+.lnode:disabled{cursor:not-allowed}
+.lnode:disabled .disc{filter:grayscale(.9) brightness(1.02);color:#a59aa0;box-shadow:0 0 0 3px #d9cfd3,0 5px 0 3px #b9adb2}
+.lnode .lname{font:400 13px/1 var(--display);background:rgba(255,250,244,.95);border:2px solid #fff;box-shadow:0 0 0 2px #f3b3c8;border-radius:999px;padding:3px 9px;white-space:nowrap;color:#b24d73}
+.lnode .rwb{position:absolute;top:-22px;right:-18px;width:34px;height:34px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #ffd56a,0 2px 0 2px #e8a93a;display:grid;place-items:center}
+.lnode .rwb canvas{width:30px;height:30px}
+.lnode .ok{position:absolute;bottom:-4px;right:-6px;width:22px;height:22px;border-radius:50%;background:#7fd6ae;color:#fff;border:2px solid #fff;font:700 13px/18px var(--body);text-align:center}
+.lnode .lock{position:absolute;inset:0;display:grid;place-items:center;font-size:20px}
+.chap{position:absolute;left:14px;top:10px;font:400 15px/1 var(--display);color:#fff;background:linear-gradient(#ffa9c6,#f37aa2);border:2px solid #fff;border-radius:999px;padding:5px 12px;box-shadow:0 3px 0 #c2607e;white-space:nowrap}
+
+/* 玩法、列表 */
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;height:100%;min-height:200px}
+.mode{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:22px;border:3px solid #fff;padding:12px;cursor:pointer;color:#fff;font:inherit;box-shadow:0 0 0 2px var(--mc2),0 6px 0 2px var(--mc3);background:linear-gradient(160deg,var(--mc1),var(--mc2))}
+.mode canvas{width:84px;height:84px;background:rgba(255,255,255,.35);border-radius:22px}
+.mode b{font:400 24px/1 var(--display);text-shadow:0 2px 0 var(--mc3)}
+.mode small{font-size:12px;text-align:center;opacity:.95}
+.mode:active{transform:translateY(3px)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.litem{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;cursor:pointer;font:inherit;color:var(--ink);background:rgba(255,250,244,.96);border:3px solid #fff;border-radius:18px;padding:10px 12px;box-shadow:0 0 0 2px #f3b3c8,0 4px 0 2px #e48aa9}
+.litem b{font:400 20px/1.1 var(--display);color:#d0567f}
+.litem span{font-size:12px;color:#7a5566}
+.litem .st{position:absolute;top:8px;right:10px;font:400 13px/1 var(--display);color:#fff;background:#7fd6ae;border-radius:999px;padding:3px 8px}
+.litem:active{transform:translateY(3px)}
+
+/* 选小伙伴 */
+.deck{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr);gap:10px;height:100%;min-height:0}
+.deck > .sheet{min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.deck-r{display:flex;flex-direction:column;gap:8px}
+.deck .slots{background:linear-gradient(#ffb8d0,#f58fb2);border:2px solid #fff;box-shadow:0 0 0 2px #e77ca0;border-radius:14px}
+.deck .tiles{grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:6px}
+.tile.tg-gold{border-color:#e8b64a;box-shadow:0 0 0 2px #ffe7a1,0 0 10px rgba(232,182,74,.7);background:linear-gradient(#fffaf0,#fff1c9)}
+.tile.tg-flash{border-color:#c9a3ff;box-shadow:0 0 0 2px #e9d8ff,0 0 10px rgba(201,163,255,.7);background:linear-gradient(135deg,#fff,#f3e8ff,#e6f7ff,#fff0f6)}
+.tile .tgb{position:absolute;top:-6px;left:-6px;font:700 9px/1 var(--body);color:#fff;border-radius:999px;padding:3px 5px;border:2px solid #fff}
+.tile.tg-gold .tgb{background:linear-gradient(#ffd56a,#e8a93a)}
+.tile.tg-flash .tgb{background:linear-gradient(90deg,#ff9ec0,#b48cff,#7fd3ff)}
+.startbar{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:4px}
+.btn.big{font-size:22px;padding:9px 30px;margin-left:auto}
+
+/* 卡片：普通 / 闪卡 / 金卡 */
+.pcard{--cw:110px;position:relative;width:var(--cw);aspect-ratio:2/3;flex:none;border-radius:calc(var(--cw)*.08);color:var(--ink);-webkit-user-select:none;user-select:none}
+.pcard.t-base{background:linear-gradient(160deg,#fff,#ffeaf2);border:calc(var(--cw)*.03) solid #fff;box-shadow:0 0 0 2px #f3b3c8,0 3px 0 2px rgba(194,96,126,.3);box-sizing:border-box}
+.pcard.t-gold{background:url(img/card_gold.webp) center/100% 100% no-repeat;filter:drop-shadow(0 4px 7px rgba(201,138,43,.5))}
+.pcard.t-flash{background:url(img/card_flash.webp) center/100% 100% no-repeat;filter:drop-shadow(0 4px 7px rgba(180,120,255,.45))}
+.pc-in{position:absolute;overflow:hidden;border-radius:calc(var(--cw)*.07);display:flex;flex-direction:column;align-items:center}
+.t-base .pc-in{inset:5%}
+.t-gold .pc-in{left:9.6%;right:9.6%;top:14%;bottom:10.6%}
+.t-flash .pc-in{left:7.6%;right:7.6%;top:7%;bottom:7%}
+.pc-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,#fff 0%,#ffe6ef 50%,#ffd3e3 100%)}
+.t-gold .pc-glow{background:repeating-conic-gradient(from 0deg at 50% 42%,rgba(255,255,255,.45) 0 8deg,transparent 8deg 22deg),radial-gradient(circle at 50% 42%,#fffdf0 0%,#ffe9ad 50%,#f4c967 100%)}
+.t-flash .pc-glow{background:radial-gradient(circle at 50% 40%,#fff 0%,#eaf7ff 30%,#f3e4ff 60%,#ffe1ef 100%)}
+.pc-art{position:relative;width:118%;max-width:none;height:auto;aspect-ratio:1;margin-top:-4%;flex:none}
+.pc-name{position:absolute;left:5%;right:5%;bottom:5%;text-align:center;font:400 calc(var(--cw)*.115)/1.25 var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:999px;padding:1px 4px;background:rgba(255,255,255,.85);color:#c2507a;box-shadow:0 0 0 1px #f3b3c8}
+.t-gold .pc-name{background:linear-gradient(#fff6d6,#f6d27a);color:#8a5a12;box-shadow:0 0 0 1px #d9a441,inset 0 1px 0 #fff}
+.t-flash .pc-name{background:linear-gradient(90deg,#ffe3ef,#efe2ff,#e0f4ff);color:#8a4fc7;box-shadow:0 0 0 1px #d4b6ff}
+.pc-no{position:absolute;left:6%;top:4%;font:700 calc(var(--cw)*.07)/1 var(--body);color:#c98aa3;letter-spacing:.04em}
+.t-gold .pc-no{color:#b07a20}
+.t-flash .pc-no{color:#9a74d6}
+.pc-tier{position:absolute;right:5%;top:3.5%;font:400 calc(var(--cw)*.085)/1 var(--display);color:#fff;border-radius:999px;padding:2px 6px}
+.t-gold .pc-tier{background:linear-gradient(#ffd56a,#d99a2b);text-shadow:0 1px 0 #a8701c}
+.t-flash .pc-tier{background:linear-gradient(90deg,#ff9ec0,#b48cff,#7fd3ff);text-shadow:0 1px 0 #8a5ac0}
+.pc-sheen{position:absolute;inset:0;pointer-events:none;border-radius:inherit}
+.t-flash .pc-sheen{background:linear-gradient(115deg,transparent 22%,rgba(255,140,190,.5) 34%,rgba(255,236,120,.5) 42%,rgba(140,240,200,.5) 50%,rgba(120,200,255,.5) 58%,rgba(200,150,255,.5) 66%,transparent 78%);background-size:300% 100%;mix-blend-mode:overlay;animation:holo 3.4s linear infinite}
+.t-gold .pc-sheen{background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.8) 48%,rgba(255,236,180,.55) 53%,transparent 63%);background-size:280% 100%;animation:glint 3s ease-in-out infinite}
+@keyframes holo{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes glint{0%,30%{background-position:130% 0}100%{background-position:-130% 0}}
+.pc-spark{position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(circle,#fff 0 1.4px,transparent 2.4px) 16% 20%/12px 12px no-repeat,
+  radial-gradient(circle,#fff 0 1.4px,transparent 2.4px) 82% 34%/12px 12px no-repeat,
+  radial-gradient(circle,#fff 0 1.8px,transparent 2.8px) 26% 70%/12px 12px no-repeat,
+  radial-gradient(circle,#fff 0 1.2px,transparent 2.2px) 74% 78%/12px 12px no-repeat,
+  radial-gradient(circle,#fff 0 1.6px,transparent 2.6px) 50% 12%/12px 12px no-repeat;animation:twinkle 1.6s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.2}to{opacity:1}}
+.pcard.dim > *{filter:grayscale(.85) brightness(.95);opacity:.75}
+.pcard.dim{filter:grayscale(.6)}
+.pcard .lockmark.pv{top:20%;font-size:calc(var(--cw)*.075);background:rgba(194,96,126,.82)}
+.pcard .lockmark{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font:400 calc(var(--cw)*.11)/1.2 var(--display);color:#fff;background:rgba(120,70,95,.72);border-radius:999px;padding:3px 10px;white-space:nowrap;filter:none;opacity:1}
+.pcard.big{transform:perspective(800px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .18s ease-out;animation:cardsway 5s ease-in-out infinite}
+@keyframes cardsway{0%,100%{rotate:0deg}50%{rotate:-1.2deg}}
+
+/* 卡册 */
+.album-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.album-head .stat{font:400 16px/1 var(--display);color:#fff;border-radius:999px;padding:6px 12px;border:2px solid #fff}
+.album-head .stat.g{background:linear-gradient(#ffd56a,#d99a2b);box-shadow:0 3px 0 #a8701c}
+.album-head .stat.f{background:linear-gradient(90deg,#ff9ec0,#b48cff,#7fd3ff);box-shadow:0 3px 0 #8a5ac0}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:14px 10px;justify-items:center;padding:10px 6px}
+.acell{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;padding:0;cursor:pointer;font:inherit}
+.acell .bar{width:92px;height:8px;border-radius:999px;background:rgba(255,255,255,.75);box-shadow:0 0 0 2px #fff,0 0 0 3px #f3b3c8;overflow:hidden}
+.acell .bar i{display:block;height:100%;background:linear-gradient(90deg,#ff9ec0,#d79bff)}
+.acell .bar.gold i{background:linear-gradient(90deg,#ffd56a,#e8a93a)}
+.acell small{font-size:11px;color:#b24d73;font-weight:700;background:rgba(255,250,244,.92);border-radius:999px;padding:1px 8px;box-shadow:0 0 0 1.5px #f6c0d3}
+.acell:active .pcard{transform:scale(.97)}
+
+/* 弹窗层（盖在页面上面） */
+#modal{position:absolute;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;background:rgba(120,40,75,.45);padding:10px max(10px,env(safe-area-inset-right,0px)) 10px max(10px,env(safe-area-inset-left,0px));box-sizing:border-box;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.mbox{position:relative;max-width:min(760px,100%);max-height:100%;width:100%;display:flex;flex-direction:column;gap:10px;box-sizing:border-box;background:linear-gradient(#fffaf4,#fff2f6);border:4px solid #fff;border-radius:24px;box-shadow:0 0 0 3px #f3a6bf,0 8px 0 3px #c2607e,0 18px 40px rgba(120,40,75,.35);padding:14px 16px;color:var(--ink);animation:mpop .28s cubic-bezier(.2,1.3,.4,1)}
+.mbox.narrow{max-width:420px}
+@keyframes mpop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.mbox h2{margin:0;font:400 22px/1.15 var(--display);color:#d0567f;padding-right:40px}
+.mclose{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:700 18px/1 var(--body);box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e;cursor:pointer;z-index:3}
+.mscroll{min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.cdetail{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center;min-height:0}
+.cstage{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ctabs{display:flex;gap:6px}
+.ctab{font:400 15px/1 var(--display);padding:6px 12px;border-radius:999px;border:2px solid #fff;background:#ffe4ee;color:#c2507a;box-shadow:0 0 0 2px #f3b3c8;cursor:pointer}
+.ctab.on{background:linear-gradient(#ffb8d0,#ff86b0);color:#fff}
+.ctab.g.on{background:linear-gradient(#ffd56a,#d99a2b)}
+.ctab.f.on{background:linear-gradient(90deg,#ff9ec0,#b48cff,#7fd3ff)}
+.cinfo{display:flex;flex-direction:column;gap:8px;min-width:0}
+.cinfo h3{margin:0;font:400 26px/1.1 var(--display);color:#d0567f}
+.prog{display:flex;align-items:center;gap:8px;font-size:12px}
+.prog .bar{flex:1;height:12px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 2px #f3b3c8;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:linear-gradient(90deg,#ff9ec0,#d79bff);border-radius:999px}
+.prog.gold .bar i{background:linear-gradient(90deg,#ffe08a,#e8a93a)}
+.prog b{min-width:76px;text-align:right;font-variant-numeric:tabular-nums}
+.perk{font-size:13px;background:#fff;border-radius:12px;padding:8px 10px;box-shadow:inset 0 0 0 2px #f6d3e0}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn .ico{width:20px;height:20px;margin:-3px 2px 0 0}
+
+/* 扭蛋 */
+.gacha{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,380px);gap:12px;height:100%;min-height:0}
+.gm{position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+.gm img{max-height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 10px 16px rgba(160,60,110,.3));animation:gmfloat 3.4s ease-in-out infinite}
+.gm.shake img{animation:gmshake .12s linear 6}
+@keyframes gmfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes gmshake{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-5px) rotate(-1.5deg)}75%{transform:translateX(5px) rotate(1.5deg)}}
+.gside{display:flex;flex-direction:column;gap:7px;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}
+.gside .sheet{padding:9px 12px;display:flex;flex-direction:column;gap:5px}
+.gside .sheet h2{margin:0}
+.odds{display:grid;grid-template-columns:auto 1fr auto;gap:4px 8px;align-items:center;font-size:12px}
+.odds .tg{font:400 13px/1 var(--display);color:#fff;border-radius:999px;padding:3px 8px;text-align:center}
+.odds .tg.g{background:linear-gradient(#ffd56a,#d99a2b)}
+.odds .tg.f{background:linear-gradient(90deg,#ff9ec0,#b48cff,#7fd3ff)}
+.odds .tg.i{background:#f3a6bf}
+.pity{display:flex;flex-direction:column;gap:5px}
+.gbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gbtn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 6px;border-radius:16px;border:3px solid #fff;color:#fff;cursor:pointer;font:inherit;box-shadow:0 0 0 2px var(--b2),0 5px 0 2px var(--b3);background:linear-gradient(var(--b1),var(--b2))}
+.gbtn b{font:400 20px/1 var(--display);text-shadow:0 2px 0 var(--b3)}
+.gbtn span{display:flex;align-items:center;gap:3px;font:400 14px/1 var(--display);background:rgba(255,255,255,.9);color:var(--b3);border-radius:999px;padding:3px 10px}
+.gbtn span .ico{width:18px;height:18px}
+.gbtn:disabled{filter:grayscale(.7);cursor:not-allowed}
+.gbtn:active:not(:disabled){transform:translateY(3px)}
+.glinks{display:flex;gap:8px;flex-wrap:wrap}
+.chip.light{background:#fff;color:#c2507a;border-color:#f3b3c8}
+/* 开扭蛋动画 */
+.reveal{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:0}
+.rays{position:absolute;left:50%;top:46%;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;pointer-events:none;background:repeating-conic-gradient(from 0deg,var(--ray,rgba(255,214,120,.55)) 0 9deg,transparent 9deg 22deg);-webkit-mask:radial-gradient(circle,#000 0 25%,transparent 68%);mask:radial-gradient(circle,#000 0 25%,transparent 68%);animation:spin 9s linear infinite;opacity:0;transition:opacity .4s}
+.reveal.lit .rays{opacity:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cap{--c1:#ff9ec0;position:relative;width:86px;height:86px;border-radius:50%;background:linear-gradient(180deg,var(--c1) 0 50%,rgba(255,255,255,.85) 50% 100%);border:4px solid #fff;box-shadow:0 0 0 3px rgba(194,96,126,.35),inset 0 -8px 0 rgba(0,0,0,.06),0 0 24px var(--glow,transparent);cursor:pointer;animation:capdrop .7s cubic-bezier(.3,1.5,.5,1) both}
+.cap::before{content:"";position:absolute;left:18%;top:12%;width:26%;height:16%;border-radius:50%;background:rgba(255,255,255,.75)}
+.cap.r3{--c1:linear-gradient(#ffe9a8,#e8a93a);--glow:rgba(255,200,80,.95);background:linear-gradient(180deg,#ffd56a 0 50%,rgba(255,255,255,.88) 50% 100%)}
+.cap.r2{--glow:rgba(200,150,255,.95);background:linear-gradient(180deg,#d79bff 0 50%,rgba(255,255,255,.88) 50% 100%)}
+.cap.r1{background:linear-gradient(180deg,#7fd3ff 0 50%,rgba(255,255,255,.88) 50% 100%)}
+.cap.r0{background:linear-gradient(180deg,#a8ecd1 0 50%,rgba(255,255,255,.88) 50% 100%)}
+.cap.wob{animation:capwob .5s ease-in-out infinite}
+@keyframes capdrop{from{transform:translateY(-160px) scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes capwob{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg)}75%{transform:rotate(9deg)}}
+.flip{perspective:900px}
+.flip-in{position:relative;transition:transform .7s cubic-bezier(.3,1.2,.4,1);transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.flip-face{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.flip-back{position:absolute;inset:0;border-radius:calc(var(--cw)*.08);background:url(img/card_back.jpg) center/cover;box-shadow:0 0 0 3px #fff,0 6px 14px rgba(120,40,75,.35)}
+.flip-front{transform:rotateY(180deg)}
+.rname{font:400 22px/1.2 var(--display);color:#d0567f;text-align:center}
+.rname.g{color:#c98a2b}
+.rname.f{background:linear-gradient(90deg,#ff6fa5,#9b6df0,#3fb2f0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;justify-items:center}
+.ritem{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;text-align:center;min-width:0}
+.ritem .rbox{width:62px;height:62px;border-radius:16px;display:grid;place-items:center;background:#fff;box-shadow:0 0 0 2px #f3b3c8,0 3px 0 2px rgba(194,96,126,.3)}
+.ritem .rbox canvas{width:48px;height:48px}
+.ritem .rbox .ico{width:40px;height:40px}
+.ritem.r1 .rbox{box-shadow:0 0 0 2px #7fd3ff,0 3px 0 2px #4fa6d6}
+.ritem b{font-weight:700;color:#7a5566;white-space:nowrap}
+.ritem .n{position:absolute;top:-6px;right:-6px;background:#ff86b0;color:#fff;border-radius:999px;font:700 11px/1 var(--body);padding:2px 5px;border:2px solid #fff}
+.ritem.pop{animation:mpop .3s cubic-bezier(.2,1.4,.4,1) both}
+.rules{font-size:13px;line-height:1.6}
+.rules h3{margin:10px 0 4px;font:400 17px/1.2 var(--display);color:#d0567f}
+.rules table{border-collapse:collapse;width:100%;font-size:13px;background:#fff;border-radius:10px;overflow:hidden}
+.rules th,.rules td{padding:4px 8px;border-bottom:1px solid #f6d3e0;text-align:left;color:var(--ink);font-size:13px}
+.rules th{background:#ffe4ee;color:#b24d73;font-weight:700}
+.rules td.num{text-align:right;font-variant-numeric:tabular-nums}
+.rules ul{margin:0;padding-left:1.2em}
+.log{display:flex;flex-direction:column;gap:4px;font-size:12px}
+.log div{display:flex;justify-content:space-between;gap:10px;background:#fff;border-radius:8px;padding:4px 8px}
+
+/* 商店 */
+.shop-banner{position:relative;flex:none;height:clamp(64px,calc(var(--ah,500px)*.2),110px);border-radius:18px;background:url(img/shop_banner.jpg) center/cover;box-shadow:0 0 0 3px #fff,0 0 0 5px #f3b3c8;display:grid;place-items:center}
+.shop-banner b{font:400 clamp(22px,calc(var(--ah,500px)*.07),34px)/1 var(--display);color:#fff;-webkit-text-stroke:1.5px #c2607e;text-shadow:0 3px 0 #c2607e}
+.shop-sec{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.shop-sec h2{margin:0;font:400 18px/1 var(--display);color:#fff;text-shadow:0 2px 0 #c2607e,0 0 6px rgba(194,96,126,.6)}
+.goods{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+.good{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px 8px;border-radius:18px;border:3px solid #fff;background:rgba(255,250,244,.96);box-shadow:0 0 0 2px #f3b3c8,0 4px 0 2px #e48aa9;cursor:pointer;font:inherit;color:var(--ink)}
+.good .ico{width:44px;height:44px}
+.good canvas{width:44px;height:44px}
+.good b{font:400 17px/1.1 var(--display);color:#d0567f}
+.good small{font-size:11px;color:#8a5a6e;text-align:center;min-height:2.4em}
+.good .price{display:flex;align-items:center;gap:3px;font:400 15px/1 var(--display);color:#fff;background:linear-gradient(#ffb8d0,#ff86b0);border-radius:999px;padding:5px 12px;box-shadow:0 2px 0 #c2607e}
+.good .price.gp{background:linear-gradient(#c9a3ff,#9b6df0);box-shadow:0 2px 0 #6a3fc0}
+.good .price.cp{background:linear-gradient(#ffd56a,#e8a93a);box-shadow:0 2px 0 #a8701c}
+.good .price .ico{width:18px;height:18px}
+.good .tagx{position:absolute;top:-8px;right:-6px;font:700 10px/1 var(--body);color:#fff;background:#ff4f7b;border:2px solid #fff;border-radius:999px;padding:3px 6px}
+.good:active{transform:translateY(3px)}
+.gemstack{display:flex;align-items:center;gap:2px}
+
+/* 任务 */
+.tasks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;align-content:start}
+.tasks > .muted,.tasks > .bonus{grid-column:1/-1}
+.task{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;background:rgba(255,250,244,.96);border:3px solid #fff;border-radius:16px;padding:6px 10px;box-shadow:0 0 0 2px #f3b3c8}
+.task b{font:400 16px/1.2 var(--display);color:#b24d73}
+.task .prog{grid-column:1}
+.task .rw{display:flex;align-items:center;gap:3px;font:400 14px/1 var(--display);color:#c98a2b}
+.task .rw .ico{width:18px;height:18px}
+.task .act{grid-row:1/3;grid-column:2;display:flex;flex-direction:column;align-items:center;gap:4px}
+.task.got{opacity:.6}
+.bonus{display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,#fff3c9,#ffe0ec);border:3px solid #fff;border-radius:16px;padding:8px 12px;box-shadow:0 0 0 2px #ffd56a}
+.bonus .ico{width:42px;height:42px}
+
+/* 结算奖励 */
+.rewards{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:linear-gradient(90deg,#fff3c9,#ffe7f0);border-radius:14px;padding:8px 10px}
+.rw-pill{display:flex;align-items:center;gap:4px;font:400 18px/1 var(--display);color:#b0701a;background:#fff;border-radius:999px;padding:4px 10px 4px 4px;box-shadow:0 0 0 2px #ffd56a}
+.rw-pill .ico{width:24px;height:24px}
+.rw-pill.gem{color:#8a4fc7;box-shadow:0 0 0 2px #d4b6ff}
+
+/* 对局里的道具栏 */
+.tool.bag{flex-direction:column;justify-content:center}
+.tool.bag .ico{width:30px;height:30px}
+.tool .badge{position:absolute;top:1px;right:1px;min-width:16px;height:16px;box-sizing:border-box;border-radius:999px;background:#ff4f7b;color:#fff;font:700 10px/12px var(--body);text-align:center;padding:0 3px;border:2px solid #fff}
+.tool.dart.free .cost{color:#e0457a;font-size:11px}
+#itemTray{position:absolute;left:8px;bottom:8px;z-index:4;display:flex;gap:6px;align-items:stretch;background:rgba(255,250,244,.96);border:3px solid #fff;border-radius:18px;padding:6px;box-shadow:0 0 0 2px #f3a6bf,0 5px 0 2px #c2607e;max-width:calc(100% - 16px);overflow-x:auto;animation:mpop .22s ease-out}
+.itm{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;width:58px;padding:4px 2px;border-radius:12px;border:2px solid #f6d3e0;background:#fff;cursor:pointer;font:inherit;color:var(--ink)}
+.itm canvas{width:38px;height:38px}
+.itm b{font:400 12px/1.1 var(--display);color:#b24d73;white-space:nowrap}
+.itm .badge{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;box-sizing:border-box;border-radius:999px;background:#ff4f7b;color:#fff;font:700 11px/14px var(--body);text-align:center;padding:0 3px;border:2px solid #fff}
+.itm:disabled{opacity:.45;cursor:not-allowed}
+.itm:active:not(:disabled){transform:translateY(2px)}
+.tray-tip{align-self:center;font-size:11px;color:#9a6a7e;padding:0 4px;max-width:110px}
+
+/* 小屏：主页和页面压缩一些 */
+@media (max-height:420px), (orientation:portrait) and (max-width:600px){
+  .hub-main{grid-template-columns:minmax(0,1fr) minmax(250px,360px)}
+  .cta{padding:8px 10px}
+  .cta canvas{width:48px;height:48px}
+  .mtile{padding:5px 8px}
+  .mtile .ico{width:34px;height:34px}
+  .dbtn{width:60px;font-size:12px}
+  .dbtn .ico{width:38px;height:38px}
+  .lnode .disc{width:54px;height:54px;font-size:18px}
+  .lnode.cur .disc{width:64px;height:64px}
+  .agrid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
+}
+
 @media (prefers-reduced-motion:reduce){.card,.tool,#toast{transition:none}.card.ready{animation:none}}
 </style>
 
@@ -274,6 +634,7 @@ body{margin:0}
     <div id="cards"></div>
     <div id="tools">
       <button id="dartBtn" class="tool dart" aria-label="牙签飞镖：戳破气球，25 方糖"><canvas width="72" height="72"></canvas><span class="cost">25</span><span class="mask"></span></button>
+      <button id="bagBtn" class="tool bag" aria-label="道具"><i class="ico bag"></i><span class="badge" hidden>0</span></button>
       <button id="shovel" class="tool" aria-label="铲子：移除小伙伴"><canvas width="72" height="72"></canvas></button>
       <div id="side">
         <button id="speedBtn" class="tool" aria-label="切换速度">1×</button>
@@ -284,8 +645,10 @@ body{margin:0}
   <div id="stage">
     <canvas id="game"></canvas>
     <button id="tutSkip" class="chip" hidden>跳过引导</button>
+    <div id="itemTray" hidden></div>
   </div>
   <div id="overlay"></div>
+  <div id="modal" hidden></div>
   <div id="toast" role="status" aria-live="polite"></div>
 </div>
 
@@ -340,6 +703,14 @@ const PLANTS = {
                   stat: '每 5 秒 1 发奶油弹（任意一行，中心 300，周围 120）', lore: '裱花袋装满奶油，蹲在后排哪里吃紧就往哪里挤。' },
   laserbean:    { name: '棒棒糖光束', cost: 275, cd: 7.5, hp: 300,  desc: '彩虹光束瞬间打穿整行，砧板也挡不住',
                   stat: '每 3 秒 1 道光束，整行每只 120', lore: '转着彩虹圈的大棒棒糖，一发光整排都亮了。' },
+  peppershaker: { name: '胡椒瓶',     cost: 125, cd: 7.5, hp: 300,  desc: '朝前方近处喷胡椒，打一片，团子打喷嚏会被震退', original: true,
+                  stat: '每 2 秒喷一次，前方 2.5 格内每只 60，并把团子震退一点', lore: '原创小伙伴。瓶盖一松，前面的团子全都阿嚏阿嚏。' },
+  taffytrap:    { name: '麦芽糖粘粘', cost: 75,  cd: 10,  hp: 400,  desc: '贴在地上，踩上来的团子被黏住 2.5 秒', original: true,
+                  stat: '黏住 2.5 秒并造成 40 · 能黏 4 次 · 黏不住面包熊和气球', lore: '原创小伙伴。一摊金黄的麦芽糖，谁踩谁走不动。' },
+  fortunecookie:{ name: '幸运签饼',   cost: 100, cd: 15,  hp: 300,  desc: '每隔一会儿随机开出好运：方糖、回血或全场减速', original: true,
+                  stat: '每 15 秒一次：50% 两块方糖 · 30% 给周围回 300 血 · 20% 全场团子减速 3 秒', lore: '原创小伙伴。每次掰开都是一句好话，有时还附赠好运。' },
+  chocolava:    { name: '巧克力熔岩', cost: 125, cd: 30,  hp: 300,  desc: '一次性：在前方铺开 3 格熔岩巧克力，持续烫伤团子', original: true,
+                  stat: '熔岩持续 8 秒 · 每 0.5 秒 40 · 走过的团子会变慢', lore: '原创小伙伴。切开的一瞬间，滚烫的巧克力流满一地。' },
   // —— 甜甜圈保龄球专用 ——
   bowlnut:      { name: '甜甜圈',     cost: 0,   cd: 0,   hp: 300,  desc: '滚出去撞团子，撞到后弹到隔壁行', special: true },
   bombnut:      { name: '跳跳糖甜甜圈', cost: 0, cd: 0,   hp: 300,  desc: '滚出去撞到团子就炸开', special: true },
@@ -348,15 +719,15 @@ const PLANTS = {
 };
 const PLANT_ORDER = Object.keys(PLANTS).filter(k => !PLANTS[k].box && !PLANTS[k].special);
 // 不会被吃、团子直接走过去的地面小伙伴（第一版暂时没有）
-const GROUND = new Set([]);
+const GROUND = new Set(['taffytrap']);
 const BASE_PLANTS = ['peaflower', 'firepea', 'peanut', 'twinpop'];
 const NUTS = new Set(['peanut', 'cherrynut', 'torchnut', 'frostnut', 'magnetnut']);
 const DMG_MUL = 2; // 所有小伙伴伤害的倍率（图鉴里的数字已按倍率写好）
 // 甜品盲盒：稀有度和开盒概率；weights 是同一稀有度里各小伙伴的权重
 const RARITY = {
-  common:    { name: '普通', color: '#fff3d1', plants: ['peaflower', 'icemine', 'peanut', 'shieldleaf', 'twinpop'], weights: [40, 22, 26, 12, 18] },
-  rare:      { name: '稀有', color: '#7fd3ff', plants: ['cherrynut', 'cherrypepper', 'chompsquash', 'beeflower', 'torchnut', 'frostnut', 'magnetnut', 'gatlingpea'], weights: [1, 1, 1, 1, 1, 1, 1, 1] },
-  epic:      { name: '史诗', color: '#d79bff', plants: ['firepea', 'snowrepeater', 'lightningvine', 'icemelon'], weights: [1, 1, 1, 1] },
+  common:    { name: '普通', color: '#fff3d1', plants: ['peaflower', 'icemine', 'peanut', 'shieldleaf', 'twinpop', 'taffytrap', 'fortunecookie'], weights: [40, 22, 26, 12, 18, 12, 14] },
+  rare:      { name: '稀有', color: '#7fd3ff', plants: ['cherrynut', 'cherrypepper', 'chompsquash', 'beeflower', 'torchnut', 'frostnut', 'magnetnut', 'gatlingpea', 'peppershaker'], weights: [1, 1, 1, 1, 1, 1, 1, 1, 1] },
+  epic:      { name: '史诗', color: '#d79bff', plants: ['firepea', 'snowrepeater', 'lightningvine', 'icemelon', 'chocolava'], weights: [1, 1, 1, 1, 1] },
   legendary: { name: '传说', color: '#ffb12b', plants: ['clockflower', 'mortar', 'laserbean'], weights: [1, 1, 1] },
 };
 const BOX_ODDS = {
@@ -390,6 +761,16 @@ Object.assign(ZDEF, {
   imp:      { name: '小团子',     hp: 150,  armor: 0,    armorType: null,       speed: 28, cost: 99,
               lore: '面包熊背上的小不点，被扔出去以后跑得飞快。' },
 });
+Object.assign(ZDEF, {
+  hide:   { name: '躲猫猫团子', hp: 270, armor: 0, armorType: null, speed: 17, cost: 3,
+            lore: '披着隐身斗篷，前半场谁也瞄不到它。走到餐桌中间才现身。爆炸、熔岩和地上的陷阱照样能对付它。' },
+  mochi2: { name: '双层大福',   hp: 650, armor: 0, armorType: null, speed: 13, cost: 5,
+            lore: '两层叠在一起的大福，被喂饱以后会分成两个小大福继续往前冲。' },
+  mini:   { name: '小大福',     hp: 110, armor: 0, armorType: null, speed: 24, cost: 99,
+            lore: '双层大福分出来的小家伙，个子小跑得快。' },
+  nurse:  { name: '小护士团子', hp: 320, armor: 0, armorType: null, speed: 15, cost: 4,
+            lore: '戴着护士帽，每秒给身边的团子回血。看到它要优先打。' },
+});
 const ZOMBIE_ORDER = Object.keys(ZDEF);
 // 团子的颜色、头顶标记、特点和克制它的小伙伴（关卡情报、图鉴、出场提示都用这份）
 const ZINFO = {
@@ -405,6 +786,10 @@ const ZINFO = {
   dancer:   { color: '#f3e3ff', badge: '舞', badgeColor: '#b69cf0', trait: '一进场就召唤 4 个伴舞', counters: ['cherrypepper', 'icemelon', 'gatlingpea', 'mortar'] },
   garg:     { color: '#f3d2a2', badge: '巨', badgeColor: '#c2601e', trait: '超耐打，每锤很重，防守墙能扛五六下，半血扔小团子', counters: ['icemine', 'chompsquash', 'clockflower', 'laserbean', 'cherrypepper'] },
   imp:      { color: '#fff6ee', badge: null, trait: '面包熊扔出来的小团子，跑得很快', counters: ['gatlingpea', 'twinpop', 'beeflower'] },
+  hide:     { color: '#efeaff', badge: '隐', badgeColor: '#9a8cff', trait: '前半场隐身瞄不到，走到餐桌中间才现身', counters: ['cherrypepper', 'chocolava', 'taffytrap', 'cherrynut', 'chompsquash'] },
+  mochi2:   { color: '#fffaf4', badge: '裂', badgeColor: '#ff8fb5', trait: '喂饱后分裂成两个小大福', counters: ['peppershaker', 'gatlingpea', 'icemelon', 'chocolava'] },
+  mini:     { color: '#fffaf4', badge: null, trait: '分裂出来的小大福，跑得快', counters: ['gatlingpea', 'peppershaker', 'twinpop'] },
+  nurse:    { color: '#ffeef3', badge: '医', badgeColor: '#ff6b8a', trait: '每秒给身边的团子回血，要优先打', counters: ['laserbean', 'lightningvine', 'mortar', 'beeflower'] },
   balloon: { color: '#fff4c2', badge: '飞', badgeColor: '#ff9e3d', trait: '飘在空中，直射的糖豆打不到', counters: ['beeflower', 'lightningvine', 'mortar', 'icemelon', 'chompsquash'] },
 };
 // 小伙伴的职能：决定脚下碟子和卡片色条的颜色
@@ -417,9 +802,10 @@ const ROLES = {
 };
 const ROLE_OF = { peaflower: 'eco', firepea: 'atk', snowrepeater: 'atk', beeflower: 'atk', peanut: 'def', cherrynut: 'def', torchnut: 'def', frostnut: 'def',
   icemine: 'boom', chompsquash: 'boom', cherrypepper: 'boom', clockflower: 'sup',
-  twinpop: 'atk', gatlingpea: 'atk', icemelon: 'atk', lightningvine: 'atk', mortar: 'atk', laserbean: 'atk', magnetnut: 'sup', shieldleaf: 'sup' };
+  twinpop: 'atk', gatlingpea: 'atk', icemelon: 'atk', lightningvine: 'atk', mortar: 'atk', laserbean: 'atk', magnetnut: 'sup', shieldleaf: 'sup',
+  peppershaker: 'atk', taffytrap: 'sup', fortunecookie: 'eco', chocolava: 'boom' };
 const P5 = ['normal', 'cone', 'bucket', 'shield', 'balloon'];
-const ALL_POOL = [...P5, 'pole', 'football', 'zomboni', 'digger', 'dancer', 'garg'];
+const ALL_POOL = [...P5, 'pole', 'football', 'zomboni', 'digger', 'dancer', 'garg', 'hide', 'mochi2', 'nurse'];
 // 金属护甲：第一版暂时没有会吸护甲的小伙伴
 const METAL = new Set(['bucket', 'football', 'helmet']);
 const CH1_POOL = ['normal', 'cone', 'bucket'];
@@ -441,6 +827,10 @@ const LEVELS = [
   { id: '1-14', name: '噼里啪啦', pool: ALL_POOL,                               waves: 22, flags: [6, 12, 18, 22], base: 1.8, grow: 0.76, reward: 'lightningvine' },
   { id: '1-15', name: '奶油大作战', pool: ALL_POOL,                             waves: 22, flags: [6, 12, 18, 22], base: 1.9, grow: 0.78, reward: 'mortar' },
   { id: '1-16', name: '彩虹终章', pool: ALL_POOL,                               waves: 24, flags: [6, 12, 18, 24], base: 2.0, grow: 0.8, reward: 'laserbean' },
+  { id: '1-17', name: '躲猫猫',     pool: [...P5, 'hide', 'pole'],               waves: 20, flags: [5, 10, 15, 20], base: 1.9, grow: 0.78, reward: 'peppershaker' },
+  { id: '1-18', name: '大福来了',   pool: [...P5, 'mochi2', 'hide', 'dancer'],    waves: 22, flags: [6, 12, 18, 22], base: 2.0, grow: 0.8, reward: 'taffytrap' },
+  { id: '1-19', name: '小护士查房', pool: [...P5, 'nurse', 'mochi2', 'football'], waves: 22, flags: [6, 12, 18, 22], base: 2.0, grow: 0.82, reward: 'fortunecookie' },
+  { id: '1-20', name: '甜蜜大决战', pool: ALL_POOL,                               waves: 26, flags: [6, 12, 18, 26], base: 2.1, grow: 0.84, reward: 'chocolava' },
 ];
 const MINIGAMES = [
   { id: 'm1', name: '甜甜圈保龄球', desc: '传送带送来甜甜圈，放在红线左边就会滚出去。撞到团子会弹到隔壁行，连撞越多越爽。',
@@ -461,7 +851,7 @@ const CHALLENGES = [
 ];
 const ACH = [
   { id: 'first',     name: '开张大吉',   desc: '通关冒险 1-1' },
-  { id: 'master',    name: '甜点大师',   desc: '通关冒险 1-16' },
+  { id: 'master',    name: '甜点大师',   desc: '通关冒险 1-20' },
   { id: 'luckywin',  name: '开盒达人',   desc: '甜品盲盒撑过第 15 波' },
   { id: 'legend',    name: '欧皇附体',   desc: '从盲盒里开出传说小伙伴' },
   { id: 'unlucky',   name: '倒霉蛋',     desc: '一局里开出 3 只团子' },
@@ -478,9 +868,13 @@ const ACH = [
 
 /* ================= 存档 ================= */
 const SAVE_KEY = 'cake-save-v1';
-const defaultSave = () => ({ cleared: [], chal: {}, seen: {}, ach: {}, kills: 0, bestWave: 0, sfx: true, music: true, pick: [], boxGot: {}, luckyWin: false, luckyBest: 0, mini: {}, tutorialDone: false });
+const defaultSave = () => ({ cleared: [], chal: {}, seen: {}, ach: {}, kills: 0, bestWave: 0, sfx: true, music: true, pick: [], boxGot: {}, luckyWin: false, luckyBest: 0, mini: {}, tutorialDone: false,
+  coins: 0, gems: 0, cards: {}, cardNew: {}, bond: {}, items: { dart: 0, sugar: 0, freeze: 0, heal: 0, robot: 0, bomb: 0 },
+  gacha: { pulls: 0, pf: 0, pg: 0, log: [] }, daily: { date: '', prog: {}, got: {}, free: false, bonus: false }, starter: false, dev: false, v2: false });
 let save = defaultSave();
 try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (s) save = Object.assign(defaultSave(), s); } catch (e) {}
+// 新版本加的嵌套字段：旧存档补齐默认值
+{ const d = defaultSave(); for (const k of ['items', 'gacha', 'daily']) save[k] = Object.assign(d[k], save[k] || {}); }
 function persist() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (e) {} }
 function plantUnlocked(k) {
   if (PLANTS[k].luckyOnly) return !!save.boxGot[k];
@@ -493,6 +887,191 @@ function levelOpen(i) {
 }
 function unlockedPlants() { return PLANT_ORDER.filter(k => !PLANTS[k].luckyOnly && plantUnlocked(k)); }
 const PICKABLE = PLANT_ORDER.filter(k => !PLANTS[k].luckyOnly);
+
+/* ================= 收集、经济与扭蛋 ================= */
+// 图片素材都在 img/ 目录（生成单文件预览时会被换成内嵌数据）
+const IMG = {
+  menu: 'img/menu_bg.jpg', album: 'img/album_bg.jpg', gacha: 'img/gacha_bg.jpg', levels: 'img/levels_bg.jpg',
+  shop: 'img/shop_banner.jpg', machine: 'img/gacha_machine.webp',
+};
+const CARDABLE = new Set(PLANT_ORDER);
+const TIER_NAME = { flash: '闪卡', gold: '金卡' };
+// ↓↓ 数值都集中在这里，调整时只改这几行 ↓↓
+const BOND = { flash: 300, gold: 1500 };          // 累计"参与喂饱"多少只团子，送这位小伙伴的闪卡 / 金卡
+const CARD_BONUS = { flash: 1.1, gold: 1.2 };     // 拥有闪卡 / 金卡：攻击伤害、方糖产出速度、耐久的倍率（两张都有按金卡算）
+const GACHA_COST = { one: 100, ten: 900 };        // 扭蛋价格（金币）；每天第一次单抽免费
+const PITY = { flash: 10, gold: 80 };             // 保底：10 次内必出闪卡或金卡；80 次内必出金卡
+const DUP_GEMS = { flash: 30, gold: 150 };        // 某一档卡片全部集齐后，再抽到就换成钻石
+const GEM_CARD = { flash: 128, gold: 648 };       // 用钻石自选卡片
+const GACHA_POOL = [                              // 单次基础概率（合计 100%）
+  { id: 'gold',   name: '金卡',          p: 1 },
+  { id: 'flash',  name: '闪卡',          p: 6 },
+  { id: 'bomb',   name: '奶油大炮 ×1',    p: 5,  item: 'bomb',   n: 1 },
+  { id: 'robot',  name: '机器人充电 ×1',  p: 8,  item: 'robot',  n: 1 },
+  { id: 'freeze', name: '冰冻棒棒糖 ×1',  p: 10, item: 'freeze', n: 1 },
+  { id: 'heal',   name: '爱心蛋糕 ×1',    p: 10, item: 'heal',   n: 1 },
+  { id: 'sugar',  name: '方糖罐 ×2',      p: 15, item: 'sugar',  n: 2 },
+  { id: 'dart',   name: '牙签飞镖 ×3',    p: 20, item: 'dart',   n: 3 },
+  { id: 'coin',   name: '金币 ×60',       p: 25, coins: 60 },
+];
+// 计入保底后的长期平均概率（按上面的规则模拟 300 万次得到）
+const GACHA_REAL = { gold: 1.81, flash: 12.17, bomb: 4.62, robot: 7.43, freeze: 9.24, heal: 9.21, sugar: 13.86, dart: 18.54, coin: 23.11 };
+const ITEMS = {
+  sugar:  { name: '方糖罐',     desc: '立刻得到 150 方糖' },
+  freeze: { name: '冰冻棒棒糖', desc: '全场团子冻住 5 秒', none: '场上还没有团子' },
+  heal:   { name: '爱心蛋糕',   desc: '全场小伙伴回满血', none: '大家都是满血哦' },
+  robot:  { name: '机器人充电', desc: '用掉的扫地机器人全部回来', none: '机器人都还在岗' },
+  bomb:   { name: '奶油大炮',   desc: '全场团子挨一发 600 伤害的奶油炮', none: '场上还没有团子' },
+  dart:   { name: '牙签飞镖',   desc: '免费戳一个气球：不花方糖、不用等冷却（自动用在飞镖按钮上）' },
+};
+const TRAY_ITEMS = ['sugar', 'freeze', 'heal', 'robot', 'bomb'];
+const DAILY = [
+  { id: 'login', name: '今天来甜品店打卡', goal: 1,   coins: 100 },
+  { id: 'win',   name: '守住 1 关（冒险、挑战、小游戏都算）', goal: 1, coins: 150 },
+  { id: 'kills', name: '喂饱 120 只团子', goal: 120, coins: 150 },
+  { id: 'sun',   name: '收集 40 块方糖',   goal: 40,  coins: 100 },
+  { id: 'pop',   name: '戳破 3 个气球',    goal: 3,   coins: 100 },
+  { id: 'gacha', name: '扭 1 次扭蛋',      goal: 1,   coins: 50 },
+];
+const DAILY_BONUS_GEMS = 20;                      // 每日任务全部领完再送的钻石
+const ACH_GEMS = 30;                              // 每个成就送的钻石
+const STARTER = { coins: 1000, gems: 120, items: { dart: 3, sugar: 2, freeze: 1 } };
+const EXCHANGE = [{ gems: 60, coins: 600 }, { gems: 300, coins: 3300, tag: '多送 10%' }, { gems: 980, coins: 11000, tag: '多送 12%' }];
+const COIN_GOODS = [
+  { id: 'c_dart',   name: '牙签飞镖 ×3',  price: 150, give: { dart: 3 } },
+  { id: 'c_sugar',  name: '方糖罐 ×1',    price: 120, give: { sugar: 1 } },
+  { id: 'c_freeze', name: '冰冻棒棒糖 ×1', price: 200, give: { freeze: 1 } },
+];
+const GEM_GOODS = [
+  { id: 'g_party', name: '派对礼包', desc: '飞镖×5 方糖罐×3 冰冻棒棒糖×1', price: 60,  give: { dart: 5, sugar: 3, freeze: 1 } },
+  { id: 'g_guard', name: '守护礼包', desc: '爱心蛋糕×3 机器人充电×2 奶油大炮×2', price: 120, give: { heal: 3, robot: 2, bomb: 2 } },
+];
+// 充值档位：体验版不接支付，点了只弹说明
+const TOPUP = [{ rmb: 6, gems: 60 }, { rmb: 30, gems: 300, bonus: 30 }, { rmb: 68, gems: 680, bonus: 80 }, { rmb: 128, gems: 1280, bonus: 200 }, { rmb: 328, gems: 3280, bonus: 600 }, { rmb: 648, gems: 6480, bonus: 1500 }];
+// ↑↑ 数值区结束 ↑↑
+
+function cardTier(k) { const c = save.cards[k]; return c ? (c.gold ? 'gold' : c.flash ? 'flash' : null) : null; }
+function cardMul(k) { const t = cardTier(k); return t ? CARD_BONUS[t] : 1; }
+function cardCount(tier) { return PLANT_ORDER.filter(k => save.cards[k] && save.cards[k][tier]).length; }
+function today() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
+function ensureDaily() {
+  const t = today();
+  if (save.daily.date !== t) save.daily = { date: t, prog: { login: 1 }, got: {}, free: true, bonus: false };
+  return save.daily;
+}
+function dailyAdd(id, n = 1) {
+  const d = ensureDaily(), T = DAILY.find(x => x.id === id);
+  if (T) d.prog[id] = Math.min(T.goal, (d.prog[id] || 0) + n);
+}
+function dailyReady() {
+  const d = ensureDaily();
+  return DAILY.filter(T => (d.prog[T.id] || 0) >= T.goal && !d.got[T.id]).length + (!d.bonus && DAILY.every(T => d.got[T.id]) ? 1 : 0);
+}
+function newCardCount() { return Object.keys(save.cardNew).length; }
+
+/* ---------- 参与喂饱 → 闪卡 / 金卡 ---------- */
+let CUR_SRC = null; // 正在造成伤害的小伙伴种类；null 表示沿用这只团子上次挨打的来源（灼伤），'' 表示不算任何小伙伴（机器人、道具）
+const NONATK = new Set(['eco', 'def', 'sup']);
+// 一只团子被喂饱：打中过它的小伙伴，加上同一行里不会攻击的小伙伴（经济 / 防守 / 辅助），每种各 +1
+function creditKill(z) {
+  const got = new Set(z.hitBy || []);
+  const row = S.plants[z.row];
+  if (row) for (const p of row) if (p && NONATK.has(ROLE_OF[p.type])) got.add(p.type);
+  for (const k of got) if (CARDABLE.has(k)) addBond(k);
+}
+function addBond(k) {
+  const v = save.bond[k] = (save.bond[k] || 0) + 1;
+  for (const tier of ['flash', 'gold'])
+    if (v >= BOND[tier] && grantCard(k, tier) && S && !S.demo) {
+      S.newCards.push([k, tier]);
+      toast(`${PLANTS[k].name}的${TIER_NAME[tier]}到手啦！（累计参与喂饱 ${BOND[tier]} 只团子）`);
+      sfx('unlock');
+    }
+}
+function grantCard(k, tier) {
+  const c = save.cards[k] || (save.cards[k] = {});
+  if (c[tier]) return false;
+  c[tier] = Date.now();
+  save.cardNew[k] = true;
+  if (S && S.cardMul) {
+    S.cardMul[k] = cardMul(k);
+    for (const row of S.plants) for (const p of row) if (p && p.type === k) p.tier = cardTier(k);
+  }
+  persist();
+  return true;
+}
+
+/* ---------- 扭蛋 ---------- */
+function pickCardFor(tier) {
+  const unowned = PLANT_ORDER.filter(k => !(save.cards[k] && save.cards[k][tier]));
+  if (!unowned.length) return null;
+  const pref = unowned.filter(plantUnlocked);
+  const pool = pref.length ? pref : unowned;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+function pullOnce() {
+  const G = save.gacha;
+  G.pulls++; G.pf++; G.pg++;
+  let id;
+  if (G.pg >= PITY.gold) id = 'gold';
+  else {
+    let r = Math.random() * 100;
+    id = GACHA_POOL[GACHA_POOL.length - 1].id;
+    for (const e of GACHA_POOL) { r -= e.p; if (r < 0) { id = e.id; break; } }
+    if (id !== 'gold' && id !== 'flash' && G.pf >= PITY.flash) id = 'flash';
+  }
+  if (id === 'gold') { G.pg = 0; G.pf = 0; }
+  else if (id === 'flash') G.pf = 0;
+  const e = GACHA_POOL.find(x => x.id === id);
+  const res = { id, rare: id === 'gold' ? 3 : id === 'flash' ? 2 : e.p <= 8 ? 1 : 0 };
+  if (id === 'gold' || id === 'flash') {
+    const k = pickCardFor(id);
+    if (k) { grantCard(k, id); res.card = k; res.tier = id; }
+    else { res.gems = DUP_GEMS[id]; save.gems += res.gems; }
+  } else if (e.item) { save.items[e.item] += e.n; res.item = e.item; res.n = e.n; }
+  else { save.coins += e.coins; res.coins = e.coins; }
+  G.log.unshift({ t: Date.now(), id, k: res.card || null });
+  if (G.log.length > 100) G.log.length = 100;
+  return res;
+}
+// 扭 n 次（1 或 10）；钱不够返回 null
+function doGacha(n) {
+  const d = ensureDaily();
+  const free = n === 1 && d.free;
+  const cost = free ? 0 : n === 1 ? GACHA_COST.one : GACHA_COST.ten;
+  if (save.coins < cost) return null;
+  save.coins -= cost;
+  if (free) d.free = false;
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(pullOnce());
+  dailyAdd('gacha', n);
+  persist();
+  return out;
+}
+function resultLabel(r) {
+  if (r.card) return `${PLANTS[r.card].name} · ${TIER_NAME[r.tier]}`;
+  if (r.gems) return `${TIER_NAME[r.id]}已集齐 → 钻石 ×${r.gems}`;
+  if (r.item) return `${ITEMS[r.item].name} ×${r.n}`;
+  return `金币 ×${r.coins}`;
+}
+
+/* ---------- 对局奖励 ---------- */
+function battleRewards(won, first) {
+  let coins = S.kills, gems = 0;
+  if (won) {
+    coins += CFG.mode === 'adventure' ? 100 : 150;
+    if (first) { coins += 100; gems += 20; }
+    dailyAdd('win');
+  }
+  if (CFG.waves === Infinity) coins += S.waveNum * 5;
+  coins = Math.round(coins);
+  save.coins += coins; save.gems += gems;
+  persist();
+  return { coins, gems, cards: S.newCards.slice() };
+}
+
+// 老玩家升级到这个版本：已经拿到的成就和已经通关的关卡，按新规则补发钻石
+if (!save.v2) { save.v2 = true; save.gems += Object.keys(save.ach).filter(id => ACH.some(a => a.id === id)).length * ACH_GEMS + save.cleared.length * 20; persist(); }
 
 /* ================= 声音（全部用 WebAudio 合成） ================= */
 const Sound = (() => {
@@ -563,6 +1142,8 @@ const Sound = (() => {
       case 'pop': tone(320, 0.1, 'square', 0.08, 640); break;
       case 'zap': noise(0.16, 0.28, 4200, 0, 'highpass'); tone(1200, 0.14, 'sawtooth', 0.06, 180); break;
       case 'groan': tone(150, 0.7, 'sawtooth', 0.04, 95); break;
+      case 'crank': [0, 0.11, 0.22, 0.33].forEach((d, i) => tone(480 + i * 90, 0.06, 'square', 0.05, null, d)); noise(0.25, 0.14, 1600, 0.5, 'bandpass'); tone(300, 0.2, 'triangle', 0.15, 600, 0.55); break;
+      case 'gold': [784, 988, 1175, 1568, 1976].forEach((f, i) => tone(f, 0.4, 'triangle', 0.2, null, i * 0.08)); tone(392, 0.9, 'sine', 0.22, null, 0.05); noise(0.6, 0.08, 6000, 0.3, 'highpass'); break;
       case 'unlock': [659, 784, 988, 1319].forEach((f, i) => tone(f, 0.25, 'square', 0.06, null, i * 0.09)); break;
     }
   }
@@ -604,11 +1185,12 @@ const rnd = (a, b) => a + Math.random() * (b - a);
 const clamp01 = v => Math.max(0, Math.min(1, v));
 const cellCX = c => LX + c * CW + CW / 2;
 const cellCY = r => TOP + r * CH + CH / 2;
-// 团子走到这里（餐桌右边缘）以后才会被小伙伴攻击，避免还没看见就开火
-const VIS_X = LX + CW * COLS + 12;
+// 团子一走进画面（身体大半露出来）就会被小伙伴攻击
+const VIS_X = W - 6;
 
 /* ================= 状态 ================= */
 let S, CFG, running = false, paused = false, speed = 1, beltDirty = false;
+let skipDraw = false; // 整页界面铺满屏幕时，下面的餐桌不用画
 
 function makeCfg(base) {
   // diff：每波团子数量的倍率；hpMul：团子血量和护甲的倍率（冒险前几关和部分小游戏设为 1）
@@ -633,12 +1215,13 @@ function newState(cfg, deck) {
     plants: Array.from({ length: ROWS }, () => Array(COLS).fill(null)),
     craters: Array.from({ length: ROWS }, () => Array(COLS).fill(0)),
     graves: Array.from({ length: ROWS }, () => Array(COLS).fill(0)),
-    zombies: [], peas: [], lobs: [], bees: [], rollers: [], suns: [], fx: [], parts: [], texts: [], decals: [],
+    zombies: [], peas: [], lobs: [], bees: [], rollers: [], suns: [], fx: [], parts: [], texts: [], decals: [], pools: [],
     belt: [], beltT: 1, beltId: 0, selBelt: null, fogClear: 0, metTypes: {}, dartCd: 0,
     mowers: Array.from({ length: ROWS }, () => ({ x: LX - 52, state: 'ready' })),
     cd, selected: null, nextSky: 5, lastRow: -1, banner: null, bannerFor: {},
     waveNum: 0, nextWaveT: 18, pending: [], over: false, ending: 0, hover: null,
     shake: 0, flashA: 0, mowerUsed: false, demo: false,
+    cardMul: Object.fromEntries(PLANT_ORDER.map(k => [k, cardMul(k)])), newCards: [], itemsUsed: 0,
   };
   // 进度条：预先算出每一波的时间
   if (cfg.waves !== Infinity) {
@@ -676,12 +1259,17 @@ function buildWave(i) {
 }
 
 /* ================= 逻辑 ================= */
+// 同种小伙伴受了伤，可以花钱放一个新的把它换掉（满血）
+function canReplace(old, k) {
+  return !!old && !!k && k !== 'shovel' && k !== 'dart' && old.type === k && old.hp < old.maxHp && !PLANTS[k].box && !old.atk;
+}
 // 面包熊每一锤的伤害：防守墙（4800 血）能扛 5～6 下，普通小伙伴一锤就倒
 const HEAVY_HIT = 850;
 const PLANT_HP_MUL = 2; // 所有小伙伴血量的倍率（图鉴里的耐久已按倍率写好）
 function makePlant(type) {
   const d = PLANTS[type];
-  return { type, hp: d.hp * PLANT_HP_MUL, maxHp: d.hp * PLANT_HP_MUL, age: 0, shootT: type === 'icemelon' ? 1 : 0.6, sunT: type === 'sunnut' ? 10 : 7,
+  const cm = S && S.cardMul && !S.demo ? S.cardMul[type] || 1 : 1; // 闪卡 / 金卡加耐久
+  return { type, hp: d.hp * PLANT_HP_MUL * cm, maxHp: d.hp * PLANT_HP_MUL * cm, tier: S && S.cardMul && !S.demo ? cardTier(type) : null, age: 0, shootT: type === 'icemelon' ? 1 : 0.6, sunT: type === 'sunnut' ? 10 : 7,
     armed: false, hurt: 0, recoil: 0, fuse: type === 'doomcherry' ? 1.3 : 1, chew: 0, atk: null, spikeT: 0, open: 0, clockT: 6 };
 }
 // 开盒：按概率抽稀有度，再在这一档里随机挑一株
@@ -876,17 +1464,19 @@ function floatText(x, y, text, color = '#fff3d1', size = 20) {
 // 团子脚下的 y 坐标（含换行动画和气球高度）
 function zombieY(z) { return cellCY(z.row) + 32 + (z.rowShift || 0) - (z.fly ? 24 : 0); }
 function zombieAhead(r, px) {
-  return S.zombies.some(z => z.row === r && !z.dead && !z.under && z.x > px - 10 && z.x < VIS_X);
+  return S.zombies.some(z => z.row === r && !z.dead && !z.under && !z.hid && z.x > px - 10 && z.x < VIS_X);
 }
 // 返回 true 表示这次攻击打死了团子
 // opt.front：从正面射来的直线子弹，会被盾牌挡住
 function hurtZombie(z, dmg, opt = {}) {
   if (z.dead) return false;
-  dmg *= DMG_MUL;
+  const src = CUR_SRC;
+  dmg *= DMG_MUL * (src && S.cardMul ? S.cardMul[src] || 1 : 1);
+  if (src) (z.hitBy || (z.hitBy = new Set())).add(src);
   const y = cellCY(z.row) + 32;
   if (z.fly) {
     // 气球被打破，掉下来变成普通走路的团子
-    z.fly = false; z.landT = 0.4;
+    z.fly = false; z.landT = 0.4; dailyAdd('pop');
     floatText(z.x, y - 130, '啪！', '#ff6b5a', 22);
     for (let i = 0; i < 8; i++) part({ x: z.x + 6, y: y - 130, vx: rnd(-160, 160), vy: rnd(-160, 60), grav: 300, life: 0.4, size: rnd(2, 4), color: '#e3263a', shape: 'rect', vr: 10 });
     sfx('pop');
@@ -927,7 +1517,13 @@ function hurtZombie(z, dmg, opt = {}) {
 
   if (z.hp <= 0) {
     flushDamage(z);
+    if (z.type === 'mochi2') {
+      for (const dx of [-22, 22]) { spawnZombie('mini', z.row, z.x + dx); const m = S.zombies[S.zombies.length - 1]; m.landT = 0.3; }
+      floatText(z.x, zombieY(z) - 80, '分裂啦！', '#ff9ec0', 18);
+    }
     z.dead = true; z.deadT = 0; S.kills++; save.kills++;
+    dailyAdd('kills'); creditKill(z);
+    if (S.kills % 15 === 0) persist();
     if (save.kills >= 100) unlockAch('kills100');
     if (z.type === 'garg') unlockAch('giantslayer');
     // 吃饱了：冒出几颗爱心
@@ -940,7 +1536,7 @@ function hurtZombie(z, dmg, opt = {}) {
   return false;
 }
 function shoot(r, x, y, kind) {
-  S.peas.push({ row: r, x, y, kind, dmg: kind === 'fire' ? 40 : 20 });
+  S.peas.push({ src: CUR_SRC, row: r, x, y, kind, dmg: kind === 'fire' ? 40 : 20 });
   muzzle(x + 6, y, kind === 'fire' ? '#ffb12b' : kind === 'ice' ? '#bfe9ff' : '#c8f59a');
   sfx('shoot');
 }
@@ -1128,6 +1724,16 @@ function update(dt) {
   }
   if (S.banner) { S.banner.t += dt; if (S.banner.t > 3.2) S.banner = null; }
   if (S.tip) { S.tip.t += dt; if (S.tip.t > 5) S.tip = null; }
+  CUR_SRC = 'chocolava';
+  for (const pl of S.pools) {
+    pl.t += dt; pl.tick -= dt;
+    if (pl.tick <= 0) {
+      pl.tick = 0.5;
+      for (const z of S.zombies) if (z.row === pl.row && !z.dead && !z.fly && !z.under && z.x > pl.x0 && z.x < pl.x1) { hurtZombie(z, 20, { dot: true }); z.slow = Math.max(z.slow, 0.8); }
+    }
+  }
+  S.pools = S.pools.filter(pl => pl.t < pl.life);
+  CUR_SRC = null;
   if (S.sun >= 2000) unlockAch('rich');
   S.dartCd = Math.max(0, S.dartCd - dt);
 
@@ -1181,12 +1787,14 @@ function update(dt) {
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
     const p = S.plants[r][c];
     if (!p) continue;
+    CUR_SRC = p.type;
     const px = cellCX(c), py = cellCY(r);
     p.age += dt; p.hurt = Math.max(0, p.hurt - dt); p.recoil = Math.max(0, p.recoil - dt);
+    if (p.tier && Math.random() < dt * 1.3) part({ x: px + rnd(-24, 24), y: py + rnd(-36, 16), vx: 0, vy: -26, grav: 0, life: 0.8, size: rnd(2.5, 4.5), color: p.tier === 'gold' ? (Math.random() < 0.5 ? '#ffd56a' : '#fff3c4') : RAINBOW[Math.floor(Math.random() * 6)], shape: 'sparkle', vr: 4 });
     switch (p.type) {
       case 'peaflower':
         p.sunT -= dt;
-        if (p.sunT <= 0) { p.sunT = 20; addSun(px + rnd(-14, 14), py - 30, py + 14); }
+        if (p.sunT <= 0) { p.sunT = 20 / (S.cardMul[p.type] || 1); addSun(px + rnd(-14, 14), py - 30, py + 14); }
         // fallthrough 射击
       case 'firepea': case 'peanut': case 'snowrepeater':
         p.shootT -= dt;
@@ -1194,7 +1802,7 @@ function update(dt) {
           p.shootT = p.type === 'peaflower' ? 2 : p.type === 'peanut' ? 1.6 : 1.5;
           p.recoil = 0.12;
           if (p.type === 'peanut') shoot(r, px + 34, py - 3, 'pea');
-          else if (p.type === 'snowrepeater') { shoot(r, px + 24, py - 14, 'ice'); S.peas.push({ row: r, x: px - 4, y: py - 14, kind: 'ice', dmg: 20 }); }
+          else if (p.type === 'snowrepeater') { shoot(r, px + 24, py - 14, 'ice'); S.peas.push({ src: CUR_SRC, row: r, x: px - 4, y: py - 14, kind: 'ice', dmg: 20 }); }
           else shoot(r, px + 22, py - 14, p.type === 'firepea' ? 'fire' : 'pea');
         }
         break;
@@ -1229,7 +1837,7 @@ function update(dt) {
         } else {
           let best = null;
           for (const z of S.zombies)
-            if (z.row === r && !z.dead && !z.under && z.jumping <= 0 && z.x > px - 30 && z.x < px + 130 && (!best || z.x < best.x)) best = z;
+            if (z.row === r && !z.dead && !z.under && !z.hid && z.jumping <= 0 && z.x > px - 30 && z.x < px + 130 && (!best || z.x < best.x)) best = z;
           if (best) { p.atk = { t: 0, tx: best.x, hit: false }; sfx('jump'); }
         }
         break;
@@ -1268,7 +1876,7 @@ function update(dt) {
         if (p.shootT <= 0 && [r - 1, r, r + 1].some(rr => rr >= 0 && rr < ROWS && zombieAhead(rr, px))) {
           p.shootT = 1.5; p.recoil = 0.12;
           for (const tr of [r - 1, r, r + 1]) if (tr >= 0 && tr < ROWS)
-            S.peas.push({ row: tr, x: px + 20, y: py - 24, ty: cellCY(tr) - 14, kind: 'ice', dmg: 20 });
+            S.peas.push({ src: CUR_SRC, row: tr, x: px + 20, y: py - 24, ty: cellCY(tr) - 14, kind: 'ice', dmg: 20 });
           muzzle(px + 26, py - 24, '#bfe9ff');
           sfx('shoot');
         }
@@ -1277,10 +1885,10 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0) {
           let tgt = null;
-          for (const z of S.zombies) if (z.row === r && !z.dead && !z.under && z.x > px && z.x < VIS_X && (!tgt || z.x < tgt.x)) tgt = z;
+          for (const z of S.zombies) if (z.row === r && !z.dead && !z.under && !z.hid && z.x > px && z.x < VIS_X && (!tgt || z.x < tgt.x)) tgt = z;
           if (tgt) {
             p.shootT = 3; p.recoil = 0.25;
-            S.lobs.push({ kind: 'melon', row: r, sx: px - 6, sy: py - 50, z: tgt, tx: tgt.x, t: 0, dur: 0.9 });
+            S.lobs.push({ src: CUR_SRC, kind: 'melon', row: r, sx: px - 6, sy: py - 50, z: tgt, tx: tgt.x, t: 0, dur: 0.9 });
             sfx('jump');
           }
         }
@@ -1289,7 +1897,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0 && zombieAhead(r, px)) {
           p.shootT = 1.5; p.recoil = 0.3;
-          for (let i = 0; i < 4; i++) S.peas.push({ row: r, x: px + 24 - i * 22, y: py - 14, kind: 'pea', dmg: 20 });
+          for (let i = 0; i < 4; i++) S.peas.push({ src: CUR_SRC, row: r, x: px + 24 - i * 22, y: py - 14, kind: 'pea', dmg: 20 });
           muzzle(px + 34, py - 14, RAINBOW[Math.floor(Math.random() * 6)]); muzzle(px + 34, py - 14, '#ffffff'); S.shake = Math.max(S.shake, 1);
           sfx('shoot');
         }
@@ -1298,7 +1906,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0 && zombieAhead(r, px)) {
           p.shootT = 1.6; p.recoil = 0.12;
-          S.peas.push({ row: r, x: px + 22, y: py - 14, kind: 'water', dmg: 20, pierce: true, hitSet: new Set() });
+          S.peas.push({ src: CUR_SRC, row: r, x: px + 22, y: py - 14, kind: 'water', dmg: 20, pierce: true, hitSet: new Set() });
           muzzle(px + 30, py - 14, '#6fd6f2');
           sfx('shoot');
         }
@@ -1308,10 +1916,10 @@ function update(dt) {
         if (p.shootT <= 0) {
           // 全场离房子最近的团子
           let tgt = null;
-          for (const z of S.zombies) if (!z.dead && !z.under && z.x < VIS_X && z.jumping <= 0 && (!tgt || z.x < tgt.x)) tgt = z;
+          for (const z of S.zombies) if (!z.dead && !z.under && !z.hid && z.x < VIS_X && z.jumping <= 0 && (!tgt || z.x < tgt.x)) tgt = z;
           if (tgt) {
             p.shootT = 5; p.recoil = 0.35;
-            S.lobs.push({ kind: 'shell', row: tgt.row, sx: px + 10, sy: py - 50, z: tgt, tx: tgt.x, t: 0, dur: 1.2 });
+            S.lobs.push({ src: CUR_SRC, kind: 'shell', row: tgt.row, sx: px + 10, sy: py - 50, z: tgt, tx: tgt.x, t: 0, dur: 1.2 });
             for (let i = 0; i < 6; i++) part({ x: px + 14, y: py - 52, vx: rnd(-40, 40), vy: rnd(-120, -40), grav: -30, life: 0.6, size: rnd(3, 6), color: 'rgba(200,200,200,.8)' });
             S.shake = Math.max(S.shake, 2);
             sfx('slam');
@@ -1322,6 +1930,76 @@ function update(dt) {
         p.open += dt;
         if (p.open >= 0.9) openBox(r, c, p);
         break;
+      case 'peppershaker': {
+        // 胡椒瓶：前方 2.5 格内的团子一起挨喷，打喷嚏被震退
+        p.shootT -= dt;
+        if (p.shootT <= 0) {
+          const hit = S.zombies.filter(z => z.row === r && !z.dead && !z.under && !z.hid && !z.fly && z.x > px - 10 && z.x < px + 200);
+          if (hit.length) {
+            p.shootT = 2; p.recoil = 0.3;
+            for (const z of hit) {
+              hurtZombie(z, 30);
+              if (z.type !== 'garg' && z.type !== 'zomboni' && !z.dead) z.x = Math.min(W - 10, z.x + 18);
+              if (Math.random() < 0.5) floatText(z.x, zombieY(z) - 70, '阿嚏！', '#c2405e', 15);
+            }
+            S.fx.push({ type: 'spray', x: px + 24, y: py - 18, t: 0, dur: 0.45 });
+            for (let i = 0; i < 18; i++) part({ x: px + 26, y: py - 18, vx: rnd(160, 460), vy: rnd(-70, 70), grav: 40, life: rnd(0.3, 0.5), size: rnd(1.5, 3), color: i % 3 ? '#5a4a52' : '#c9a3b4' });
+            sfx('hit');
+          }
+        }
+        break;
+      }
+      case 'taffytrap':
+        // 麦芽糖：踩上来的团子被黏住
+        for (const z of S.zombies) {
+          if (z.row !== r || z.dead || z.fly || z.under || z.type === 'garg' || (z.stuckCd || 0) > 0 || Math.abs(z.x - px) > 26) continue;
+          z.stop = Math.max(z.stop, 2.5); z.stuckCd = 4; z.eating = false;
+          hurtZombie(z, 20);
+          p.hp -= 200; p.hurt = 0.2;
+          floatText(px, py - 40, '黏住啦！', '#ffc04a', 18);
+          for (let i = 0; i < 8; i++) part({ x: px + rnd(-20, 20), y: py + 24, vx: rnd(-60, 60), vy: rnd(-120, -40), life: 0.5, size: rnd(2, 4), color: '#ffc04a' });
+          sfx('jump');
+          if (p.hp <= 0) { killPlant(r, c); break; }
+        }
+        break;
+      case 'fortunecookie':
+        // 幸运签饼：每 15 秒随机开出好运
+        p.sunT -= dt;
+        if (p.sunT <= 0) {
+          p.sunT = 15 / (S.cardMul[p.type] || 1); p.recoil = 0.4;
+          const roll = Math.random();
+          if (roll < 0.5) {
+            addSun(px - 14, py - 40, py + 12); addSun(px + 14, py - 40, py + 16);
+            floatText(px, py - 60, '大吉！两块方糖', '#ffd56a', 17);
+          } else if (roll < 0.8) {
+            for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
+              const q = S.plants[r + dr] && S.plants[r + dr][c + dc];
+              if (!q || PLANTS[q.type].box) continue;
+              q.hp = Math.min(q.maxHp, q.hp + 300);
+              part({ shape: 'heart', x: cellCX(c + dc), y: cellCY(r + dr) - 10, vx: 0, vy: -70, grav: 0, life: 0.9, size: 7, color: '#ff8fb5' });
+            }
+            floatText(px, py - 60, '中吉！大家回血', '#ff9ec0', 17);
+          } else {
+            for (const z of S.zombies) if (!z.dead) z.slow = Math.max(z.slow, 3);
+            S.fx.push({ type: 'mist', x: W / 2, y: H / 2, t: 0, dur: 0.8, color: '168,236,255', r: 420 });
+            floatText(px, py - 60, '上上签！全场减速', '#a8ecd1', 17);
+          }
+          S.fx.push({ type: 'ring', x: px, y: py - 20, t: 0, dur: 0.5, color: '#ffd56a', r: 70 });
+          sfx('sun');
+        }
+        break;
+      case 'chocolava':
+        // 巧克力熔岩：放下 0.6 秒后在前方铺开 3 格熔岩
+        p.fuse -= dt;
+        if (p.fuse <= 0.4) {
+          S.plants[r][c] = null;
+          S.pools.push({ row: r, x0: px - 30, x1: px + CW * 3 + 30, t: 0, life: 8, tick: 0 });
+          S.fx.push({ type: 'shock', x: px + CW * 1.5, y: py + 20, t: 0, dur: 0.5, r: 200 });
+          for (let i = 0; i < 24; i++) part({ x: px + rnd(0, CW * 3), y: py + 20, vx: rnd(-80, 80), vy: rnd(-260, -80), life: 0.7, size: rnd(3, 6), color: i % 2 ? '#7a3f22' : '#b8683a' });
+          S.shake = Math.max(S.shake, 6);
+          sfx('burn');
+        }
+        break;
       case 'twinpop': {
         // 双色冰棒：前面有团子就往前射，背后有团子就往后射
         p.shootT -= dt;
@@ -1331,7 +2009,7 @@ function update(dt) {
           if (fwd || back) {
             p.shootT = 1.5; p.recoil = 0.12;
             if (fwd) shoot(r, px + 24, py - 14, 'pea');
-            if (back) { S.peas.push({ row: r, x: px - 24, y: py - 14, kind: 'pea', dmg: 40, dir: -1, c: '#7fd3ff' }); muzzle(px - 30, py - 14, '#7fd3ff'); }
+            if (back) { S.peas.push({ src: CUR_SRC, row: r, x: px - 24, y: py - 14, kind: 'pea', dmg: 40, dir: -1, c: '#7fd3ff' }); muzzle(px - 30, py - 14, '#7fd3ff'); }
           }
         }
         break;
@@ -1364,7 +2042,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0 && S.zombies.some(z => !z.dead && z.x < VIS_X)) {
           p.shootT = 2.5; p.recoil = 0.2;
-          S.bees.push({ x: px + 4, y: py - 34, z: null, t: 0 });
+          S.bees.push({ src: CUR_SRC, x: px + 4, y: py - 34, z: null, t: 0 });
           sfx('select');
         }
         break;
@@ -1372,7 +2050,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0 && zombieAhead(r, px)) {
           p.shootT = 2.5; p.recoil = 0.3;
-          S.peas.push({ row: r, x: px + 18, y: py - 22, kind: 'boomer', dmg: 20, home: px, back: false, hitSet: new Set(), spin: 0 });
+          S.peas.push({ src: CUR_SRC, row: r, x: px + 18, y: py - 22, kind: 'boomer', dmg: 20, home: px, back: false, hitSet: new Set(), spin: 0 });
           sfx('jump');
         }
         break;
@@ -1380,7 +2058,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0) {
           let first = null;
-          for (const z of S.zombies) if (z.row === r && !z.dead && !z.under && z.x > px && z.x < VIS_X && (!first || z.x < first.x)) first = z;
+          for (const z of S.zombies) if (z.row === r && !z.dead && !z.under && !z.hid && z.x > px && z.x < VIS_X && (!first || z.x < first.x)) first = z;
           if (first) {
             p.shootT = 2.5; p.recoil = 0.3;
             // 打中最近的团子后，再跳向附近 3 只（任意行）
@@ -1389,7 +2067,7 @@ function update(dt) {
             for (let n = 0; n < 3; n++) {
               let best = null, bd = 190;
               for (const z of S.zombies) {
-                if (z.dead || z.under || chain.includes(z) || z.x > VIS_X) continue;
+                if (z.dead || z.under || z.hid || chain.includes(z) || z.x > VIS_X) continue;
                 const d = Math.hypot(z.x - cur.x, cellCY(z.row) - cellCY(cur.row));
                 if (d < bd) { bd = d; best = z; }
               }
@@ -1414,7 +2092,7 @@ function update(dt) {
         if (p.magT <= 0) {
           let best = null;
           for (const z of S.zombies) {
-            if (z.dead || z.under || Math.abs(z.row - r) > 1 || z.x < px - 40 || z.x > px + CW * 3) continue;
+            if (z.dead || z.under || z.hid || Math.abs(z.row - r) > 1 || z.x < px - 40 || z.x > px + CW * 3) continue;
             if (!((METAL.has(z.armorType) && z.armor > 0) || z.shield > 0)) continue;
             if (!best || z.x < best.x) best = z;
           }
@@ -1434,7 +2112,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0 && zombieAhead(r, px)) {
           p.shootT = 1.5; p.recoil = 0.12;
-          S.peas.push({ row: r, x: px + 24, y: py - 14, kind: 'spike', dmg: 25, pierce: true, air: true, pierceLeft: 2, hitSet: new Set() });
+          S.peas.push({ src: CUR_SRC, row: r, x: px + 24, y: py - 14, kind: 'spike', dmg: 25, pierce: true, air: true, pierceLeft: 2, hitSet: new Set() });
           muzzle(px + 30, py - 14, '#c9e77a');
           sfx('shoot');
         }
@@ -1443,7 +2121,7 @@ function update(dt) {
         p.shootT -= dt;
         if (p.shootT <= 0 && zombieAhead(r, px)) {
           p.shootT = 3; p.recoil = 0.35;
-          for (const z of S.zombies) if (z.row === r && !z.dead && !z.under && z.x > px && z.x < VIS_X) { hurtZombie(z, 60); z.hitJ = 0.15; }
+          for (const z of S.zombies) if (z.row === r && !z.dead && !z.under && !z.hid && z.x > px && z.x < VIS_X) { hurtZombie(z, 60); z.hitJ = 0.15; }
           S.fx.push({ type: 'laser', x: px + 20, y: py - 20, t: 0, dur: 0.35 });
           S.shake = Math.max(S.shake, 3);
           sfx('zap');
@@ -1475,6 +2153,7 @@ function update(dt) {
     }
   }
 
+  CUR_SRC = null;
   // 团子
   for (const z of S.zombies) {
     if (z.dead) {
@@ -1489,6 +2168,26 @@ function update(dt) {
     z.flash = Math.max(0, z.flash - dt);
     if (z.rowShift) z.rowShift = Math.sign(z.rowShift) * Math.max(0, Math.abs(z.rowShift) - 150 * dt);
     z.hitJ = Math.max(0, z.hitJ - dt);
+    z.stuckCd = Math.max(0, (z.stuckCd || 0) - dt);
+    if (z.type === 'hide') {
+      const was = z.hid;
+      z.hid = z.x > LX + CW * 5;
+      if (was && !z.hid) {
+        floatText(z.x, zombieY(z) - 70, '被发现了！', '#d7c8ff', 18);
+        for (let i = 0; i < 10; i++) part({ x: z.x, y: zombieY(z) - 30, vx: rnd(-120, 120), vy: rnd(-160, 0), grav: 120, life: 0.5, size: rnd(3, 5), color: '#d7c8ff', shape: 'sparkle' });
+      }
+    }
+    if (z.type === 'nurse') {
+      z.healT = (z.healT || 0) - dt;
+      if (z.healT <= 0) {
+        z.healT = 1;
+        for (const o of S.zombies) {
+          if (o === z || o.dead || Math.abs(o.row - z.row) > 1 || Math.abs(o.x - z.x) > 130 || o.hp >= o.maxHp) continue;
+          o.hp = Math.min(o.maxHp, o.hp + 40 * (CFG.hpMul || 1));
+          part({ shape: 'plus', x: o.x + rnd(-10, 10), y: zombieY(o) - 50, vx: 0, vy: -40, grav: 0, life: 0.6, size: 4, color: '#ff8fb5' });
+        }
+      }
+    }
     z.dmgT = (z.dmgT || 0) - dt;
     if (z.dmgT <= 0 && (z.dmgAcc >= 1 || z.blockAcc >= 1)) flushDamage(z);
     if (z.burnT > 0) {
@@ -1601,7 +2300,8 @@ function update(dt) {
   // 往右走出画面的团子算溜走了
   S.zombies = S.zombies.filter(z => !(z.dead && z.deadT > 1) && z.x > -60 && !(z.dir === 1 && z.x > W + 40));
 
-  // 扫地机器人
+  // 扫地机器人（不算任何小伙伴的功劳）
+  CUR_SRC = '';
   S.mowers.forEach((m, r) => {
     if (m.state !== 'go') return;
     m.x += 330 * dt;
@@ -1613,6 +2313,7 @@ function update(dt) {
 
   // 子弹（糖豆、跳跳糖、冰淇淋球等）
   for (const p of S.peas) {
+    CUR_SRC = p.src || null;
     // 回旋镖：飞到餐桌尽头再飞回来，去程回程各打一次（回程打盾牌团子的背）
     if (p.kind === 'boomer') {
       p.spin += dt * 16;
@@ -1624,7 +2325,7 @@ function update(dt) {
         if (p.x <= p.home) { p.gone = true; continue; }
       }
       for (const z of S.zombies) {
-        if (z.row !== p.row || z.dead || z.fly || z.under || p.hitSet.has(z) || Math.abs(p.x - z.x) > 22) continue;
+        if (z.row !== p.row || z.dead || z.fly || z.under || z.hid || p.hitSet.has(z) || Math.abs(p.x - z.x) > 22) continue;
         p.hitSet.add(z);
         hurtZombie(z, p.dmg, { front: !p.back });
         sfx('hit');
@@ -1650,7 +2351,7 @@ function update(dt) {
     // 水弹：穿透这一行每只团子各打一次，并往后推
     if (p.pierce) {
       for (const z of S.zombies) {
-        if (z.row !== p.row || z.dead || (z.fly && !p.air) || z.under || p.hitSet.has(z) || p.x < z.x - 22 || p.x > z.x + 18) continue;
+        if (z.row !== p.row || z.dead || (z.fly && !p.air) || z.under || z.hid || p.hitSet.has(z) || p.x < z.x - 22 || p.x > z.x + 18) continue;
         p.hitSet.add(z);
         hurtZombie(z, p.dmg, { front: true });
         z.hitJ = 0.1;
@@ -1674,7 +2375,7 @@ function update(dt) {
     }
     let hit = null;
     for (const z of S.zombies)
-      if (z.row === p.row && !z.dead && !z.fly && !z.under && z.landT <= 0 && p.x >= z.x - 22 && p.x <= z.x + 18 && (!hit || z.x < hit.x)) hit = z;
+      if (z.row === p.row && !z.dead && !z.fly && !z.under && !z.hid && z.landT <= 0 && p.x >= z.x - 22 && p.x <= z.x + 18 && (!hit || z.x < hit.x)) hit = z;
     if (hit) {
       const blocked = hit.shield > 0;
       if (blocked) hitRing(p.x, p.y, '#e8b27a');
@@ -1682,7 +2383,7 @@ function update(dt) {
       hurtZombie(hit, p.dmg, { front: true, burn: p.kind === 'fire' && hit.armor <= 0 && hit.hp <= p.dmg && Math.random() < 0.3 });
       if (blocked) sfx('pop');
       if (p.kind === 'fire') {
-        for (const z of S.zombies) if (z !== hit && !z.fly && !z.under && z.row === p.row && Math.abs(z.x - hit.x) < 50) hurtZombie(z, 13);
+        for (const z of S.zombies) if (z !== hit && !z.fly && !z.under && !z.hid && z.row === p.row && Math.abs(z.x - hit.x) < 50) hurtZombie(z, 13);
         hit.slow = 0;
         if (p.burn) ignite(hit);
         sfx('firehit');
@@ -1697,6 +2398,7 @@ function update(dt) {
 
   // 冰西瓜：抛物线飞向目标，落地溅射并减速
   for (const l of S.lobs) {
+    CUR_SRC = l.src || null;
     l.t += dt;
     if (l.z && !l.z.dead) l.tx = l.z.x;
     if (l.t >= l.dur && l.kind === 'shell') {
@@ -1733,12 +2435,13 @@ function update(dt) {
 
   // 蜜蜂：追踪任意一行的团子，目标死了就换最近的一只
   for (const b of S.bees) {
+    CUR_SRC = b.src || null;
     b.t += dt;
     if (!b.z || b.z.dead) {
       b.z = null;
       let bd = Infinity;
       for (const z of S.zombies) {
-        if (z.dead || z.under || z.x > VIS_X) continue;
+        if (z.dead || z.under || z.hid || z.x > VIS_X) continue;
         const d = Math.hypot(z.x - b.x, zombieY(z) - b.y);
         if (d < bd) { bd = d; b.z = z; }
       }
@@ -1761,6 +2464,7 @@ function update(dt) {
 
   // 甜甜圈保龄球：滚过去撞团子，撞到后弹到隔壁行
   for (const ro of S.rollers) {
+    CUR_SRC = ro.kind;
     ro.x += 170 * dt; ro.spin += dt * 9;
     ro.y += (cellCY(ro.row) + 20 - ro.y) * Math.min(1, dt * 8);
     for (const z of S.zombies) {
@@ -1785,6 +2489,7 @@ function update(dt) {
     if (ro.x > W + 30) ro.gone = true;
   }
   S.rollers = S.rollers.filter(ro => !ro.gone);
+  CUR_SRC = null;
 
   // 方糖
   for (const s of S.suns) {
@@ -1882,29 +2587,188 @@ function cherries(x, y) {
   ell(x + 8, y - 2, 2.5, 2, 'rgba(255,255,255,.7)');
 }
 
-// 可爱小脸：dir=1 朝右（小伙伴），dir=-1 朝左（团子）
-function cuteFace(x, y, s, dir = 1, mood = 'smile') {
-  const ex = 5.5 * s, ey = -2 * s;
-  // 每隔几秒眨一下眼（不同位置错开节奏）
-  if (mood === 'smile' && ((Date.now() / 1000 + x * 0.013 + y * 0.007) % 3.3) < 0.13) mood = 'happy';
-  if (mood === 'happy' || mood === 'sleep') {
-    for (const sx of [-1, 1]) {
-      g.beginPath(); g.arc(x + sx * ex + dir * 2 * s, y + ey + 1 * s, 2.6 * s, Math.PI * 1.1, Math.PI * 1.9);
-      g.strokeStyle = '#4a2a2a'; g.lineWidth = 1.6 * s; g.lineCap = 'round'; g.stroke();
+// 每个角色的专属表情：眼睛 / 嘴巴 / 眉毛 / 小装饰。团子的 key 前面加 z_
+const FACES = {
+  peaflower:     { eyes: 'star',    mouth: 'w' },
+  firepea:       { eyes: 'x',       mouth: 'grin' },
+  peanut:        { eyes: 'half',    mouth: 'smirk' },
+  icemine:       { eyes: 'teary',   mouth: 'wavy' },
+  cherrynut:     { eyes: 'dot',     mouth: 'wavy', blush: 1.8 },
+  snowrepeater:  { eyes: 'closed',  mouth: 'tongue' },
+  chompsquash:   { eyes: 'dot',     mouth: 'flat', brows: 'angry' },
+  cherrypepper:  { eyes: 'wide',    mouth: 'grin' },
+  beeflower:     { eyes: 'heart',   mouth: 'w' },
+  clockflower:   { eyes: 'wide',    mouth: 'o', extra: 'alert' },
+  torchnut:      { eyes: 'fire',    mouth: 'grin', brows: 'angry' },
+  frostnut:      { eyes: 'snow',    mouth: 'w' },
+  twinpop:       { eyes: 'dot',     mouth: 'cat' },
+  shieldleaf:    { eyes: 'closed',  mouth: 'w', blush: 1.5 },
+  gatlingpea:    { eyes: 'wink',    mouth: 'tongue' },
+  magnetnut:     { eyes: 'wide',    mouth: 'o' },
+  icemelon:      { eyes: 'cool',    mouth: 'smirk' },
+  lightningvine: { eyes: 'spiral',  mouth: 'wavy' },
+  mortar:        { eyes: 'focus',   mouth: 'flat' },
+  laserbean:     { eyes: 'sparkle', mouth: 'w' },
+  peppershaker:  { eyes: 'x',       mouth: 'o', extra: 'sneeze' },
+  taffytrap:     { eyes: 'closed',  mouth: 'tongue', blush: 1.4 },
+  fortunecookie: { eyes: 'wink',    mouth: 'grin' },
+  chocolava:     { eyes: 'fire',    mouth: 'smirk', brows: 'smug' },
+  z_normal:   { eyes: 'dot',   mouth: 'drool' },
+  z_flag:     { eyes: 'x',     mouth: 'o' },
+  z_cone:     { eyes: 'dot',   mouth: 'pout', blush: 1.7 },
+  z_bucket:   { eyes: 'half',  mouth: 'flat' },
+  z_shield:   { eyes: 'dot',   mouth: 'smirk', brows: 'smug' },
+  z_balloon:  { eyes: 'wide',  mouth: 'o' },
+  z_pole:     { eyes: 'star',  mouth: 'grin' },
+  z_football: { eyes: 'dot',   mouth: 'grin', brows: 'angry', extra: 'sweat' },
+  z_zomboni:  { eyes: 'cool',  mouth: 'grin' },
+  z_digger:   { eyes: 'x',     mouth: 'wavy', extra: 'dust' },
+  z_dancer:   { eyes: 'wink',  mouth: 'o', extra: 'note' },
+  z_garg:     { eyes: 'dot',   mouth: 'frown', brows: 'grumpy' },
+  z_imp:      { eyes: 'dot',   mouth: 'fang', brows: 'angry' },
+  z_hide:     { eyes: 'wink',  mouth: 'fang' },
+  z_mochi2:   { eyes: 'half',  mouth: 'w', blush: 1.6 },
+  z_mini:     { eyes: 'x',     mouth: 'o' },
+  z_nurse:    { eyes: 'closed', mouth: 'w', extra: 'cross' },
+};
+// 当前正在画的角色的表情（drawPlant / drawZombie 里设置）
+let FACE_SIG = null;
+const INK = '#3a2424', LINE = '#4a2a2a';
+
+function eyeShape(kind, ex, ey, s, dir, side) {
+  const x = ex, y = ey;
+  switch (kind) {
+    case 'closed':
+      g.beginPath(); g.arc(x, y + s, 2.6 * s, Math.PI * 1.1, Math.PI * 1.9);
+      g.strokeStyle = LINE; g.lineWidth = 1.6 * s; g.lineCap = 'round'; g.stroke(); return;
+    case 'flat':
+      line(x - 2.4 * s, y, x + 2.4 * s, y, LINE, 1.6 * s); return;
+    case 'x':
+      g.strokeStyle = LINE; g.lineWidth = 1.5 * s; g.lineCap = 'round';
+      g.beginPath(); const k = side * dir;
+      g.moveTo(x - 2.2 * s * k, y - 2.2 * s); g.lineTo(x + 2.2 * s * k, y); g.lineTo(x - 2.2 * s * k, y + 2.2 * s); g.stroke(); return;
+    case 'star': {
+      g.beginPath();
+      for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, r = (i % 2 ? 1.4 : 3.4) * s; g.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); }
+      g.closePath(); g.fillStyle = INK; g.fill();
+      ell(x + 0.6 * s, y - 0.6 * s, 0.7 * s, 0.7 * s, '#fff'); return;
     }
+    case 'heart': heart(x, y, 3.2 * s, '#ff4f7a'); ell(x - 0.9 * s, y - 1.2 * s, 0.7 * s, 0.6 * s, '#fff'); return;
+    case 'half':
+      g.beginPath(); g.ellipse(x, y, 2.6 * s, 2.8 * s, 0, 0, Math.PI); g.closePath(); g.fillStyle = INK; g.fill();
+      line(x - 3 * s, y - 0.2 * s, x + 3 * s, y - 0.2 * s, LINE, 1.4 * s); return;
+    case 'wide':
+      ell(x, y, 3.3 * s, 3.8 * s, '#fff', LINE, 1.2 * s);
+      ell(x + dir * 0.6 * s, y + 0.4 * s, 1.9 * s, 2.3 * s, INK);
+      ell(x + dir * 0.6 * s + 0.7 * s, y - 0.6 * s, 0.7 * s, 0.7 * s, '#fff'); return;
+    case 'sparkle':
+      ell(x, y, 2.9 * s, 3.6 * s, INK);
+      ell(x + 0.9 * s, y - 1.3 * s, 1.1 * s, 1.1 * s, '#fff');
+      ell(x - 0.9 * s, y + 1.2 * s, 0.6 * s, 0.6 * s, '#fff');
+      ell(x, y + 2.2 * s, 1.6 * s, 0.7 * s, 'rgba(255,150,190,.8)'); return;
+    case 'teary':
+      ell(x, y, 2.4 * s, 3 * s, INK); ell(x + 0.8 * s, y - 1.1 * s, 0.9 * s, 0.9 * s, '#fff');
+      g.beginPath(); g.moveTo(x + 1.5 * s, y + 2.6 * s); g.quadraticCurveTo(x + 3.2 * s, y + 5.6 * s, x + 1.5 * s, y + 6 * s); g.quadraticCurveTo(x - 0.2 * s, y + 5.6 * s, x + 1.5 * s, y + 2.6 * s);
+      g.fillStyle = 'rgba(127,211,255,.9)'; g.fill(); return;
+    case 'fire':
+      ell(x, y, 2.6 * s, 3.1 * s, INK);
+      g.beginPath(); g.moveTo(x - 0.6 * s, y + 0.8 * s); g.quadraticCurveTo(x - 1.4 * s, y - 1.2 * s, x + 0.2 * s, y - 2.4 * s); g.quadraticCurveTo(x + 0.4 * s, y - 0.8 * s, x + 1.2 * s, y + 0.8 * s); g.closePath();
+      g.fillStyle = '#ffb347'; g.fill(); return;
+    case 'snow':
+      ell(x, y, 2.4 * s, 3 * s, INK); ell(x + 0.8 * s, y - 1.1 * s, 0.9 * s, 0.9 * s, '#fff');
+      if (side > 0) { const cx = x + 3.6 * s, cy = y - 3 * s; for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; line(cx - Math.cos(a) * 1.8 * s, cy - Math.sin(a) * 1.8 * s, cx + Math.cos(a) * 1.8 * s, cy + Math.sin(a) * 1.8 * s, '#ffffff', 0.9 * s); } }
+      return;
+    case 'spiral':
+      g.beginPath(); for (let i = 0; i < 26; i++) { const a = i * 0.5 + (Date.now() / 160), r = i * 0.12 * s; g.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); }
+      g.strokeStyle = LINE; g.lineWidth = 1.1 * s; g.stroke(); return;
+    case 'focus':
+      if (side * dir < 0) line(x - 2.4 * s, y + 0.4 * s, x + 2.4 * s, y - 0.4 * s, LINE, 1.6 * s);
+      else { ell(x, y, 3 * s, 3.6 * s, '#fff', LINE, 1.1 * s); ell(x + dir * 0.6 * s, y, 1.6 * s, 1.9 * s, INK); }
+      return;
+    default: // dot
+      ell(x, y, 2.4 * s, 3 * s, INK);
+      ell(x + 0.8 * s, y - 1.1 * s, 0.9 * s, 0.9 * s, '#fff');
+  }
+}
+function mouthShape(kind, mx, my, s, dir) {
+  g.strokeStyle = LINE; g.lineWidth = 1.4 * s; g.lineCap = 'round';
+  switch (kind) {
+    case 'o': ell(mx, my + 1 * s, 2.3 * s, 2.7 * s, '#c2405e'); return;
+    case 'grin':
+      g.beginPath(); g.arc(mx, my, 3.4 * s, 0, Math.PI); g.closePath(); g.fillStyle = '#c2405e'; g.fill();
+      g.fillStyle = '#fff'; g.fillRect(mx - 2.6 * s, my, 5.2 * s, 1.1 * s); return;
+    case 'smirk':
+      g.beginPath(); g.moveTo(mx - 2.6 * s * dir, my + 0.6 * s); g.quadraticCurveTo(mx, my + 2.2 * s, mx + 2.8 * s * dir, my - 0.8 * s); g.stroke(); return;
+    case 'tongue':
+      g.beginPath(); g.arc(mx - 1.6 * s, my, 1.6 * s, 0, Math.PI); g.arc(mx + 1.6 * s, my, 1.6 * s, 0, Math.PI); g.stroke();
+      ell(mx + 0.8 * s * dir, my + 2.2 * s, 1.4 * s, 1.6 * s, '#ff8fa8'); return;
+    case 'wavy':
+      g.beginPath(); g.moveTo(mx - 3 * s, my + 1 * s);
+      g.quadraticCurveTo(mx - 1.5 * s, my - 0.5 * s, mx, my + 1 * s); g.quadraticCurveTo(mx + 1.5 * s, my + 2.5 * s, mx + 3 * s, my + 1 * s); g.stroke(); return;
+    case 'flat': g.beginPath(); g.moveTo(mx - 2 * s, my + 1 * s); g.lineTo(mx + 2 * s, my + 1 * s); g.stroke(); return;
+    case 'cat':
+      g.beginPath(); g.arc(mx - 1.4 * s, my + 0.6 * s, 1.4 * s, Math.PI * 0.1, Math.PI * 0.9); g.arc(mx + 1.4 * s, my + 0.6 * s, 1.4 * s, Math.PI * 0.1, Math.PI * 0.9); g.stroke(); return;
+    case 'drool':
+      ell(mx, my + 1 * s, 2.4 * s, 2.4 * s, '#c2405e');
+      g.beginPath(); g.moveTo(mx + 2 * s * dir, my + 2 * s); g.quadraticCurveTo(mx + 3.2 * s * dir, my + 5 * s, mx + 2 * s * dir, my + 6 * s); g.quadraticCurveTo(mx + 1 * s * dir, my + 5 * s, mx + 2 * s * dir, my + 2 * s);
+      g.fillStyle = 'rgba(127,211,255,.9)'; g.fill(); return;
+    case 'pout': ell(mx, my + 1 * s, 1.5 * s, 1.5 * s, '#c2405e'); return;
+    case 'frown': g.beginPath(); g.arc(mx, my + 3.4 * s, 2.8 * s, Math.PI * 1.15, Math.PI * 1.85); g.stroke(); return;
+    case 'fang':
+      g.beginPath(); g.arc(mx, my, 2.8 * s, 0, Math.PI); g.closePath(); g.fillStyle = '#c2405e'; g.fill();
+      poly([mx + 0.4 * s, my, mx + 2 * s, my, mx + 1.2 * s, my + 1.8 * s], '#ffffff'); return;
+    default: // w
+      g.beginPath(); g.arc(mx - 1.6 * s, my, 1.6 * s, 0, Math.PI); g.arc(mx + 1.6 * s, my, 1.6 * s, 0, Math.PI); g.stroke();
+  }
+}
+// 可爱小脸：dir=1 朝右（小伙伴），dir=-1 朝左（团子）
+// mood：'smile' 用角色自己的表情；'open' 角色的眼睛 + 张嘴；'happy' 吃饱/开心；'sleep' 睡着；'hurt' 被打
+function cuteFace(x, y, s, dir = 1, mood = 'smile') {
+  const sig = FACE_SIG || {};
+  let eyes = sig.eyes || 'dot', mouth = sig.mouth || 'w';
+  if (mood === 'open') mouth = 'o';
+  else if (mood === 'happy') { eyes = 'closed'; mouth = 'w'; }
+  else if (mood === 'sleep') { eyes = 'flat'; mouth = 'flat'; }
+  else if (mood === 'hurt') { eyes = 'x'; mouth = 'wavy'; }
+  // 每隔几秒眨一下眼（不同位置错开节奏）
+  const blinkable = ['dot', 'wide', 'sparkle', 'teary', 'snow', 'fire'].includes(eyes);
+  if (mood === 'smile' && blinkable && ((Date.now() / 1000 + x * 0.013 + y * 0.007) % 3.3) < 0.13) eyes = 'closed';
+  const ox = dir * 2 * s, ex = 5.5 * s, ey = -2 * s;
+  // 腮红
+  const bl = sig.blush || 1;
+  ell(x - 9 * s + ox, y + 3 * s, 3.2 * s * bl, 2 * s * Math.min(bl, 1.4), 'rgba(255,120,150,.45)');
+  ell(x + 9 * s + ox, y + 3 * s, 3.2 * s * bl, 2 * s * Math.min(bl, 1.4), 'rgba(255,120,150,.45)');
+  // 眼睛（墨镜两只眼一起画）
+  if (eyes === 'cool') {
+    for (const sx of [-1, 1]) { rr(x + sx * ex + ox - 3.6 * s, y + ey - 2.6 * s, 7.2 * s, 4.8 * s, 2 * s); g.fillStyle = '#3a2a3a'; g.fill(); }
+    line(x - ex + ox + 3.6 * s, y + ey - 1 * s, x + ex + ox - 3.6 * s, y + ey - 1 * s, '#3a2a3a', 1.4 * s);
+    line(x - ex + ox - 2.4 * s, y + ey - 1.6 * s, x - ex + ox - 0.6 * s, y + ey - 1.6 * s, 'rgba(255,255,255,.7)', 1 * s);
+  } else if (eyes === 'wink') {
+    eyeShape('dot', x - ex * dir + ox, y + ey, s, dir, -1);
+    eyeShape('closed', x + ex * dir + ox, y + ey, s, dir, 1);
   } else {
+    for (const sx of [-1, 1]) eyeShape(eyes, x + sx * ex + ox, y + ey, s, dir, sx);
+  }
+  // 眉毛
+  if (sig.brows && mood !== 'happy' && mood !== 'sleep') {
+    const by = y + ey - 4.6 * s;
     for (const sx of [-1, 1]) {
-      ell(x + sx * ex + dir * 2 * s, y + ey, 2.4 * s, 3 * s, '#3a2424');
-      ell(x + sx * ex + dir * 2 * s + 0.8 * s, y + ey - 1.1 * s, 0.9 * s, 0.9 * s, '#fff');
+      const bx = x + sx * ex + ox;
+      if (sig.brows === 'angry') line(bx - 2.4 * s * sx, by - 1.4 * s, bx + 2.4 * s * sx, by + 0.6 * s, LINE, 1.5 * s);
+      else if (sig.brows === 'grumpy') line(bx - 2.8 * s * sx, by - 0.6 * s, bx + 2.8 * s * sx, by + 1 * s, LINE, 2.2 * s);
+      else if (sig.brows === 'smug') line(bx - 2.4 * s, by + (sx * dir > 0 ? -1.4 : 0.4) * s, bx + 2.4 * s, by + (sx * dir > 0 ? -0.6 : 0.4) * s, LINE, 1.4 * s);
     }
   }
-  ell(x - 9 * s + dir * 2 * s, y + 3 * s, 3.2 * s, 2 * s, 'rgba(255,120,150,.45)');
-  ell(x + 9 * s + dir * 2 * s, y + 3 * s, 3.2 * s, 2 * s, 'rgba(255,120,150,.45)');
-  g.beginPath();
-  if (mood === 'open') { ell(x + dir * 2 * s, y + 4 * s, 2.4 * s, 2.8 * s, '#c2405e'); return; }
-  if (mood === 'sleep') { g.moveTo(x + dir * 2 * s - 2 * s, y + 4 * s); g.lineTo(x + dir * 2 * s + 2 * s, y + 4 * s); }
-  else { g.arc(x + dir * 2 * s - 1.6 * s, y + 3 * s, 1.6 * s, 0, Math.PI); g.arc(x + dir * 2 * s + 1.6 * s, y + 3 * s, 1.6 * s, 0, Math.PI); }
-  g.strokeStyle = '#4a2a2a'; g.lineWidth = 1.4 * s; g.lineCap = 'round'; g.stroke();
+  // 嘴巴
+  mouthShape(mouth, x + ox, y + 3 * s, s, dir);
+  // 小装饰
+  const ex2 = sig.extra;
+  if (ex2 === 'alert') bigText('!', x + 12 * s * dir, y - 12 * s, 9 * s, '#ff6b6b', '#fffaf4');
+  else if (ex2 === 'sweat') { g.beginPath(); const sx0 = x - 11 * s * dir, sy0 = y - 6 * s; g.moveTo(sx0, sy0 - 3 * s); g.quadraticCurveTo(sx0 + 2 * s, sy0 + 1 * s, sx0, sy0 + 2 * s); g.quadraticCurveTo(sx0 - 2 * s, sy0 + 1 * s, sx0, sy0 - 3 * s); g.fillStyle = 'rgba(127,211,255,.9)'; g.fill(); }
+  else if (ex2 === 'note') { g.font = `${10 * s}px ${FONT}`; g.textAlign = 'center'; g.fillStyle = '#b07ae8'; g.fillText('♪', x + 13 * s * dir, y - 10 * s + Math.sin(Date.now() / 200) * 2 * s); }
+  else if (ex2 === 'dust') { ell(x - 10 * s * dir, y + 6 * s, 2.4 * s, 1.6 * s, 'rgba(168,103,58,.45)'); ell(x - 13 * s * dir, y + 4 * s, 1.6 * s, 1.2 * s, 'rgba(168,103,58,.35)'); }
+  else if (ex2 === 'cross') { const cx = x - 10 * s * dir, cy = y - 9 * s; g.fillStyle = '#ff6b8a'; g.fillRect(cx - 0.9 * s, cy - 2.6 * s, 1.8 * s, 5.2 * s); g.fillRect(cx - 2.6 * s, cy - 0.9 * s, 5.2 * s, 1.8 * s); }
+  else if (ex2 === 'sneeze' && Math.sin(Date.now() / 300) > 0.6) { g.font = `${7 * s}px ${FONT}`; g.textAlign = 'center'; g.fillStyle = '#c2405e'; g.fillText('啊…', x + 12 * s * dir, y - 11 * s); }
 }
 function leafPair(x, y) {
   ell(x - 10, y - 3, 10, 4, '#9fdc9b', '#4f9a5a', 1.5);
@@ -1934,6 +2798,7 @@ function donut(x, y, r, bomb) {
 }
 
 function drawPlant(type, x, y, t, p) {
+  const prevSig = FACE_SIG; FACE_SIG = FACES[type] || null;
   const bob = Math.sin(t * 2.2 + x * 0.05) * 1.5;
   const ratio = p ? p.hp / p.maxHp : 1;
   const rc = p && p.recoil > 0 ? -3 : 0;
@@ -2117,7 +2982,57 @@ function drawPlant(type, x, y, t, p) {
       for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; line(x + Math.cos(a) * 10, hy + 2 + Math.sin(a) * 10, x + Math.cos(a) * 12, hy + 2 + Math.sin(a) * 12, '#e8a0a0', 1.2); }
       line(x, hy + 2, x + Math.sin(-ct / 18 * Math.PI * 2) * 9, hy + 2 - Math.cos(-ct / 18 * Math.PI * 2) * 9, '#c23e3e', 2.5);
       ell(x - 16, hy + 8, 3.2, 2, 'rgba(255,255,255,.5)');
-      ell(x - 7, hy - 5, 1.6, 2, '#3a2424'); ell(x + 7, hy - 5, 1.6, 2, '#3a2424');
+      cuteFace(x, hy - 3, 0.6, 1, 'smile');
+      break;
+    }
+    case 'peppershaker': {
+      // 胡椒瓶：圆滚滚的瓶身，瓶盖上有孔
+      shadow(x, y + 2, 22);
+      const tilt = p && p.recoil > 0 ? 0.35 : Math.sin(t * 2) * 0.05;
+      g.save(); g.translate(x, y - 4); g.rotate(tilt);
+      rr(-17, -44, 34, 44, 14); g.fillStyle = '#fffaf6'; g.fill(); g.strokeStyle = '#8a7a8a'; g.lineWidth = 2.5; g.stroke();
+      rr(-15, -54, 30, 14, 6); g.fillStyle = '#c9d6e3'; g.fill(); g.strokeStyle = '#7a8fa3'; g.stroke();
+      for (const [dx, dy] of [[-6, -48], [0, -50], [6, -48]]) ell(dx, dy, 1.6, 1.6, '#5a6a7a');
+      for (let i = 0; i < 6; i++) ell(-9 + (i % 3) * 9, -10 - Math.floor(i / 3) * 6, 1.4, 1.4, '#5a4a52');
+      g.restore();
+      cuteFace(x, y - 28, 0.8, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      break;
+    }
+    case 'taffytrap': {
+      // 麦芽糖粘粘：地上一摊亮晶晶的糖
+      g.beginPath(); g.ellipse(x, y - 2, 32, 11, 0, 0, Math.PI * 2);
+      g.fillStyle = 'rgba(255,192,74,.9)'; g.fill(); g.strokeStyle = '#c9862a'; g.lineWidth = 2.5; g.stroke();
+      ell(x - 12, y - 6, 9, 3, 'rgba(255,255,255,.6)'); ell(x + 14, y, 4, 2, 'rgba(255,255,255,.5)');
+      for (let i = 0; i < 3; i++) { const bx = x - 18 + i * 18, k = (t * 0.8 + i * 0.33) % 1; ell(bx, y - 8 - k * 6, 2 + k, 2 + k, `rgba(255,214,120,${1 - k})`); }
+      cuteFace(x, y - 4, 0.75, 1, 'smile');
+      break;
+    }
+    case 'fortunecookie': {
+      // 幸运签饼：对折的饼干，夹着一张签纸
+      shadow(x, y + 2, 24);
+      const wob = p && p.recoil > 0 ? Math.sin(t * 40) * 2 : 0;
+      g.save(); g.translate(x + wob, y - 22);
+      g.beginPath(); g.moveTo(-26, 6); g.quadraticCurveTo(-24, -26, 0, -22); g.quadraticCurveTo(24, -26, 26, 6); g.quadraticCurveTo(0, -6, -26, 6); g.closePath();
+      g.fillStyle = '#f2c27a'; g.fill(); g.strokeStyle = '#b8783a'; g.lineWidth = 2.5; g.stroke();
+      g.beginPath(); g.moveTo(-10, -6); g.quadraticCurveTo(0, -14, 10, -6); g.strokeStyle = 'rgba(184,120,58,.6)'; g.lineWidth = 2; g.stroke();
+      rr(8, -30, 22, 9, 2); g.fillStyle = '#fffaf6'; g.fill(); g.strokeStyle = '#e8a0b4'; g.lineWidth = 1.5; g.stroke();
+      line(12, -26, 26, -26, '#ff8fb5', 1.4);
+      g.restore();
+      cuteFace(x + wob, y - 30, 0.75, 1, 'smile');
+      break;
+    }
+    case 'chocolava': {
+      // 巧克力熔岩：切开就会流心的小蛋糕
+      const fuse = p ? 1 - p.fuse : 0;
+      const sc = 1 + fuse * 0.4;
+      shadow(x, y + 2, 22);
+      g.translate(x, y); g.scale(sc, sc); g.translate(-x, -y);
+      g.beginPath(); g.moveTo(x - 20, y - 2); g.lineTo(x - 16, y - 38); g.quadraticCurveTo(x, y - 46, x + 16, y - 38); g.lineTo(x + 20, y - 2); g.closePath();
+      g.fillStyle = '#6b3a24'; g.fill(); g.strokeStyle = '#3e1f12'; g.lineWidth = 2.5; g.stroke();
+      ell(x, y - 40, 15, 5, '#8a4a2c');
+      g.beginPath(); g.moveTo(x - 6, y - 40); g.quadraticCurveTo(x - 8, y - 30, x - 4, y - 26); g.quadraticCurveTo(x, y - 32, x + 4, y - 40); g.closePath(); g.fillStyle = '#c86a3a'; g.fill();
+      for (let i = 0; i < 4; i++) ell(x - 10 + i * 7, y - 44 - (i % 2) * 2, 2, 2, '#fffaf6');
+      cuteFace(x, y - 20, 0.75, 1, fuse > 0.4 ? 'open' : 'smile');
       break;
     }
     case 'twinpop': {
@@ -2281,6 +3196,7 @@ function drawPlant(type, x, y, t, p) {
     }
   }
   g.restore();
+  FACE_SIG = prevSig;
   // 小伙伴血条：受伤后才显示，画在所有变形之外
   if (p && p.hp < p.maxHp && !PLANTS[type].box) {
     const k = clamp01(p.hp / p.maxHp);
@@ -2311,7 +3227,9 @@ function drawZombie(z, ox, oy) {
   // 往右走的团子左右翻转
   if (z.dir === 1) { g.translate(x, 0); g.scale(-1, 1); g.translate(-x, 0); }
   // 面包熊特别大，小团子特别小
-  const zs = z.type === 'garg' ? 1.7 : z.type === 'imp' ? 0.65 : 1;
+  const zs = z.type === 'garg' ? 1.7 : z.type === 'imp' ? 0.65 : z.type === 'mini' ? 0.7 : z.type === 'mochi2' ? 1.18 : 1;
+  // 隐身的躲猫猫团子只剩淡淡的影子
+  if (z.hid && !z.dead) g.globalAlpha *= 0.28 + Math.abs(Math.sin(S.t * 3)) * 0.12;
   if (zs !== 1) { g.translate(x, y); g.scale(zs, zs); g.translate(-x, -y); }
   if (z.dead) {
     // 吃饱了：往上飘，慢慢变透明
@@ -2348,6 +3266,22 @@ function drawZombie(z, ox, oy) {
   ell(-rx * 0.35, -ry * 0.45, rx * 0.3, ry * 0.2, 'rgba(255,255,255,.8)');
   if (full > 0.4 && !z.dead) ell(rx * 0.1, ry * 0.45, rx * 0.5, ry * 0.25, 'rgba(255,170,190,.25)');
   g.restore();
+  // 双层大福：上面再叠一层小大福，顶着一颗草莓
+  if (z.type === 'mochi2' && !z.dead) {
+    ell(x + 2, by - ry - 4, rx * 0.62, ry * 0.5, body, '#e3b9a8', 2);
+    ell(x + 2, by - ry - 14, 5, 5, '#ff5a7a', '#b8304e', 1.2);
+  }
+  // 小护士：护士帽
+  if (z.type === 'nurse' && !z.dead) {
+    g.beginPath(); g.moveTo(x - 12, by - ry + 6); g.lineTo(x - 10, by - ry - 6); g.lineTo(x + 10, by - ry - 6); g.lineTo(x + 12, by - ry + 6); g.closePath();
+    g.fillStyle = '#fffaf6'; g.fill(); g.strokeStyle = '#e3b9a8'; g.lineWidth = 1.5; g.stroke();
+    g.fillStyle = '#ff6b8a'; g.fillRect(x - 1.5, by - ry - 4, 3, 8); g.fillRect(x - 4, by - ry - 1.5, 8, 3);
+  }
+  // 躲猫猫：隐身斗篷的兜帽
+  if (z.type === 'hide' && !z.dead) {
+    g.beginPath(); g.arc(x, by - 2, ry + 3, Math.PI * 1.05, Math.PI * 1.95); g.lineTo(x + ry + 6, by + 8); g.lineTo(x - ry - 6, by + 8); g.closePath();
+    g.fillStyle = 'rgba(180,160,255,.55)'; g.fill();
+  }
   // 面包熊：熊耳朵 + 背上的小团子
   if (z.type === 'garg') {
     ell(x - 14, by - ry + 2, 7, 7, body, '#c2905a', 2); ell(x + 14, by - ry + 2, 7, 7, body, '#c2905a', 2);
@@ -2360,8 +3294,10 @@ function drawZombie(z, ox, oy) {
     if (!z.dead) for (let i = 0; i < 3; i++) { const a = S.t * 3 + i * 2.1; ell(x + Math.cos(a) * 30, by + Math.sin(a) * 16, 2.5, 2.5, ['#ffd56a', '#ff9ec0', '#7fd3ff'][i]); }
   }
   // 脸（朝左）
-  const mood = z.dead ? 'happy' : z.eating ? 'open' : 'smile';
+  const mood = z.dead ? 'happy' : z.flash > 0 ? 'hurt' : z.eating && Math.sin(z.anim * 14) > 0 ? 'open' : 'smile';
+  const prevSig = FACE_SIG; FACE_SIG = FACES['z_' + z.type] || FACES.z_normal;
   cuteFace(x - 6, by + 2, 1, -1, mood);
+  FACE_SIG = prevSig;
   if (z.dead) {
     ell(x - 16, by + 6, 5, 3, 'rgba(255,110,140,.7)'); ell(x + 4, by + 6, 5, 3, 'rgba(255,110,140,.7)');
     heart(x + 4, by - ry - 12, 8, '#ff6b8a');
@@ -2604,6 +3540,90 @@ function drawVacuum(x, y, going) {
   if (going) { const a = Date.now() / 60; line(x + 36, y + 2, x + 36 + Math.cos(a) * 6, y + 2 + Math.sin(a) * 3, '#c9a3b4', 2); }
 }
 
+// 道具图标（画在 100×100 的图标画布上）
+function drawItem(key) {
+  if (key === 'sugar') {
+    rr(24, 30, 52, 58, 14); g.fillStyle = 'rgba(214,240,255,.95)'; g.fill(); g.strokeStyle = '#6fb0d6'; g.lineWidth = 3; g.stroke();
+    for (const [x, y, a] of [[38, 70, -0.25], [60, 72, 0.3], [49, 54, 0.1], [36, 48, 0.5]]) {
+      g.save(); g.translate(x, y); g.rotate(a); rr(-9, -9, 18, 18, 4); g.fillStyle = '#fff'; g.fill(); g.strokeStyle = '#d8c3a8'; g.lineWidth = 2; g.stroke(); g.restore();
+    }
+    ell(32, 52, 3.5, 12, 'rgba(255,255,255,.75)');
+    rr(19, 19, 62, 15, 7); g.fillStyle = '#ff9ec0'; g.fill(); g.strokeStyle = '#c2607e'; g.lineWidth = 3; g.stroke();
+    heart(50, 26, 5, '#fff');
+  } else if (key === 'freeze') {
+    line(50, 60, 50, 94, '#c2607e', 9); line(50, 60, 50, 94, '#fff3df', 5);
+    ell(50, 38, 29, 29, '#bfe9ff', '#5aa9d6', 3.5);
+    g.beginPath();
+    for (let a = 0; a < Math.PI * 5.2; a += 0.15) { const r = a * 1.55, x = 50 + Math.cos(a) * r, y = 38 + Math.sin(a) * r; if (a === 0) g.moveTo(x, y); else g.lineTo(x, y); }
+    g.strokeStyle = '#ffffff'; g.lineWidth = 4.5; g.lineCap = 'round'; g.stroke();
+    for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; line(80 - Math.cos(a) * 9, 14 - Math.sin(a) * 9, 80 + Math.cos(a) * 9, 14 + Math.sin(a) * 9, '#7fc8f0', 3); }
+    ell(36, 26, 5, 3, 'rgba(255,255,255,.8)');
+  } else if (key === 'heal') {
+    heart(50, 58, 36, '#c2607e');
+    heart(50, 56, 33, '#ff8fb5');
+    heart(50, 50, 24, '#ffc8da');
+    ell(50, 22, 9, 10, '#ff4f6e', '#c2405e', 2.5);
+    poly([44, 14, 50, 18, 56, 14, 50, 11], '#6fcfa3', '#3f9a74', 2);
+    ell(47, 21, 2, 3, 'rgba(255,255,255,.8)');
+    for (const [x, y] of [[36, 46], [60, 44], [48, 62]]) ell(x, y, 2.5, 2.5, '#fff');
+  } else if (key === 'robot') {
+    g.save(); g.translate(50, 62); g.scale(1.9, 1.9); drawVacuum(-18, 4, false); g.restore();
+    line(66, 16, 74, 26, '#ffd56a', 4); line(74, 26, 68, 28, '#ffd56a', 4); line(68, 28, 76, 40, '#ffd56a', 4);
+  } else if (key === 'bomb') {
+    g.save(); g.translate(42, 64); g.rotate(-0.6);
+    rr(-11, -34, 22, 46, 10); g.fillStyle = '#ff9ec0'; g.fill(); g.strokeStyle = '#c2607e'; g.lineWidth = 3; g.stroke();
+    rr(-13, -38, 26, 10, 5); g.fillStyle = '#ffd56a'; g.fill(); g.strokeStyle = '#c98a2b'; g.lineWidth = 2.5; g.stroke();
+    g.restore();
+    ell(36, 78, 13, 13, '#d79bff', '#8a5ac0', 3); ell(36, 78, 4, 4, '#fff');
+    ell(74, 24, 15, 13, '#fffaf6', '#e0b7c6', 2.5); ell(70, 20, 5, 3.5, '#fff'); ell(78, 20, 7, 3, '#ffb3cd');
+    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2 + 0.4; line(74 + Math.cos(a) * 19, 24 + Math.sin(a) * 17, 74 + Math.cos(a) * 25, 24 + Math.sin(a) * 22, '#ffd56a', 3); }
+  } else if (key === 'dart') {
+    line(24, 78, 76, 26, '#e8c08a', 6);
+    poly([76, 26, 86, 14, 80, 32], '#c9d6e3', '#7a8fa3', 2);
+    poly([24, 78, 12, 74, 18, 90], '#ff9ec0', '#c2607e', 2);
+    poly([24, 78, 28, 92, 14, 88], '#ffb3c7', '#c2607e', 2);
+  }
+}
+// 拥有闪卡 / 金卡的小伙伴：脚下光环（front=false）和碟子边上的小徽章（front=true）
+function drawTierAura(x, y, tier, t, front) {
+  g.save();
+  if (!front) {
+    const pulse = 0.75 + Math.sin(t * 3 + x * 0.05) * 0.25;
+    if (tier === 'gold') {
+      // 金卡：金色光晕 + 金环 + 往上飘的光柱
+      const gr = g.createRadialGradient(x, y - 6, 4, x, y - 6, 50);
+      gr.addColorStop(0, `rgba(255,222,120,${0.95 * pulse})`); gr.addColorStop(0.6, `rgba(255,214,110,${0.45 * pulse})`); gr.addColorStop(1, 'rgba(255,214,110,0)');
+      g.fillStyle = gr; g.beginPath(); g.ellipse(x, y - 4, 50, 26, 0, 0, Math.PI * 2); g.fill();
+      const lg = g.createLinearGradient(0, y - 70, 0, y);
+      lg.addColorStop(0, 'rgba(255,236,170,0)'); lg.addColorStop(1, `rgba(255,236,170,${0.35 * pulse})`);
+      g.fillStyle = lg; g.fillRect(x - 26, y - 70, 52, 70);
+      g.strokeStyle = `rgba(232,170,50,${0.95 * pulse})`; g.lineWidth = 3;
+      g.beginPath(); g.ellipse(x, y + 3, 40, 15, 0, 0, Math.PI * 2); g.stroke();
+    } else {
+      // 闪卡：转动的彩虹环 + 淡淡的彩光
+      const gr = g.createRadialGradient(x, y - 4, 4, x, y - 4, 46);
+      gr.addColorStop(0, `rgba(230,200,255,${0.6 * pulse})`); gr.addColorStop(1, 'rgba(200,230,255,0)');
+      g.fillStyle = gr; g.beginPath(); g.ellipse(x, y - 4, 46, 24, 0, 0, Math.PI * 2); g.fill();
+      g.lineWidth = 4;
+      for (let i = 0; i < 6; i++) {
+        g.strokeStyle = RAINBOW[i]; g.globalAlpha = 0.9 * pulse;
+        g.beginPath(); g.ellipse(x, y + 3, 40, 15, 0, i * Math.PI / 3 + t * 1.5, (i + 1) * Math.PI / 3 + t * 1.5); g.stroke();
+      }
+    }
+  } else {
+    const bx = x + 32, by = y;
+    if (tier === 'gold') {
+      g.translate(bx, by); g.scale(1.3, 1.3);
+      poly([-8, 4, -9, -6, -4, -1, 0, -8, 4, -1, 9, -6, 8, 4], '#ffd56a', '#b0701a', 1.8);
+      ell(0, -8, 1.8, 1.8, '#ff6f9c'); ell(-9, -6, 1.4, 1.4, '#7fd3ff'); ell(9, -6, 1.4, 1.4, '#7fd3ff');
+    } else {
+      g.translate(bx, by - 2); g.rotate(t * 1.2); g.scale(1.3, 1.3);
+      poly([0, -8, 2.4, -2.4, 8, 0, 2.4, 2.4, 0, 8, -2.4, 2.4, -8, 0, -2.4, -2.4], RAINBOW[Math.floor(t * 4) % 6], '#fff', 1.6);
+    }
+  }
+  g.restore();
+}
+
 function drawHUD() {
   g.fillStyle = '#ee8fab'; g.fillRect(0, 0, W, TOP);
   g.fillStyle = 'rgba(255,255,255,.1)'; g.fillRect(0, TOP - 3, W, 3);
@@ -2742,6 +3762,10 @@ function drawFx(f) {
       g.fillStyle = cols[i]; g.fill();
     }
     g.restore();
+  } else if (f.type === 'spray') {
+    g.save(); g.globalAlpha = 0.5 * (1 - k);
+    g.beginPath(); g.moveTo(f.x, f.y); g.lineTo(f.x + 60 + k * 160, f.y - 30 - k * 20); g.lineTo(f.x + 60 + k * 160, f.y + 30 + k * 20); g.closePath();
+    g.fillStyle = '#c9a3b4'; g.fill(); g.restore();
   } else if (f.type === 'plant') {
     for (let i = 0; i < 5; i++) ell(f.x - 24 + i * 12, f.y - k * 10, 6 * (1 - k), 4 * (1 - k), `rgba(255,179,199,${1 - k})`);
   }
@@ -2761,6 +3785,14 @@ function draw() {
     line(LX + CW * 3, TOP + 4, LX + CW * 3, TOP + CH * ROWS - 4, '#e3263a', 4);
   }
   for (const d of S.decals) ell(d.x, d.y, d.r, d.r * 0.32, `rgba(40,24,10,${0.45 * (1 - d.t / d.life)})`);
+  for (const pl of S.pools) {
+    const a = Math.min(1, pl.t * 4, (pl.life - pl.t) / 1.2), cy = cellCY(pl.row) + 26;
+    g.save(); g.globalAlpha = a;
+    rr(pl.x0, cy - 14, pl.x1 - pl.x0, 30, 15); g.fillStyle = '#6b3a24'; g.fill();
+    rr(pl.x0 + 6, cy - 10, pl.x1 - pl.x0 - 12, 10, 5); g.fillStyle = 'rgba(200,106,58,.7)'; g.fill();
+    for (let i = 0; i < 6; i++) { const bx = pl.x0 + 20 + i * (pl.x1 - pl.x0 - 40) / 5, k = (pl.t * 1.2 + i * 0.37) % 1; ell(bx, cy - k * 10, 3 + k * 3, 3 + k * 3, `rgba(232,140,80,${0.9 - k})`); }
+    g.restore();
+  }
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) if (S.graves[r][c]) drawGrave(cellCX(c), cellCY(r) + 30, S.graves[r][c] / 600);
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
     const left = S.craters[r][c];
@@ -2773,7 +3805,8 @@ function draw() {
   }
   if (S.hover && S.selected && !S.over) {
     const { r, c } = S.hover;
-    const occupied = !!S.plants[r][c] || S.craters[r][c] > 0 || !!S.graves[r][c] || (CFG.bowling && c > 2);
+    const replaceable = canReplace(S.plants[r][c], S.selected);
+    const occupied = (!!S.plants[r][c] && !replaceable) || S.craters[r][c] > 0 || !!S.graves[r][c] || (CFG.bowling && c > 2);
     if (S.selected === 'shovel') {
       if (occupied) { g.fillStyle = 'rgba(255,80,60,.25)'; g.fillRect(LX + c * CW, TOP + r * CH, CW, CH); }
     } else {
@@ -2781,7 +3814,8 @@ function draw() {
       g.fillRect(LX, TOP + r * CH, CW * COLS, CH);
       g.fillStyle = occupied ? 'rgba(255,80,60,.22)' : 'rgba(255,255,255,.22)';
       g.fillRect(LX + c * CW, TOP + r * CH, CW, CH);
-      if (!occupied) { g.save(); g.globalAlpha = 0.45; drawPlant(S.selected, cellCX(c), cellCY(r) + 28, t, null); g.restore(); }
+      if (replaceable) bigText('换新', cellCX(c), cellCY(r) - 34, 18, '#a8ecd1', '#3f9a74');
+      else if (!occupied) { g.save(); g.globalAlpha = 0.45; drawPlant(S.selected, cellCX(c), cellCY(r) + 28, t, null); g.restore(); }
     }
   }
   S.mowers.forEach((m, r) => {
@@ -2792,7 +3826,11 @@ function draw() {
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const p = S.plants[r][c];
-      if (p && !p.atk) drawPlant(p.type, cellCX(c), cellCY(r) + 28, t, p);
+      if (p && !p.atk) {
+        if (p.tier) drawTierAura(cellCX(c), cellCY(r) + 28, p.tier, t, false);
+        drawPlant(p.type, cellCX(c), cellCY(r) + 28, t, p);
+        if (p.tier) drawTierAura(cellCX(c), cellCY(r) + 28, p.tier, t, true);
+      }
     }
     S.zombies.filter(z => z.row === r).sort((a, b) => a.x - b.x).forEach(z => drawZombie(z));
     for (let c = 0; c < COLS; c++) {
@@ -2954,6 +3992,8 @@ function drawIcon(canvas, kind, key, opt = {}) {
       shield: d.shield || 0, fly: !!d.fly, thrown: false, smashT: 0, stop: 0, bounce: 0, landT: 0 }, 0, 0);
   } else if (kind === 'sun') {
     g.translate(50, 50); g.scale(1.05, 1.05); drawSun(0, 0, 0);
+  } else if (kind === 'item') {
+    drawItem(key);
   } else if (kind === 'dart') {
     // 牙签飞镖：牙签 + 粉色尾羽
     line(24, 78, 76, 26, '#e8c08a', 6);
@@ -2988,7 +4028,7 @@ function buildCards(deck) {
   cardEls = {};
   deck.forEach((k, i) => {
     const b = document.createElement('button');
-    b.className = 'card'; b.id = 'card-' + k;
+    b.className = 'card' + (cardTier(k) ? ' tg-' + cardTier(k) : ''); b.id = 'card-' + k;
     if (ROLES[ROLE_OF[k]]) b.style.borderBottom = `5px solid ${ROLES[ROLE_OF[k]].color}`;
     b.setAttribute('aria-label', `${PLANTS[k].name}，${PLANTS[k].cost} 方糖（快捷键 ${i + 1}）`);
     b.appendChild(iconCanvas('plant', k, 48));
@@ -3043,8 +4083,9 @@ shovelBtn.addEventListener('click', () => {
 dartBtn.addEventListener('click', () => {
   if (!playable()) return;
   if (S.selected === 'dart') { S.selected = null; return; }
-  if (S.dartCd > 0) { sfx('cant'); return; }
-  if (S.sun < DART_COST) { nope(); return; }
+  const free = save.items.dart > 0; // 扭蛋得到的免费飞镖：不花方糖、不用等冷却
+  if (!free && S.dartCd > 0) { sfx('cant'); return; }
+  if (!free && S.sun < DART_COST) { nope(); return; }
   S.selected = 'dart'; sfx('select');
 });
 speedBtn.addEventListener('click', () => { speed = speed === 1 ? 2 : 1; speedBtn.textContent = speed + '×'; });
@@ -3071,8 +4112,13 @@ function updateUI() {
   }
   shovelBtn.classList.toggle('sel', S.selected === 'shovel');
   dartBtn.classList.toggle('sel', S.selected === 'dart');
-  dartBtn.classList.toggle('off', S.dartCd > 0 || S.sun < DART_COST);
-  dartBtn.querySelector('.mask').style.height = (S.dartCd / DART_CD * 100).toFixed(1) + '%';
+  const freeDart = save.items.dart > 0;
+  if (lastUI.darts !== save.items.dart) { lastUI.darts = save.items.dart; dartCostEl.textContent = freeDart ? `免费×${save.items.dart}` : DART_COST; dartBtn.classList.toggle('free', freeDart); }
+  dartBtn.classList.toggle('off', !freeDart && (S.dartCd > 0 || S.sun < DART_COST));
+  dartBtn.querySelector('.mask').style.height = freeDart ? '0%' : (S.dartCd / DART_CD * 100).toFixed(1) + '%';
+  const bagN = TRAY_ITEMS.reduce((a, k) => a + (save.items[k] || 0), 0);
+  if (lastUI.bagN !== bagN) { lastUI.bagN = bagN; bagBadge.textContent = bagN > 99 ? '99+' : bagN; bagBadge.hidden = !bagN; }
+  bagBtn.classList.toggle('sel', !trayEl.hidden);
   dartBtn.hidden = !!CFG.conveyor;
 }
 
@@ -3085,10 +4131,12 @@ function toast(text) {
 }
 function unlockAch(id) {
   if (save.ach[id]) return;
-  save.ach[id] = true; persist();
+  save.ach[id] = true;
   const a = ACH.find(a => a.id === id);
+  if (a) save.gems += ACH_GEMS;
+  persist();
   if (!a) return;
-  toast(`获得成就：${a.name}`);
+  toast(`获得成就：${a.name}（+${ACH_GEMS} 钻石）`);
   sfx('ach');
 }
 
@@ -3109,116 +4157,228 @@ function btn(label, fn, cls = '') { return el('button', { class: 'btn ' + cls, o
 function openOverlay(node, soft = false) {
   overlay.innerHTML = '';
   overlay.className = soft ? 'soft' : '';
+  overlay.style.removeProperty('--scene-bg');
+  skipDraw = false;
   overlay.append(node);
   overlay.hidden = false;
   const f = overlay.querySelector('button:not(:disabled)');
   if (f) f.focus({ preventScroll: true });
 }
-function closeOverlay() { overlay.hidden = true; overlay.innerHTML = ''; }
+function closeOverlay() { overlay.hidden = true; overlay.innerHTML = ''; skipDraw = false; }
 function panel(cls, ...kids) { return el('div', { class: 'panel ' + cls }, ...kids); }
 function head(title, back) {
   return el('div', { class: 'phead' }, el('h1', {}, title), back ? btn('返回', back, 'alt small') : null);
 }
 
-/* ---------- 主菜单 ---------- */
+/* ---------- 页面通用：整页（铺满背景图）+ 弹窗层 ---------- */
+const modal = document.getElementById('modal');
+const appEl = document.getElementById('app');
+const fmt = n => n >= 100000 ? (n / 10000).toFixed(n >= 1000000 ? 0 : 1) + '万' : String(n);
+function appH() { return appEl.clientHeight || 500; }
+function openPage(node, bg) {
+  closeModal();
+  openOverlay(node);
+  overlay.className = 'scene';
+  overlay.style.setProperty('--scene-bg', `url(${bg || IMG.menu})`);
+  skipDraw = true;
+}
+function openModal(node, cls = '', onClose = null) {
+  modal.innerHTML = '';
+  const box = el('div', { class: 'mbox ' + cls }, el('button', { class: 'mclose', 'aria-label': '关闭', onclick: () => { sfx('select'); closeModal(); } }, '×'), node);
+  modal.append(box);
+  modal.hidden = false;
+  modal.onClose = onClose;
+  return box;
+}
+function closeModal() {
+  if (modal.hidden) return;
+  modal.hidden = true; modal.innerHTML = '';
+  const f = modal.onClose; modal.onClose = null;
+  if (f) f();
+}
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+function walletPills() {
+  const go = () => { sfx('select'); showShop(); };
+  return [
+    el('button', { class: 'pill coin', 'aria-label': `金币 ${save.coins}，打开商店`, onclick: go }, el('i', { class: 'ico coin' }), el('b', {}, fmt(save.coins)), el('span', { class: 'plus' }, '+')),
+    el('button', { class: 'pill gem', 'aria-label': `钻石 ${save.gems}，打开商店`, onclick: go }, el('i', { class: 'ico gem' }), el('b', {}, fmt(save.gems)), el('span', { class: 'plus' }, '+')),
+  ];
+}
+function refreshWallet() {
+  document.querySelectorAll('.pill.coin b').forEach(b => { b.textContent = fmt(save.coins); });
+  document.querySelectorAll('.pill.gem b').forEach(b => { b.textContent = fmt(save.gems); });
+}
+function page(title, back, body, opt = {}) {
+  return el('div', { class: 'page ' + (opt.cls || '') },
+    el('div', { class: 'pbar' },
+      back ? el('button', { class: 'back', onclick: () => { sfx('select'); back(); } }, '‹ 返回') : null,
+      el('h1', { class: 'ptitle' }, title),
+      el('div', { class: 'grow' }),
+      ...walletPills()),
+    el('div', { class: 'pbody ' + (opt.bodyCls || '') }, ...[].concat(body)));
+}
+const icon = k => el('i', { class: 'ico ' + k });
+function cvIcon(kind, key, px = 44) { const w = el('i', { class: 'ico cv' }); w.append(iconCanvas(kind, key, px)); return w; }
+const dotEl = n => n ? el('span', { class: 'dot' }, n > 9 ? '9+' : String(n)) : null;
+function rwPill(kind, n) { return el('span', { class: 'rw-pill ' + kind }, icon(kind), '+' + n); }
+function itemPill(k, n) { const c = iconCanvas('item', k, 24); c.style.cssText = 'width:24px;height:24px'; return el('span', { class: 'rw-pill' }, c, `${ITEMS[k].name}×${n}`); }
+
+/* ---------- 卡片 ---------- */
+// tier：null 普通卡 / 'flash' 闪卡 / 'gold' 金卡
+function cardEl(k, tier, opt = {}) {
+  const no = PLANT_ORDER.indexOf(k) + 1;
+  const art = iconCanvas('plant', k, Math.round((opt.size || 110) * 0.8));
+  art.className = 'pc-art';
+  const node = el('div', { class: `pcard t-${tier || 'base'}${opt.dim ? ' dim' : ''}${opt.cls ? ' ' + opt.cls : ''}` },
+    el('div', { class: 'pc-in' },
+      el('div', { class: 'pc-glow' }), art,
+      el('span', { class: 'pc-no' }, 'No.' + String(no).padStart(2, '0')),
+      tier ? el('span', { class: 'pc-tier' }, TIER_NAME[tier]) : null,
+      el('div', { class: 'pc-name' }, PLANTS[k].name)),
+    el('div', { class: 'pc-sheen' }),
+    tier ? el('div', { class: 'pc-spark' }) : null,
+    opt.lock ? el('span', { class: 'lockmark' + (opt.lockCls ? ' ' + opt.lockCls : '') }, opt.lock) : null);
+  node.style.setProperty('--cw', (opt.size || 110) + 'px');
+  return node;
+}
+// 大卡片跟着手指 / 鼠标倾斜，反光跟着动
+function tilt(node) {
+  node.addEventListener('pointermove', e => {
+    const r = node.getBoundingClientRect();
+    let x, y;
+    if (rotatedMQ.matches) { x = (e.clientY - r.top) / r.height - 0.5; y = (r.right - e.clientX) / r.width - 0.5; }
+    else { x = (e.clientX - r.left) / r.width - 0.5; y = (e.clientY - r.top) / r.height - 0.5; }
+    node.style.setProperty('--ry', (x * 20).toFixed(1) + 'deg');
+    node.style.setProperty('--rx', (-y * 16).toFixed(1) + 'deg');
+  });
+  node.addEventListener('pointerleave', () => { node.style.setProperty('--ry', '0deg'); node.style.setProperty('--rx', '0deg'); });
+}
+function bigCardW() { return Math.round(Math.max(130, Math.min(230, (appH() - 150) * 2 / 3))); }
+
+/* ---------- 主页 ---------- */
 function demoScene() {
   const s = newState(makeCfg({ waves: 1, label: '' }), []);
   s.demo = true; s.intro = INTRO;
-  const put = (r, c, k) => { const p = makePlant(k); p.age = 5; p.armed = true; s.plants[r][c] = p; };
-  put(0, 0, 'peaflower'); put(0, 1, 'snowrepeater'); put(1, 0, 'peaflower'); put(1, 1, 'firepea'); put(1, 3, 'peanut');
-  put(2, 0, 'peaflower'); put(2, 1, 'beeflower'); put(2, 3, 'cherrynut'); put(3, 1, 'chompsquash'); put(3, 4, 'icemine');
-  put(4, 0, 'clockflower'); put(4, 2, 'goldbox'); put(0, 4, 'luckybox'); put(4, 5, 'cherrypepper');
-  const z = (type, row, x) => { const d = ZDEF[type]; s.zombies.push({ type, row, x, hp: d.hp, maxHp: d.hp, armor: d.armor, maxArmor: d.armor, armorType: d.armorType, shield: d.shield || 0, fly: !!d.fly, speed: 0, pole: false, jumping: 0, frozen: 0, slow: 0, flash: 0, anim: rnd(0, 5), eating: false, dead: false, deadT: 0, stop: 0, hitJ: 0 }); };
-  z('cone', 0, 640); z('flag', 1, 720); z('shield', 2, 600); z('balloon', 3, 760); z('bucket', 4, 680);
   return s;
 }
 function showMenu() {
   running = false; paused = false;
   S = demoScene();
-  bankEl.hidden = true;
+  bankEl.hidden = true; closeTray();
   wantMusic = 'menu'; Sound.music('menu');
+  const d = ensureDaily();
   const done = save.cleared.length;
-  const seenN = ZOMBIE_ORDER.filter(k => save.seen[k]).length + PLANT_ORDER.filter(plantUnlocked).length;
-  const achN = ACH.filter(a => save.ach[a.id]).length;
   const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
   const nextLv = firstOpen === -1 ? LEVELS.length - 1 : firstOpen;
-  const chalN = CHALLENGES.filter(c => save.chal[c.id]).length;
-  const sfxChip = el('button', { class: 'chip', onclick: () => { save.sfx = !save.sfx; persist(); sfxChip.textContent = '音效：' + (save.sfx ? '开' : '关'); sfx('select'); } }, '音效：' + (save.sfx ? '开' : '关'));
-  const musChip = el('button', { class: 'chip', onclick: () => { save.music = !save.music; persist(); musChip.textContent = '音乐：' + (save.music ? '开' : '关'); Sound.music(save.music ? 'menu' : null); } }, '音乐：' + (save.music ? '开' : '关'));
-  let armed = false;
-  const resetChip = el('button', { class: 'chip', onclick: () => {
-    if (!armed) { armed = true; resetChip.textContent = '再点一次确认重置'; resetChip.classList.add('warn'); return; }
-    const keep = { sfx: save.sfx, music: save.music };
-    save = Object.assign(defaultSave(), keep); persist(); toast('进度已重置'); showMenu();
-  } }, '重置进度');
-  openOverlay(el('div', { class: 'menu' },
-    el('div', { class: 'logo' }, el('span', { class: 'l1' }, '别偷吃我的蛋糕'), el('small', {}, '厨房塔防 · 原创小游戏')),
-    el('div', { class: 'mgrid' },
-      el('button', { class: 'mbtn main', onclick: () => { sfx('select'); showLevels(); } },
-        el('b', {}, '冒险模式'), el('span', {}, done >= LEVELS.length ? '全部通关！可以重玩任意关卡' : `已通关 ${done}/${LEVELS.length} · 下一关 ${LEVELS[nextLv].id} ${LEVELS[nextLv].name}`)),
-      el('button', { class: 'mbtn main lucky', onclick: () => { sfx('select'); startFlow(luckyCfg()); } },
-        el('b', {}, '甜品盲盒'), el('span', {}, save.luckyBest ? `无尽开盲盒 · 最高第 ${save.luckyBest} 波 · 开出过 ${Object.keys(save.boxGot).length}/${PLANT_ORDER.length} 种小伙伴` : '无尽模式：花方糖买盲盒，开出什么全看运气')),
-      el('button', { class: 'mbtn', onclick: () => { sfx('select'); showChallenges(); } }, el('b', {}, '挑战模式'), el('span', {}, `完成 ${chalN}/${CHALLENGES.length}`)),
-      el('button', { class: 'mbtn', onclick: () => { sfx('select'); startFlow(endlessCfg()); } }, el('b', {}, '无尽模式'), el('span', {}, save.bestWave ? `最高第 ${save.bestWave} 波` : '看你能撑几波')),
-      el('button', { class: 'mbtn', onclick: () => { sfx('select'); showAlmanac('plants'); } }, el('b', {}, '图鉴收藏'), el('span', {}, `图鉴 ${seenN}/${PLANT_ORDER.length + ZOMBIE_ORDER.length}`)),
-      el('button', { class: 'mbtn', onclick: () => { sfx('select'); showMinigames(); } }, el('b', {}, '小游戏'), el('span', {}, `甜甜圈保龄球等 · 完成 ${MINIGAMES.filter(m => save.mini[m.id]).length}/${MINIGAMES.length}`)),
-    ),
-    el('div', { class: 'mfoot' },
-      el('button', { class: 'chip hot', onclick: () => { sfx('select'); showGuide(); } }, '新手指南'),
-      el('button', { class: 'chip', onclick: () => { sfx('select'); showAlmanac('ach'); } }, `成就 ${achN}/${ACH.length}`),
-      sfxChip, musChip, resetChip),
-  ), true);
+  const L = LEVELS[nextLv];
+  const allDone = done >= LEVELS.length;
+  const tile = (ico, name, sub, fn, n, colors) => el('button', { class: 'mtile', style: colors, onclick: () => { sfx('select'); fn(); } }, ico, el('span', {}, el('b', {}, name), el('small', {}, sub)), dotEl(n));
+  const dbtn = (ico, name, fn, n) => el('button', { class: 'dbtn', onclick: () => { sfx('select'); fn(); } }, ico, name, dotEl(n));
+  const hub = el('div', { class: 'hub' },
+    el('div', { class: 'topbar' }, el('div', { class: 'grow' }), ...walletPills(),
+      el('button', { class: 'rbtn', 'aria-label': '设置', onclick: () => { sfx('select'); showSettings(); } }, icon('gear'))),
+    el('div', { class: 'hub-main' },
+      el('div', { class: 'hub-logo' }, el('div', { class: 'logo2' }, '别偷吃', el('br'), '我的蛋糕', el('em', {}, '！')), el('div', { class: 'hub-sub' }, '甜品店保卫战 · 原创塔防')),
+      el('div', { class: 'hub-menu' },
+        el('button', { class: 'cta', onclick: () => { sfx('select'); showLevels(); } },
+          iconCanvas('plant', allDone ? 'chocolava' : L.reward, 58),
+          el('span', {}, el('b', {}, '冒险模式'), el('small', {}, allDone ? `全部 ${LEVELS.length} 关通关！随时可以重玩` : `下一关 ${L.id}「${L.name}」· 已通关 ${done}/${LEVELS.length}`)),
+          el('span', { class: 'go' }, '出发')),
+        el('div', { class: 'hub-grid' },
+          tile(icon('capsule'), '扭蛋机', d.free ? '今天可以免费扭一次' : `闪卡保底还差 ${PITY.flash - save.gacha.pf} 次`, showGacha, d.free ? 1 : 0, '--tc:#dcc2ff;--tcd:#9b6df0'),
+          tile(icon('album'), '卡册', `闪卡 ${cardCount('flash')} · 金卡 ${cardCount('gold')}`, showAlbum, newCardCount(), '--tc:#ffe08a;--tcd:#d99a2b'),
+          tile(icon('gift'), '甜品盲盒', save.luckyBest ? `无尽开盲盒 · 最高第 ${save.luckyBest} 波` : '花方糖开盲盒放小伙伴', () => startFlow(luckyCfg()), 0, '--tc:#b6f0d8;--tcd:#3f9a74'),
+          tile(cvIcon('zombie', 'cone', 40), '更多玩法', '挑战 · 小游戏 · 无尽', showModes, 0, '--tc:#b9e3ff;--tcd:#4fa6d6')))),
+    el('div', { class: 'dock' },
+      dbtn(icon('tasks'), '每日任务', showDaily, dailyReady()),
+      dbtn(icon('bag'), '甜品商店', showShop, 0),
+      dbtn(cvIcon('plant', 'peaflower'), '图鉴', () => showAlmanac('plants'), 0),
+      dbtn(icon('medal'), '成就', () => showAlmanac('ach'), 0),
+      dbtn(cvIcon('zombie', 'normal'), '新手指南', showGuide, 0),
+      el('span', { class: 'hub-ver' }, '体验版 · 原创角色与美术')));
+  openPage(hub, IMG.menu);
+  if (!save.starter) setTimeout(() => { if (!running && !save.starter && modal.hidden && overlay.querySelector('.hub')) showStarter(); }, 400);
+}
+function showStarter() {
+  const it = STARTER.items;
+  openModal(el('div', { class: 'cstage', style: 'gap:12px;text-align:center' },
+    el('h2', { style: 'padding:0' }, '开业大礼包'),
+    el('p', {}, '欢迎来到甜品店！送你一份开业礼物，先去扭蛋机试试手气吧～'),
+    el('div', { class: 'rewards', style: 'justify-content:center' }, rwPill('coin', STARTER.coins), rwPill('gem', STARTER.gems), ...Object.entries(it).map(([k, n]) => itemPill(k, n))),
+    el('div', { class: 'btnrow' }, btn('收下礼物', () => {
+      if (!save.starter) {
+        save.starter = true; save.coins += STARTER.coins; save.gems += STARTER.gems;
+        for (const [k, n] of Object.entries(it)) save.items[k] += n;
+        persist(); sfx('unlock');
+      }
+      closeModal(); showMenu();
+    }))), 'narrow');
 }
 
+/* ---------- 冒险：关卡地图 ---------- */
 function advCfg(i) {
   const L = LEVELS[i];
-  return makeCfg({ mode: 'adventure', idx: i, label: `冒险 ${L.id}`, pool: L.pool, waves: L.waves, flags: L.flags, base: L.base, grow: L.grow,
+  return makeCfg({ mode: 'adventure', idx: i, label: `冒险 ${L.id}`, back: showLevels, pool: L.pool, waves: L.waves, flags: L.flags, base: L.base, grow: L.grow,
     startSun: L.startSun || 150, diff: L.diff || 1.3, hpMul: L.hpMul || 1.1, night: L.night, fog: L.fog, graves: L.graves, conveyor: L.conveyor,
     plants: L.conveyor ? [] : unlockedPlants() });
 }
-function miniCfg(m) { return makeCfg(Object.assign({ mode: 'mini', id: m.id, label: `小游戏：${m.name}`, plants: m.cfg.conveyor ? [] : PICKABLE.slice() }, m.cfg)); }
-function showMinigames() {
-  const grid = el('div', { class: 'lvgrid' });
-  MINIGAMES.forEach(m => {
-    grid.append(el('button', { class: 'lv' + (save.mini[m.id] ? ' done' : ''), onclick: () => { sfx('select'); startFlow(miniCfg(m)); } },
-      el('b', {}, m.name), el('span', { class: 'nm', style: 'font-weight:400' }, m.desc),
-      save.mini[m.id] ? el('span', { class: 'st' }, '已完成') : null));
-  });
-  openOverlay(panel('wide', head('小游戏', showMenu), el('p', { class: 'sub' }, '换个玩法放松一下'), grid));
-}
-function chalCfg(c) { return makeCfg(Object.assign({ mode: 'challenge', id: c.id, label: `挑战：${c.name}`, plants: PICKABLE.slice() }, c.cfg)); }
-function endlessCfg() { return makeCfg({ mode: 'endless', label: '无尽模式', pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 1, grow: 0.6, startSun: 300, plants: PICKABLE.slice() }); }
+function miniCfg(m) { return makeCfg(Object.assign({ mode: 'mini', id: m.id, label: `小游戏：${m.name}`, back: showMinigames, plants: m.cfg.conveyor ? [] : PICKABLE.slice() }, m.cfg)); }
+function chalCfg(c) { return makeCfg(Object.assign({ mode: 'challenge', id: c.id, label: `挑战：${c.name}`, back: showChallenges, plants: PICKABLE.slice() }, c.cfg)); }
+function endlessCfg() { return makeCfg({ mode: 'endless', label: '无尽模式', back: showModes, pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 1, grow: 0.6, startSun: 300, plants: PICKABLE.slice() }); }
 // 甜品盲盒：无尽模式，开局 400 方糖，每 10 波一次旗帜波
-function luckyCfg() { return makeCfg({ mode: 'lucky', label: '甜品盲盒', pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 0.8, grow: 0.55, startSun: 400, diff: 1.3, hpMul: 1.15, plants: ['luckybox', 'goldbox'] }); }
+function luckyCfg() { return makeCfg({ mode: 'lucky', label: '甜品盲盒', back: showMenu, pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 0.8, grow: 0.55, startSun: 400, diff: 1.3, hpMul: 1.15, plants: ['luckybox', 'goldbox'] }); }
 
 function showLevels() {
-  const chapters = [
-    { n: 1, title: '甜蜜厨房', sub: '每通关一关解锁一个新的小伙伴' },
-  ];
-  const sections = chapters.map(ch => {
-    const grid = el('div', { class: 'lvgrid' });
-    LEVELS.forEach((L, i) => {
-      if ((L.chapter || 1) !== ch.n) return;
-      const open = levelOpen(i), done = save.cleared.includes(i);
-      grid.append(el('button', { class: 'lv' + (open ? '' : ' locked') + (done ? ' done' : ''), disabled: !open, onclick: () => { sfx('select'); startFlow(advCfg(i)); } },
-        el('b', {}, L.id), el('span', { class: 'nm' }, open ? L.name : '未解锁'),
-        L.feature && open ? el('span', { class: 'ft' }, L.feature) : null,
-        el('span', { class: 'rw' }, iconCanvas('plant', L.reward, 28, { locked: !done }), done ? `已获得${PLANTS[L.reward].name}` : '通关奖励：？'),
-        done ? el('span', { class: 'st' }, '已通关') : null));
-    });
-    return [el('h2', {}, ch.title), el('p', { class: 'sub' }, ch.sub), grid];
+  const n = LEVELS.length, gap = 118, pad = 96;
+  const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
+  const width = pad * 2 + gap * (n - 1);
+  const xs = LEVELS.map((L, i) => pad + i * gap);
+  const ys = LEVELS.map((L, i) => 52 + Math.sin(i * 1.15 + 0.4) * 24);
+  const inner = el('div', { class: 'lmap-in', style: `width:${width}px` });
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${width} 100`);
+  svg.setAttribute('preserveAspectRatio', 'none');
+  let dpath = `M ${xs[0]} ${ys[0]}`;
+  for (let i = 1; i < n; i++) { const mx = (xs[i - 1] + xs[i]) / 2; dpath += ` C ${mx} ${ys[i - 1]}, ${mx} ${ys[i]}, ${xs[i]} ${ys[i]}`; }
+  const path = (stroke, w, dash) => {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', dpath); p.setAttribute('fill', 'none'); p.setAttribute('stroke', stroke); p.setAttribute('stroke-width', w);
+    p.setAttribute('stroke-linecap', 'round'); p.setAttribute('vector-effect', 'non-scaling-stroke');
+    if (dash) p.setAttribute('stroke-dasharray', dash);
+    return p;
+  };
+  svg.append(path('rgba(255,255,255,.92)', 16), path('#f39ab5', 5, '1 13'));
+  inner.append(svg, el('span', { class: 'chap' }, '第一章 · 甜蜜厨房'));
+  LEVELS.forEach((L, i) => {
+    const open = levelOpen(i), done = save.cleared.includes(i);
+    inner.append(el('button', { class: 'lnode' + (done ? ' done' : '') + (i === firstOpen ? ' cur' : ''), style: `left:${xs[i]}px;top:${ys[i]}%`, disabled: !open,
+      'aria-label': `${L.id} ${open ? L.name : '未解锁'}`, onclick: () => { sfx('select'); startFlow(advCfg(i)); } },
+      el('span', { class: 'disc' }, open ? L.id : '', open ? null : el('span', { class: 'lock' }, '🔒'), done ? el('span', { class: 'ok' }, '✓') : null,
+        el('span', { class: 'rwb', title: done ? `已获得${PLANTS[L.reward].name}` : '通关奖励' }, iconCanvas('plant', L.reward, 30, { locked: !done && i !== firstOpen }))),
+      el('span', { class: 'lname' }, open ? L.name : '？？？')));
   });
-  openOverlay(panel('wide', head('冒险模式', showMenu), ...sections.flat()));
+  const map = el('div', { class: 'lmap' }, inner);
+  map.addEventListener('wheel', e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { map.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
+  openPage(page('冒险模式', showMenu, map, { bodyCls: 'flexcol' }), IMG.levels);
+  const target = firstOpen === -1 ? n - 1 : firstOpen;
+  requestAnimationFrame(() => { map.scrollLeft = Math.max(0, xs[target] - map.clientWidth / 2); });
 }
-function showChallenges() {
-  const grid = el('div', { class: 'lvgrid' });
-  CHALLENGES.forEach(c => {
-    grid.append(el('button', { class: 'lv' + (save.chal[c.id] ? ' done' : ''), onclick: () => { sfx('select'); startFlow(chalCfg(c)); } },
-      el('b', {}, c.name), el('span', { class: 'nm', style: 'font-weight:400' }, c.desc),
-      save.chal[c.id] ? el('span', { class: 'st' }, '已完成') : null));
-  });
-  openOverlay(panel('wide', head('挑战模式', showMenu), el('p', { class: 'sub' }, '规则特殊的关卡，全部小伙伴都可以用'), grid));
+
+/* ---------- 更多玩法 ---------- */
+function showModes() {
+  const card = (kind, key, name, sub, fn, colors) => el('button', { class: 'mode', style: colors, onclick: () => { sfx('select'); fn(); } }, iconCanvas(kind, key, 84), el('b', {}, name), el('small', {}, sub));
+  openPage(page('更多玩法', showMenu, el('div', { class: 'modes' },
+    card('zombie', 'football', '挑战模式', `规则特殊的关卡 · 完成 ${CHALLENGES.filter(c => save.chal[c.id]).length}/${CHALLENGES.length}`, showChallenges, '--mc1:#ffb3cf;--mc2:#f47aa3;--mc3:#c2607e'),
+    card('plant', 'bowlnut', '小游戏', `甜甜圈保龄球等 · 完成 ${MINIGAMES.filter(m => save.mini[m.id]).length}/${MINIGAMES.length}`, showMinigames, '--mc1:#9fe3c6;--mc2:#5cc39a;--mc3:#3f9a74'),
+    card('zombie', 'flag', '无尽模式', save.bestWave ? `最高第 ${save.bestWave} 波 · 波数越多金币越多` : '看你能撑几波 · 波数越多金币越多', () => startFlow(endlessCfg()), '--mc1:#cfb2ff;--mc2:#9b6df0;--mc3:#6a3fc0')), { bodyCls: 'flexcol' }), IMG.menu);
 }
+function listPage(title, items, isDone, cfgOf) {
+  openPage(page(title, showModes, el('div', { class: 'list' }, ...items.map(x => el('button', { class: 'litem', onclick: () => { sfx('select'); startFlow(cfgOf(x)); } },
+    el('b', {}, x.name), el('span', {}, x.desc), isDone(x) ? el('span', { class: 'st' }, '已完成') : null)))), IMG.levels);
+}
+function showChallenges() { listPage('挑战模式', CHALLENGES, c => save.chal[c.id], chalCfg); }
+function showMinigames() { listPage('小游戏', MINIGAMES, m => save.mini[m.id], miniCfg); }
 
 /* ---------- 选卡 ---------- */
 // 关卡情报：这关会来哪些团子、各自特点、用谁克制（已解锁的克制小伙伴会标成"推荐"）
@@ -3238,39 +4398,54 @@ function intelBlock(cfg) {
   });
   return { node: el('div', { class: 'intel' }, el('h2', {}, '关卡情报'), ...rows), rec };
 }
+function bagSummary() {
+  const have = TRAY_ITEMS.filter(k => save.items[k] > 0);
+  const darts = save.items.dart || 0;
+  if (!have.length && !darts) return el('span', { class: 'muted' }, '背包里还没有道具，扭蛋和商店都能拿到');
+  return el('span', { class: 'muted' }, '对局里点「道具」使用：' + [...have.map(k => `${ITEMS[k].name}×${save.items[k]}`), darts ? `免费飞镖×${darts}` : null].filter(Boolean).join('、'));
+}
 function startFlow(cfg) {
   running = false;
-  bankEl.hidden = true;
+  bankEl.hidden = true; closeTray();
+  const back = cfg.back || showMenu;
   const intel = intelBlock(cfg);
   if (cfg.plants.length <= MAX_SLOTS) {
-    openOverlay(panel('wide', head(cfg.label, showMenu), intel.node,
-      el('div', { class: 'btns' }, btn('开始', () => startGame(cfg, cfg.plants.slice())))));
+    const tip = cfg.mode === 'lucky' ? '花方糖买盲盒放在餐桌上，开出什么小伙伴全看运气。后三列更容易开出远程攻击，前三列更容易开出防守。' : cfg.conveyor ? '传送带会不停送来小伙伴，不用花方糖。' : '准备好了就开始吧！';
+    openPage(page(cfg.label, back, el('div', { class: 'deck' }, el('div', { class: 'sheet' }, intel.node),
+      el('div', { class: 'sheet deck-r' }, el('h2', {}, '准备好了吗？'), el('p', {}, tip),
+        cfg.mode === 'lucky' ? null : el('div', { class: 'slots' }, ...cfg.plants.map(k => { const t = cardTier(k); return el('div', { class: 'tile' + (t ? ' tg-' + t : '') }, iconCanvas('plant', k, 44), el('span', { class: 'tn' }, PLANTS[k].name), t ? el('span', { class: 'tgb' }, TIER_NAME[t]) : null); })),
+        bagSummary(),
+        el('div', { class: 'startbar' }, btn('开始', () => startGame(cfg, cfg.plants.slice()), 'big')))), { bodyCls: 'flexcol' }), IMG.levels);
     return;
   }
   let pick = save.pick.filter(k => cfg.plants.includes(k)).slice(0, MAX_SLOTS);
   if (!pick.length) pick = cfg.plants.slice(0, MAX_SLOTS);
   const slots = el('div', { class: 'slots' });
   const tiles = el('div', { class: 'tiles' });
-  const go = btn('开始战斗', () => { save.pick = pick.slice(); persist(); startGame(cfg, pick.slice()); });
+  const go = btn('开始战斗', () => { save.pick = pick.slice(); persist(); startGame(cfg, pick.slice()); }, 'big');
+  const tg = k => { const t = cardTier(k); return t ? ' tg-' + t : ''; };
+  const tgb = k => { const t = cardTier(k); return t ? el('span', { class: 'tgb' }, TIER_NAME[t]) : null; };
   function render() {
     slots.innerHTML = ''; tiles.innerHTML = '';
-    pick.forEach(k => slots.append(el('button', { class: 'tile', 'aria-label': `移出${PLANTS[k].name}`, onclick: () => { pick = pick.filter(x => x !== k); sfx('select'); render(); } },
-      iconCanvas('plant', k, 44), el('span', { class: 'tn' }, PLANTS[k].cost))));
-    for (let i = pick.length; i < MAX_SLOTS; i++) slots.append(el('div', { class: 'tile', style: 'opacity:.35;pointer-events:none' }, el('span', { class: 'tn', style: 'padding:16px 0' }, '空')));
+    pick.forEach(k => slots.append(el('button', { class: 'tile' + tg(k), 'aria-label': `移出${PLANTS[k].name}`, onclick: () => { pick = pick.filter(x => x !== k); sfx('select'); render(); } },
+      iconCanvas('plant', k, 44), el('span', { class: 'tn' }, PLANTS[k].cost), tgb(k))));
+    for (let i = pick.length; i < MAX_SLOTS; i++) slots.append(el('div', { class: 'tile', style: 'opacity:.45;pointer-events:none' }, el('span', { class: 'tn', style: 'padding:16px 0' }, '空')));
     cfg.plants.forEach(k => {
       const on = pick.includes(k);
-      tiles.append(el('button', { class: 'tile' + (on ? ' used' : ''), 'aria-label': `${on ? '已选' : '选择'}${PLANTS[k].name}`, onclick: () => {
+      tiles.append(el('button', { class: 'tile' + (on ? ' used' : '') + tg(k), 'aria-label': `${on ? '已选' : '选择'}${PLANTS[k].name}`, onclick: () => {
         if (on) pick = pick.filter(x => x !== k);
         else if (pick.length < MAX_SLOTS) pick.push(k);
         else { sfx('cant'); return; }
         sfx('select'); render();
-      } }, iconCanvas('plant', k, 52), el('span', { class: 'tn' }, PLANTS[k].name), el('span', { class: 'tn' }, `☀${PLANTS[k].cost}`),
-        intel.rec.has(k) ? el('span', { class: 'rec' }, '推荐') : null));
+      } }, iconCanvas('plant', k, 52), el('span', { class: 'tn' }, PLANTS[k].name), el('span', { class: 'tn' }, `方糖 ${PLANTS[k].cost}`),
+        intel.rec.has(k) ? el('span', { class: 'rec' }, '推荐') : null, tgb(k)));
     });
     go.disabled = pick.length === 0;
   }
   render();
-  openOverlay(panel('wide', head('选择小伙伴', showMenu), intel.node, el('p', { class: 'sub' }, `${cfg.label} · 最多带 ${MAX_SLOTS} 种小伙伴，标着「推荐」的能克制这关的团子`), slots, tiles, el('div', { class: 'btns' }, go)));
+  openPage(page('选择小伙伴', back, el('div', { class: 'deck' }, el('div', { class: 'sheet' }, intel.node),
+    el('div', { class: 'sheet deck-r' }, el('p', { class: 'muted' }, `${cfg.label} · 最多带 ${MAX_SLOTS} 种。标「推荐」的能克制这关的团子，带闪卡、金卡的小伙伴更强。`), slots, tiles,
+      el('div', { class: 'startbar' }, bagSummary(), go))), { bodyCls: 'flexcol' }), IMG.levels);
 }
 
 /* ---------- 新手指南 ---------- */
@@ -3283,12 +4458,12 @@ function showGuide() {
       el('div', { class: 'intel-txt' }, el('b', {}, ZDEF[t].name + (info.badge ? ` ·「${info.badge}」` : '')), el('span', {}, info.trait)),
       el('div', { class: 'intel-ctr' }, el('small', {}, '克制'), ...info.counters.filter(k => PLANTS[k]).slice(0, 4).map(k => { const c = iconCanvas('plant', k, 30); c.title = PLANTS[k].name; return c; })));
   });
-  openOverlay(panel('wide', head('新手指南', showMenu),
+  openPage(page('新手指南', showMenu, el('div', { class: 'sheet', style: 'display:flex;flex-direction:column;gap:12px' },
     sec('怎么玩', el('ul', {},
-      el('li', {}, '团子从右边一路走向左边的蛋糕，在它们碰到蛋糕前把它们喂饱。'),
+      el('li', {}, '团子从右边一路走向左边的蛋糕，在它们碰到蛋糕前把它们喂饱。团子一走进画面，小伙伴就会开始攻击。'),
       el('li', {}, '点上方卡片选小伙伴，再点餐桌放下。卡片变暗表示方糖不够或者还在冷却。'),
-      el('li', {}, '每行最左边的扫地机器人能救你一次，用掉就没了。'),
-      el('li', {}, '锅铲可以收回放错的小伙伴。'))),
+      el('li', {}, '小伙伴受伤了，可以再放一个同种的上去，直接换成满血的新伙伴。'),
+      el('li', {}, '每行最左边的扫地机器人能救你一次，用掉就没了。锅铲可以收回放错的小伙伴。'))),
     sec('方糖', el('ul', {},
       el('li', {}, '天上会掉方糖，荷包蛋花也会产方糖，点一下就能收起来。'),
       el('li', {}, '开局先多放几朵荷包蛋花，后面才有足够的方糖放厉害的小伙伴。'))),
@@ -3297,10 +4472,13 @@ function showGuide() {
       el('li', {}, '糖豆穿过火焰棉花糖会变成焦糖火球：伤害翻倍，打中后团子灼伤 3 秒。'),
       el('li', {}, '糖豆穿过冰霜马卡龙会变成冰糖豆，让团子减速。'),
       el('li', {}, '冰和火相克：冰淇淋球穿过棉花糖会化掉，焦糖火球穿过马卡龙会被冻灭。'))),
+    sec('金币、钻石和卡片', el('ul', {},
+      el('li', {}, '每局都能拿金币：喂饱一只团子 1 金币，守住关卡还有额外奖励；第一次通关送钻石。'),
+      el('li', {}, '金币用来扭蛋，能扭到小伙伴的闪卡、金卡和对局道具；钻石可以兑换金币、礼包，或者直接自选卡片。'),
+      el('li', {}, `带闪卡的小伙伴攻击、产出、耐久 +${Math.round((CARD_BONUS.flash - 1) * 100)}%，金卡 +${Math.round((CARD_BONUS.gold - 1) * 100)}%，在餐桌上会闪闪发光。`),
+      el('li', {}, `多用某个小伙伴也能拿卡：它累计参与喂饱 ${BOND.flash} 只团子送闪卡，${BOND.gold} 只送金卡。`))),
     sec('团子和克制方法', el('div', { class: 'intel' }, ...zrows)),
-    el('div', { class: 'btns' },
-      btn('再走一遍新手引导', () => { save.tutorialDone = false; persist(); startFlow(advCfg(0)); }),
-      btn('返回', showMenu, 'alt'))));
+    el('div', { class: 'btns' }, btn('再走一遍新手引导', () => { save.tutorialDone = false; persist(); startFlow(advCfg(0)); })))), IMG.menu);
 }
 
 /* ---------- 图鉴 ---------- */
@@ -3311,7 +4489,7 @@ function showAlmanac(tab) {
   let body;
   if (tab === 'ach') {
     body = el('div', { class: 'achs' }, ...ACH.map(a => el('div', { class: 'ach' + (save.ach[a.id] ? ' got' : '') },
-      el('div', { class: 'medal' }, save.ach[a.id] ? '★' : '？'), el('div', {}, el('b', {}, a.name), el('span', {}, a.desc)))));
+      el('div', { class: 'medal' }, save.ach[a.id] ? '★' : '？'), el('div', {}, el('b', {}, a.name), el('span', {}, a.desc + `（奖励 ${ACH_GEMS} 钻石）`)))));
   } else {
     const isP = tab === 'plants';
     const keys = isP ? PLANT_ORDER : ZOMBIE_ORDER;
@@ -3329,10 +4507,12 @@ function showAlmanac(tab) {
         const rar = RARITY[rarityOf(k)];
         const how = d.luckyOnly ? (ok ? '甜品盲盒限定 · 已开出过' : '甜品盲盒限定：从盒子里开出来后解锁')
           : ok ? '冒险模式可用' : `通关冒险 ${lv.id} 解锁（挑战和无尽模式可先试用）`;
+        const tier = cardTier(k);
         detail.append(el('div', { class: 'dtop' }, big, el('div', {}, el('h3', {}, d.name),
-          el('div', { class: 'tag' }, `☀ ${d.cost} · 冷却 ${d.cd} 秒 · 职能：${ROLES[ROLE_OF[k]] ? ROLES[ROLE_OF[k]].name : '—'} · `, el('span', { class: 'rar', style: `--rar:${rar.color}` }, `盲盒稀有度：${rar.name}`)),
-          el('div', { class: 'tag' }, how))),
-          el('div', { class: 'stat' }, d.stat), el('div', { class: 'lore' }, d.lore));
+          el('div', { class: 'tag' }, `方糖 ${d.cost} · 冷却 ${d.cd} 秒 · 职能：${ROLES[ROLE_OF[k]] ? ROLES[ROLE_OF[k]].name : '—'} · `, el('span', { class: 'rar', style: `--rar:${rar.color}` }, `盲盒稀有度：${rar.name}`)),
+          el('div', { class: 'tag' }, how + (tier ? ` · 已拥有${TIER_NAME[tier]}` : '')))),
+          el('div', { class: 'stat' }, d.stat), el('div', { class: 'lore' }, d.lore),
+          el('div', {}, el('button', { class: 'chip light', onclick: () => { sfx('select'); showCard(k, null, () => showAlmanac('plants')); } }, '看看它的卡片')));
       } else {
         const d = ZDEF[k];
         const spd = d.speed >= 25 ? '很快' : d.speed >= 18 ? '较快' : '慢';
@@ -3351,8 +4531,380 @@ function showAlmanac(tab) {
     body = el('div', { class: 'alm' }, grid, detail);
     show(keys[0]);
   }
-  openOverlay(panel('wide', head('图鉴收藏', showMenu), tabs, body));
+  openPage(page(tab === 'ach' ? '成就' : '图鉴', showMenu, el('div', { class: 'sheet', style: 'display:flex;flex-direction:column;gap:10px' }, tabs, body)), IMG.album);
 }
+
+/* ---------- 卡册 ---------- */
+function showAlbum() {
+  const total = PLANT_ORDER.length;
+  const grid = el('div', { class: 'agrid' });
+  for (const k of PLANT_ORDER) {
+    const tier = cardTier(k), v = save.bond[k] || 0, c = save.cards[k] || {};
+    const next = !c.flash ? 'flash' : !c.gold ? 'gold' : null;
+    const pct = next ? Math.min(100, v / BOND[next] * 100) : 100;
+    const lv = LEVELS.find(L => L.reward === k);
+    const locked = !plantUnlocked(k) && !tier;
+    grid.append(el('button', { class: 'acell', 'aria-label': `${PLANTS[k].name}的卡片`, onclick: () => { sfx('select'); showCard(k, null, showAlbum); } },
+      cardEl(k, tier, { size: 96, dim: locked, lock: locked ? (lv ? `通关 ${lv.id}` : '盲盒限定') : null }),
+      el('span', { class: 'bar' + (next === 'flash' ? '' : ' gold') }, el('i', { style: `width:${pct}%` })),
+      el('small', {}, next ? `${TIER_NAME[next]} ${v}/${BOND[next]}` : '已集齐'),
+      save.cardNew[k] ? el('span', { class: 'dot' }, '新') : null));
+  }
+  const headRow = el('div', { class: 'album-head' },
+    el('span', { class: 'stat f' }, `闪卡 ${cardCount('flash')}/${total}`), el('span', { class: 'stat g' }, `金卡 ${cardCount('gold')}/${total}`),
+    el('button', { class: 'chip light', onclick: () => { sfx('select'); showCardHelp(); } }, '卡片有什么用？'),
+    el('button', { class: 'chip hot', onclick: () => { sfx('select'); showGacha(); } }, '去扭蛋'));
+  openPage(page('卡册', showMenu, [headRow, grid]), IMG.album);
+}
+function showCardHelp() {
+  openModal(el('div', { class: 'rules mscroll' },
+    el('h2', {}, '卡片有什么用？'),
+    el('ul', {},
+      el('li', {}, `每位小伙伴都有一张闪卡和一张金卡。拥有闪卡：攻击伤害、方糖产出速度、耐久 +${Math.round((CARD_BONUS.flash - 1) * 100)}%；拥有金卡 +${Math.round((CARD_BONUS.gold - 1) * 100)}%（两张都有按金卡算）。`),
+      el('li', {}, '带卡的小伙伴放上餐桌会闪闪发光：闪卡是彩虹光环，金卡是金色光环和小皇冠。'),
+      el('li', {}, `怎么拿：① 多用它——累计参与喂饱 ${BOND.flash} 只团子送闪卡，${BOND.gold} 只送金卡；② 扭蛋（不会抽到重复的卡）；③ 用钻石自选（闪卡 ${GEM_CARD.flash}、金卡 ${GEM_CARD.gold} 钻石）。`),
+      el('li', {}, '"参与喂饱"：打中过这只团子就算；荷包蛋花这类不会攻击的小伙伴，只要和团子在同一行就算。'))), 'narrow');
+}
+function showCard(k, sel, onClose) {
+  const c = save.cards[k] || {};
+  const owned = t => !t || !!c[t];
+  sel = sel || cardTier(k) || 'base';
+  if (save.cardNew[k]) { delete save.cardNew[k]; persist(); }
+  const t = sel === 'base' ? null : sel;
+  const w = bigCardW();
+  const big = cardEl(k, t, { size: w, lock: owned(t) ? null : '还没拥有 · 预览', lockCls: 'pv', cls: 'big' });
+  tilt(big);
+  const tabs = el('div', { class: 'ctabs' }, ...[['base', '普通'], ['flash', '闪卡'], ['gold', '金卡']].map(([id, n]) =>
+    el('button', { class: 'ctab' + (id === 'gold' ? ' g' : id === 'flash' ? ' f' : '') + (sel === id ? ' on' : ''), onclick: () => { sfx('select'); showCard(k, id, onClose); } }, n + (id !== 'base' && owned(id) ? ' ✓' : ''))));
+  const v = save.bond[k] || 0, d = PLANTS[k], role = ROLES[ROLE_OF[k]];
+  const prog = tier => el('div', { class: 'prog' + (tier === 'gold' ? ' gold' : '') }, el('span', {}, TIER_NAME[tier]),
+    el('span', { class: 'bar' }, el('i', { style: `width:${owned(tier) ? 100 : Math.min(100, v / BOND[tier] * 100)}%` })), el('b', {}, owned(tier) ? '已拥有' : `${v}/${BOND[tier]}`));
+  const buy = t && !owned(t) ? el('button', { class: 'btn gem', onclick: () => {
+    sfx('select');
+    confirmSpend(`用 ${GEM_CARD[t]} 钻石兑换「${d.name}」的${TIER_NAME[t]}？`, 'gems', GEM_CARD[t], () => { grantCard(k, t); delete save.cardNew[k]; persist(); sfx('unlock'); toast(`获得${d.name}的${TIER_NAME[t]}！`); showCard(k, t, onClose); }, () => showCard(k, sel, onClose));
+  } }, icon('gem'), `${GEM_CARD[t]} 自选这张`) : null;
+  const info = el('div', { class: 'cinfo' },
+    el('h3', {}, d.name),
+    el('div', { class: 'muted' }, `No.${String(PLANT_ORDER.indexOf(k) + 1).padStart(2, '0')} · ${role ? role.name : ''} · 盲盒稀有度 ${RARITY[rarityOf(k)].name}${plantUnlocked(k) ? '' : ' · 还没解锁'}`),
+    el('div', { class: 'perk' }, t ? `${TIER_NAME[t]}加成：攻击伤害、方糖产出速度、耐久 +${Math.round((CARD_BONUS[t] - 1) * 100)}%，放上餐桌会闪闪发光。` : d.desc),
+    el('div', { class: 'muted' }, '累计参与喂饱团子'), prog('flash'), prog('gold'),
+    el('div', { class: 'btnrow' }, buy, el('button', { class: 'chip light', onclick: () => { sfx('select'); modal.onClose = null; showGacha(); } }, '去扭蛋')));
+  openModal(el('div', { class: 'cdetail' }, el('div', { class: 'cstage' }, big, tabs), info), '', onClose);
+}
+function confirmSpend(text, cur, price, onOk, onBack) {
+  const ic = cur === 'gems' ? 'gem' : 'coin';
+  openModal(el('div', { class: 'cstage', style: 'gap:12px;text-align:center' },
+    el('h2', { style: 'padding:0' }, '确认一下'), el('p', {}, text),
+    el('p', { class: 'muted' }, `现在有 ${cur === 'gems' ? save.gems + ' 钻石' : save.coins + ' 金币'}`),
+    el('div', { class: 'btnrow', style: 'justify-content:center' },
+      el('button', { class: 'btn ' + (cur === 'gems' ? 'gem' : 'gold'), onclick: () => {
+        if (save[cur] < price) { sfx('cant'); toast(cur === 'gems' ? '钻石不够啦，做每日任务、第一次通关和成就都能拿钻石' : '金币不够啦，打关卡和做每日任务都能赚金币'); return; }
+        save[cur] -= price; persist(); refreshWallet(); onOk();
+      } }, icon(ic), `${price} 确定`),
+      btn('再想想', () => { if (onBack) onBack(); else closeModal(); }, 'alt'))), 'narrow');
+}
+
+/* ---------- 扭蛋机 ---------- */
+let gachaBusy = false;
+// 扭 n 次：扭蛋机摇一摇，再弹出结果
+function gachaPull(n) {
+  if (gachaBusy) return;
+  const res = doGacha(n);
+  if (!res) { sfx('cant'); toast(`金币不够啦（要 ${n === 1 ? GACHA_COST.one : GACHA_COST.ten}）：打关卡、做每日任务都能赚金币`); return; }
+  gachaBusy = true;
+  refreshWallet();
+  const machine = document.querySelector('.gm');
+  if (machine) machine.classList.add('shake');
+  sfx('crank');
+  setTimeout(() => { if (machine) machine.classList.remove('shake'); gachaBusy = false; if (n === 1) revealOne(res[0]); else revealTen(res); }, 760);
+}
+function pityBar(label, v, max, cls) {
+  return el('div', { class: 'prog ' + cls }, el('span', {}, label), el('span', { class: 'bar' }, el('i', { style: `width:${v / max * 100}%` })), el('b', {}, `还差 ${max - v} 次`));
+}
+function showGacha() {
+  const d = ensureDaily(), G = save.gacha;
+  const machine = el('div', { class: 'gm' }, el('img', { src: IMG.machine, alt: '扭蛋机', draggable: 'false' }));
+  const odds = el('div', { class: 'odds' },
+    el('span', { class: 'tg g' }, '金卡'), el('span', { class: 'muted' }, `含保底约 ${GACHA_REAL.gold}%`), el('b', {}, '1%'),
+    el('span', { class: 'tg f' }, '闪卡'), el('span', { class: 'muted' }, `含保底约 ${GACHA_REAL.flash}%`), el('b', {}, '6%'),
+    el('span', { class: 'tg i' }, '道具'), el('span', { class: 'muted' }, '飞镖、方糖罐、冰冻棒棒糖、金币…'), el('b', {}, '93%'));
+  const side = el('div', { class: 'gside' },
+    el('div', { class: 'sheet' }, el('h2', {}, '甜蜜扭蛋机'), odds, pityBar('闪卡保底', G.pf, PITY.flash, ''), pityBar('金卡保底', G.pg, PITY.gold, 'gold'),
+      el('div', { class: 'muted' }, `十连必出闪卡或金卡 · 不会扭到重复的卡 · 已扭 ${G.pulls} 次`)),
+    el('div', { class: 'gbtns' },
+      el('button', { class: 'gbtn', style: '--b1:#ffb8d0;--b2:#f47aa3;--b3:#c2607e', onclick: () => gachaPull(1) }, el('b', {}, '扭 1 次'), el('span', {}, d.free ? '今日免费' : [icon('coin'), String(GACHA_COST.one)])),
+      el('button', { class: 'gbtn', style: '--b1:#cfb2ff;--b2:#9b6df0;--b3:#6a3fc0', onclick: () => gachaPull(10) }, el('b', {}, '扭 10 次'), el('span', {}, icon('coin'), String(GACHA_COST.ten)))),
+    el('div', { class: 'glinks' },
+      el('button', { class: 'chip light', onclick: () => { sfx('select'); showRules(); } }, '概率与规则'),
+      el('button', { class: 'chip light', onclick: () => { sfx('select'); showGachaLog(); } }, '扭蛋记录'),
+      el('button', { class: 'chip light', onclick: () => { sfx('select'); showAlbum(); } }, '看卡册')));
+  openPage(page('扭蛋机', showMenu, el('div', { class: 'gacha' }, machine, side), { bodyCls: 'flexcol' }), IMG.gacha);
+}
+function resultVisual(r, px) {
+  if (r.card) return cardEl(r.card, r.tier, { size: Math.round(px * 0.8) });
+  const box = el('div', { class: 'rbox', style: `width:${px}px;height:${px}px` });
+  if (r.item) { const c = iconCanvas('item', r.item, Math.round(px * 0.8)); c.style.cssText = `width:${Math.round(px * 0.8)}px;height:${Math.round(px * 0.8)}px`; box.append(c); }
+  else box.append(el('i', { class: 'ico ' + (r.gems ? 'gem' : 'coin'), style: `width:${Math.round(px * 0.68)}px;height:${Math.round(px * 0.68)}px` }));
+  return box;
+}
+const RAY = ['rgba(255,255,255,.45)', 'rgba(150,215,255,.5)', 'rgba(215,160,255,.55)', 'rgba(255,214,120,.65)'];
+function revealOne(r) {
+  const cap = el('div', { class: 'cap r' + r.rare });
+  const stage = el('div', { class: 'reveal', style: `--ray:${RAY[r.rare]};min-height:${Math.min(360, appH() - 60)}px` }, el('div', { class: 'rays' }), cap, el('p', { class: 'muted' }, '点一下扭蛋打开'));
+  openModal(stage, 'narrow', showGacha);
+  setTimeout(() => cap.classList.add('wob'), 700);
+  let opened = false;
+  const open = () => {
+    if (opened) return; opened = true;
+    stage.innerHTML = '';
+    stage.append(el('div', { class: 'rays' }));
+    if (r.rare >= 2) stage.classList.add('lit');
+    let show;
+    if (r.card) {
+      const w = Math.round(Math.max(120, Math.min(200, (appH() - 170) * 2 / 3)));
+      const fl = el('div', { class: 'flip', style: `--cw:${w}px` }, el('div', { class: 'flip-in' },
+        el('div', { class: 'flip-face flip-front' }, cardEl(r.card, r.tier, { size: w })), el('div', { class: 'flip-face flip-back' })));
+      show = fl;
+      setTimeout(() => { fl.classList.add('on'); sfx(r.tier === 'gold' ? 'gold' : 'unlock'); }, 380);
+    } else {
+      show = el('div', { class: 'ritem pop r' + r.rare }, resultVisual(r, 96));
+      sfx(r.rare ? 'ach' : 'pop');
+    }
+    stage.append(show, el('div', { class: 'rname' + (r.tier === 'gold' ? ' g' : r.tier === 'flash' ? ' f' : '') }, resultLabel(r)),
+      el('div', { class: 'btnrow', style: 'justify-content:center' },
+        btn(ensureDaily().free ? '再扭一次（免费）' : `再扭一次 · ${GACHA_COST.one} 金币`, () => { modal.onClose = null; closeModal(); showGacha(); gachaPull(1); }, ''), btn('收下', () => closeModal(), 'alt')));
+  };
+  cap.addEventListener('click', open);
+  setTimeout(open, 1600);
+}
+function revealTen(res) {
+  const grid = el('div', { class: 'rgrid' });
+  const cells = res.map((r, i) => { const c = el('div', { class: 'ritem' }, el('div', { class: 'cap r' + r.rare, style: `width:52px;height:52px;animation-delay:${i * 0.06}s` })); grid.append(c); return c; });
+  const best = Math.max(...res.map(r => r.rare));
+  const bar = el('div', { class: 'btnrow', style: 'justify-content:center' });
+  const stage = el('div', { class: 'reveal' + (best >= 2 ? ' lit' : ''), style: `--ray:${RAY[best]};gap:12px` }, el('div', { class: 'rays' }), el('h2', { style: 'padding:0' }, '十连扭蛋'), grid, bar);
+  openModal(stage, '', showGacha);
+  let done = false;
+  const openAll = () => {
+    if (done) return; done = true;
+    bar.innerHTML = '';
+    res.forEach((r, i) => setTimeout(() => {
+      const c = cells[i];
+      c.innerHTML = ''; c.className = 'ritem pop r' + r.rare;
+      c.append(resultVisual(r, 52), el('b', {}, r.card ? PLANTS[r.card].name : r.item ? ITEMS[r.item].name : r.gems ? '钻石' : '金币'));
+      if (r.n > 1 || r.coins || r.gems) c.append(el('span', { class: 'n' }, '×' + (r.n || r.coins || r.gems)));
+      sfx(r.rare === 3 ? 'gold' : r.rare === 2 ? 'unlock' : 'pop');
+      if (i === res.length - 1) {
+        const cards = res.filter(x => x.card);
+        bar.append(el('span', { class: 'muted' }, cards.length ? `新卡片：${cards.map(x => `${PLANTS[x.card].name}${TIER_NAME[x.tier]}`).join('、')}` : ''),
+          btn(`再扭 10 次 · ${GACHA_COST.ten} 金币`, () => { modal.onClose = null; closeModal(); showGacha(); gachaPull(10); }), btn('收下', () => closeModal(), 'alt'));
+      }
+    }, 150 * i));
+  };
+  bar.append(btn('全部打开', openAll));
+  setTimeout(openAll, 1400);
+}
+function showRules() {
+  const rows = GACHA_POOL.map(e => el('tr', {}, el('td', {}, e.name), el('td', { class: 'num' }, e.p + '%'), el('td', { class: 'num' }, GACHA_REAL[e.id].toFixed(2) + '%')));
+  const pct = t => Math.round((CARD_BONUS[t] - 1) * 100);
+  openModal(el('div', { class: 'rules mscroll' },
+    el('h2', {}, '扭蛋概率与规则'),
+    el('h3', {}, '价格'), el('ul', {},
+      el('li', {}, `扭 1 次 ${GACHA_COST.one} 金币，扭 10 次 ${GACHA_COST.ten} 金币。`),
+      el('li', {}, '每天第一次扭 1 次免费（按这台设备的时间 0 点刷新）。'),
+      el('li', {}, '金币靠玩游戏获得：喂饱团子、守住关卡、每日任务；也可以用钻石兑换。')),
+    el('h3', {}, '奖池和概率'),
+    el('table', {}, el('tr', {}, el('th', {}, '奖品'), el('th', {}, '单次概率'), el('th', {}, '含保底的实际概率')), ...rows),
+    el('p', { class: 'muted' }, '"含保底的实际概率"是按下面的保底规则长期扭蛋的平均结果（模拟 300 万次）。'),
+    el('h3', {}, '保底'), el('ul', {},
+      el('li', {}, `连续 ${PITY.flash - 1} 次没出闪卡或金卡，第 ${PITY.flash} 次必出闪卡，所以十连一定至少有 1 张。`),
+      el('li', {}, `连续 ${PITY.gold - 1} 次没出金卡，第 ${PITY.gold} 次必出金卡；平均约 55 次出 1 张金卡。`),
+      el('li', {}, '抽到金卡时两个保底计数都清零；抽到闪卡时闪卡计数清零。'),
+      el('li', {}, '保底计数一直存在存档里，不会过期，也不会因为退出游戏清零。')),
+    el('h3', {}, '卡片怎么分配'), el('ul', {},
+      el('li', {}, '抽到闪卡或金卡时，从你还没拥有这一档卡片的小伙伴里等概率选一位（优先已经解锁的小伙伴），不会抽到重复的卡。'),
+      el('li', {}, `某一档卡片全部集齐后再抽到，闪卡换成 ${DUP_GEMS.flash} 钻石，金卡换成 ${DUP_GEMS.gold} 钻石。`)),
+    el('h3', {}, '卡片效果'), el('ul', {},
+      el('li', {}, `闪卡：这位小伙伴的攻击伤害、方糖产出速度、耐久 +${pct('flash')}%；金卡 +${pct('gold')}%（两张都有按金卡算）。`),
+      el('li', {}, '带卡的小伙伴放上餐桌会闪闪发光。')),
+    el('h3', {}, '其他获得方式'), el('ul', {},
+      el('li', {}, `多用它：累计参与喂饱 ${BOND.flash} 只团子送闪卡，${BOND.gold} 只送金卡。打中过这只团子就算参与；不会攻击的小伙伴（经济、防守、辅助）和团子在同一行也算。`),
+      el('li', {}, `用钻石自选：闪卡 ${GEM_CARD.flash} 钻石，金卡 ${GEM_CARD.gold} 钻石。`)),
+    el('h3', {}, '理性消费'), el('ul', {},
+      el('li', {}, '金币和钻石只能在游戏里使用，不能兑换成现金。'),
+      el('li', {}, '体验版暂未开放充值。正式开放后会接入平台官方支付，并按国家规定限制未成年人充值。'))));
+}
+function showGachaLog() {
+  const two = n => String(n).padStart(2, '0');
+  const rows = save.gacha.log.map(x => {
+    const d = new Date(x.t);
+    const name = x.k ? `${PLANTS[x.k] ? PLANTS[x.k].name : x.k} · ${TIER_NAME[x.id]}` : (GACHA_POOL.find(e => e.id === x.id) || { name: x.id }).name;
+    return el('div', {}, el('span', {}, name), el('span', { class: 'muted' }, `${two(d.getMonth() + 1)}-${two(d.getDate())} ${two(d.getHours())}:${two(d.getMinutes())}`));
+  });
+  openModal(el('div', { class: 'mscroll' }, el('h2', {}, '扭蛋记录（最近 100 次）'),
+    el('div', { class: 'log', style: 'margin-top:8px' }, ...(rows.length ? rows : [el('p', { class: 'muted' }, '还没有扭过哦')]))), 'narrow');
+}
+
+/* ---------- 甜品商店 ---------- */
+function showShop() {
+  const sec = (title, ...kids) => el('div', { class: 'shop-sec' }, el('h2', {}, title), ...kids);
+  const good = (vis, name, sub, priceCls, priceKids, fn, tag) => el('button', { class: 'good', onclick: () => { sfx('select'); fn(); } },
+    vis, el('b', {}, name), el('small', {}, sub), el('span', { class: 'price ' + priceCls }, ...[].concat(priceKids)), tag ? el('span', { class: 'tagx' }, tag) : null);
+  const itemsVis = give => { const k = Object.keys(give)[0]; const c = iconCanvas('item', k, 44); return c; };
+  const giveText = give => Object.entries(give).map(([k, n]) => `${ITEMS[k].name}×${n}`).join(' ');
+  const buyItems = (cur, price, give, name) => confirmSpend(`用 ${price} ${cur === 'gems' ? '钻石' : '金币'}买「${name}」？`, cur, price, () => {
+    for (const [k, n] of Object.entries(give)) save.items[k] += n;
+    persist(); sfx('unlock'); toast(`买到了：${giveText(give)}`); closeModal();
+  });
+  const topups = el('div', { class: 'goods' }, ...TOPUP.map((t, i) => good(
+    el('span', { class: 'gemstack' }, ...Array.from({ length: Math.min(3, 1 + Math.floor(i / 2)) }, () => icon('gem'))),
+    `${t.gems} 钻石`, t.bonus ? `再送 ${t.bonus} 钻石` : '小小心意', '', `¥${t.rmb}`, () => showTopupInfo(t), t.bonus ? `+${t.bonus}` : null)));
+  const exch = el('div', { class: 'goods' }, ...EXCHANGE.map(e => good(icon('coin'), `${e.coins} 金币`, e.tag || '扭蛋要用金币', 'gp', [icon('gem'), String(e.gems)],
+    () => confirmSpend(`用 ${e.gems} 钻石换 ${e.coins} 金币？`, 'gems', e.gems, () => { save.coins += e.coins; persist(); refreshWallet(); sfx('sun'); toast(`得到 ${e.coins} 金币`); closeModal(); }), e.tag ? '划算' : null)));
+  const coinGoods = el('div', { class: 'goods' }, ...COIN_GOODS.map(x => good(itemsVis(x.give), x.name, ITEMS[Object.keys(x.give)[0]].desc, 'cp', [icon('coin'), String(x.price)], () => buyItems('coins', x.price, x.give, x.name))));
+  const gemGoods = el('div', { class: 'goods' }, ...GEM_GOODS.map(x => good(icon('gift'), x.name, x.desc, 'gp', [icon('gem'), String(x.price)], () => buyItems('gems', x.price, x.give, x.name))),
+    good(icon('album'), '自选卡片', `闪卡 ${GEM_CARD.flash} 钻石 · 金卡 ${GEM_CARD.gold} 钻石，在卡册里挑`, 'gp', '去卡册', showAlbum));
+  openPage(page('甜品商店', showMenu, [
+    el('div', { class: 'shop-banner' }, el('b', {}, '甜品商店')),
+    sec('钻石礼包', gemGoods),
+    sec('金币小铺', coinGoods),
+    sec('钻石换金币', exch),
+    sec('充值钻石（体验版暂未开放）', topups),
+  ]), IMG.menu);
+}
+function showTopupInfo(t) {
+  openModal(el('div', { class: 'rules' },
+    el('h2', {}, `¥${t.rmb} · ${t.gems} 钻石${t.bonus ? ` + 送 ${t.bonus}` : ''}`),
+    el('p', {}, '体验版暂时没有开放充值，不会产生任何费用。'),
+    el('ul', {},
+      el('li', {}, '正式上线后，充值会通过应用商店或小程序平台的官方支付完成。'),
+      el('li', {}, '会按国家规定对未成年人设置充值限额，并提供消费记录查询。'),
+      el('li', {}, `现在可以免费拿钻石：每日任务全部完成送 ${DAILY_BONUS_GEMS}、每关第一次通关送 20、每个成就送 ${ACH_GEMS}。`))), 'narrow');
+}
+
+/* ---------- 每日任务 ---------- */
+function showDaily() {
+  const d = ensureDaily();
+  const rows = DAILY.map(T => {
+    const v = d.prog[T.id] || 0, ok = v >= T.goal, got = !!d.got[T.id];
+    return el('div', { class: 'task' + (got ? ' got' : '') },
+      el('b', {}, T.name),
+      el('div', { class: 'act' }, el('span', { class: 'rw' }, icon('coin'), '+' + T.coins),
+        got ? el('span', { class: 'muted' }, '已领取') : ok ? btn('领取', () => { d.got[T.id] = true; save.coins += T.coins; persist(); sfx('sun'); showDaily(); }, 'small') : el('span', { class: 'muted' }, '进行中')),
+      el('div', { class: 'prog' }, el('span', { class: 'bar' }, el('i', { style: `width:${v / T.goal * 100}%` })), el('b', {}, `${v}/${T.goal}`)));
+  });
+  const all = DAILY.every(T => d.got[T.id]);
+  const claim = btn([icon('gem'), `领取 ${DAILY_BONUS_GEMS}`], () => { if (!all || d.bonus) return; d.bonus = true; save.gems += DAILY_BONUS_GEMS; persist(); sfx('unlock'); showDaily(); }, 'small gem');
+  claim.disabled = !all;
+  const bonus = el('div', { class: 'bonus' }, icon('gift'),
+    el('div', { style: 'flex:1;min-width:0' }, el('b', { style: 'font-family:var(--display);font-weight:400;font-size:17px;color:#b0701a' }, '全部完成奖励'), el('div', { class: 'muted' }, `领完上面 ${DAILY.length} 个任务，再送 ${DAILY_BONUS_GEMS} 钻石`)),
+    d.bonus ? el('span', { class: 'muted' }, '已领取') : claim);
+  openPage(page('每日任务', showMenu, el('div', { class: 'tasks', style: 'max-width:760px;margin:0 auto;width:100%' },
+    el('div', { class: 'muted', style: 'color:#fff;text-shadow:0 1px 2px #c2607e;font-size:13px' }, `每天 0 点（这台设备的时间）刷新 · 今日免费扭蛋：${d.free ? '还没用' : '已使用'}`),
+    ...rows, bonus)), IMG.menu);
+}
+
+/* ---------- 设置 ---------- */
+function showSettings() {
+  const tog = (label, key, after) => {
+    const b = el('button', { class: 'chip' + (save[key] ? ' hot' : ''), onclick: () => {
+      save[key] = !save[key]; persist(); sfx('select');
+      b.textContent = `${label}：${save[key] ? '开' : '关'}`; b.classList.toggle('hot', save[key]);
+      if (after) after();
+    } }, `${label}：${save[key] ? '开' : '关'}`);
+    return b;
+  };
+  let armed = false;
+  const resetChip = el('button', { class: 'chip', onclick: () => {
+    if (!armed) { armed = true; resetChip.textContent = '再点一次：清空全部进度、卡片、金币和钻石'; resetChip.classList.add('warn'); return; }
+    const keep = { sfx: save.sfx, music: save.music };
+    save = Object.assign(defaultSave(), keep); persist(); toast('进度已重置'); showMenu();
+  } }, '重置进度');
+  let taps = 0;
+  const ver = el('p', { class: 'muted', onclick: () => { if (++taps >= 7 && !save.dev) { save.dev = true; persist(); toast('开发者测试模式已打开'); showSettings(); } } },
+    '《别偷吃我的蛋糕！》体验版 · 全部角色、关卡和美术都是原创');
+  const dev = save.dev ? el('div', { class: 'btnrow' }, el('span', { class: 'muted' }, '开发者测试（上架前删除）：'),
+    btn('+1000 钻石', () => { save.gems += 1000; persist(); refreshWallet(); }, 'small gem'),
+    btn('+10000 金币', () => { save.coins += 10000; persist(); refreshWallet(); }, 'small gold'),
+    btn('关闭', () => { save.dev = false; persist(); showSettings(); }, 'small alt')) : null;
+  openPage(page('设置', showMenu, el('div', { class: 'sheet', style: 'display:flex;flex-direction:column;gap:10px;max-width:620px;margin:0 auto;width:100%;box-sizing:border-box' },
+    el('h2', {}, '声音'), el('div', { class: 'btnrow' }, tog('音效', 'sfx'), tog('音乐', 'music', () => Sound.music(save.music ? 'menu' : null))),
+    el('h2', {}, '存档'), el('p', { class: 'muted' }, '进度保存在这台设备的浏览器里，换设备或清除网站数据会丢失。'), el('div', { class: 'btnrow' }, resetChip),
+    el('h2', {}, '关于'), ver, dev)), IMG.menu);
+}
+
+/* ---------- 对局里的道具 ---------- */
+const bagBtn = document.getElementById('bagBtn');
+const trayEl = document.getElementById('itemTray');
+function closeTray() { trayEl.hidden = true; }
+function renderTray() {
+  trayEl.innerHTML = '';
+  for (const id of TRAY_ITEMS) {
+    const n = save.items[id] || 0;
+    trayEl.append(el('button', { class: 'itm', disabled: n <= 0, title: ITEMS[id].desc, 'aria-label': `${ITEMS[id].name}：${ITEMS[id].desc}，还有 ${n} 个`, onclick: () => useItem(id) },
+      iconCanvas('item', id, 38), el('b', {}, ITEMS[id].name), n ? el('span', { class: 'badge' }, String(n)) : null));
+  }
+  if (!TRAY_ITEMS.some(id => save.items[id] > 0)) trayEl.append(el('span', { class: 'tray-tip' }, '还没有道具，扭蛋机和商店都能拿到'));
+}
+bagBtn.addEventListener('click', () => {
+  if (!playable()) return;
+  sfx('select');
+  if (trayEl.hidden) { renderTray(); trayEl.hidden = false; } else closeTray();
+});
+function useItem(id) {
+  if (!playable() || !(save.items[id] > 0)) { sfx('cant'); return; }
+  let ok = true;
+  if (id === 'sugar') {
+    S.sun += 150;
+    floatText(LX + 90, TOP + 60, '+150 方糖', '#ffd56a', 24);
+    for (let i = 0; i < 14; i++) part({ x: LX + 90, y: TOP + 60, vx: rnd(-200, 200), vy: rnd(-200, 80), grav: 200, life: 0.6, size: rnd(3, 6), color: i % 2 ? '#ffd56a' : '#fff', shape: 'sparkle', vr: 8 });
+    sfx('sun');
+  } else if (id === 'freeze') {
+    const zs = S.zombies.filter(z => !z.dead);
+    if (!zs.length) ok = false;
+    else {
+      for (const z of zs) { z.frozen = Math.max(z.frozen, 5); z.burnT = 0; }
+      S.fx.push({ type: 'ice', x: W / 2, y: H / 2, t: 0, dur: 1, big: true });
+      S.flashA = 0.5; S.shake = Math.max(S.shake, 4);
+      floatText(W / 2, H / 2 - 40, '冰冻棒棒糖：全场冻住！', '#bfe9ff', 26);
+      sfx('freeze');
+    }
+  } else if (id === 'heal') {
+    let n = 0;
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+      const p = S.plants[r][c];
+      if (!p || PLANTS[p.type].box || p.hp >= p.maxHp) continue;
+      p.hp = p.maxHp; n++;
+      for (let i = 0; i < 4; i++) part({ shape: 'heart', x: cellCX(c) + rnd(-18, 18), y: cellCY(r) - 10, vx: rnd(-30, 30), vy: rnd(-110, -60), grav: 0, life: 0.9, size: rnd(5, 8), color: i % 2 ? '#ff8fb5' : '#ffc2d6' });
+    }
+    if (!n) ok = false;
+    else { floatText(W / 2, H / 2 - 40, `爱心蛋糕：${n} 位小伙伴回满血`, '#ffb3cd', 22); sfx('unlock'); }
+  } else if (id === 'robot') {
+    let n = 0;
+    S.mowers.forEach(m => { if (m.state === 'done') { m.state = 'ready'; m.x = LX - 52; n++; } });
+    if (!n) ok = false;
+    else { floatText(LX + 40, H / 2, `${n} 台扫地机器人回来啦`, '#a8ecd1', 20); sfx('mower'); }
+  } else if (id === 'bomb') {
+    const zs = S.zombies.filter(z => !z.dead && !z.under);
+    if (!zs.length) ok = false;
+    else {
+      CUR_SRC = '';
+      let k = 0;
+      for (const z of zs) { if (hurtZombie(z, 300)) k++; creamSplash(z.x, zombieY(z) - 30, 40); }
+      CUR_SRC = null;
+      comboCheck(k);
+      S.fx.push({ type: 'shock', x: W / 2, y: H / 2, t: 0, dur: 0.6, r: 420 });
+      S.shake = Math.max(S.shake, 12); S.flashA = 0.4;
+      floatText(W / 2, H / 2 - 40, '奶油大炮！', '#ffe0ef', 30);
+      sfx('boom');
+    }
+  }
+  if (!ok) { floatText(W / 2, H / 2, ITEMS[id].none || '现在用不了', '#fffaf4', 18); sfx('cant'); return; }
+  save.items[id]--; S.itemsUsed++;
+  persist(); renderTray();
+}
+
+const dartCostEl = dartBtn.querySelector('.cost'), bagBadge = bagBtn.querySelector('.badge');
 
 /* ---------- 对局 ---------- */
 function setPaused(v) {
@@ -3363,75 +4915,81 @@ function setPaused(v) {
   else closeOverlay();
 }
 
+function rewardBlock(rw) {
+  return el('div', { class: 'rewards' }, el('b', { style: 'font-family:var(--display);font-weight:400;color:#b0701a' }, '本局收获'),
+    rwPill('coin', rw.coins), rw.gems ? rwPill('gem', rw.gems) : null,
+    ...rw.cards.map(([k, tier]) => el('span', { class: 'rw-pill' + (tier === 'flash' ? ' gem' : '') }, cardEl(k, tier, { size: 26 }), `${PLANTS[k].name}${TIER_NAME[tier]}`)));
+}
 function gameOver(won) {
   if (S.over) return;
-  S.over = true; S.selected = null;
+  S.over = true; S.selected = null; closeTray();
   Sound.music(null);
   const body = [];
   const btns = [];
+  const back = CFG.back || showMenu;
+  const backLabel = CFG.mode === 'adventure' ? '关卡地图' : CFG.mode === 'challenge' ? '挑战列表' : CFG.mode === 'mini' ? '小游戏列表' : '返回';
   if (CFG.mode === 'endless' || CFG.mode === 'lucky') {
     const key = CFG.mode === 'lucky' ? 'luckyBest' : 'bestWave';
     const wave = S.waveNum;
     const best = wave > save[key];
     if (best) save[key] = wave;
-    persist();
+    const rw = battleRewards(false, false);
     sfx('lose');
     body.push(el('p', {}, `撑到了第 ${wave} 波，喂饱 ${S.kills} 只团子。${best ? '刷新了最高纪录！' : `最高纪录：第 ${save[key]} 波。`}`));
     if (CFG.mode === 'lucky') body.push(el('p', {}, `图鉴里已经开出过 ${Object.keys(save.boxGot).length}/${PLANT_ORDER.length} 种小伙伴${S.boxZombies ? `，这局盒子里跳出过 ${S.boxZombies} 只团子` : ''}。`));
-    btns.push(btn('再来一局', () => startGame(CFG, S.deck)), btn('主菜单', showMenu, 'alt'));
+    body.push(rewardBlock(rw));
+    btns.push(btn('再来一局', () => startGame(CFG, S.deck)), btn('主页', showMenu, 'alt'));
     setTimeout(() => openOverlay(panel('', el('h1', {}, '蛋糕失守啦'), el('p', { class: 'sub' }, CFG.label), ...body, el('div', { class: 'btns' }, ...btns))), 700);
     return;
   }
   if (!won) {
-    persist();
+    const rw = battleRewards(false, false);
     sfx('lose');
     S.shake = 10;
     setTimeout(() => openOverlay(panel('', el('h1', {}, '蛋糕被偷吃了一口！'), el('p', { class: 'sub' }, CFG.label),
-      el('p', {}, `坚持了 ${Math.floor(S.t)} 秒，喂饱 ${S.kills} 只团子。试试先多放几朵荷包蛋花攒方糖。`),
-      el('div', { class: 'btns' }, btn('再试一次', () => startGame(CFG, S.deck)), btn('主菜单', showMenu, 'alt')))), 900);
+      el('p', {}, `坚持了 ${Math.floor(S.t)} 秒，喂饱 ${S.kills} 只团子。试试先多放几朵荷包蛋花攒方糖，或者带上道具再来。`),
+      rewardBlock(rw),
+      el('div', { class: 'btns' }, btn('再试一次', () => startGame(CFG, S.deck)), btn(backLabel, back, 'alt'), btn('主页', showMenu, 'alt')))), 900);
     return;
   }
   sfx('win');
-  for (let i = 0; i < 40; i++) part({ x: rnd(LX, W), y: TOP - 10, vx: rnd(-40, 40), vy: rnd(0, 120), grav: 150, life: rnd(1.2, 2), size: rnd(3, 6), color: ['#ffd23f', '#e3263a', '#7fd14a', '#7fd3ff', '#fff3d1'][i % 5], shape: 'rect', vr: rnd(-8, 8) });
+  for (let i = 0; i < 40; i++) part({ x: rnd(LX, W), y: TOP - 10, vx: rnd(-40, 40), vy: rnd(0, 120), grav: 150, life: rnd(1.2, 2), size: rnd(3, 6), color: ['#ffd23f', '#ff9ec0', '#7fd14a', '#7fd3ff', '#fff3d1'][i % 5], shape: 'rect', vr: rnd(-8, 8) });
   if (CFG.mode === 'adventure') {
     const i = CFG.idx, first = !save.cleared.includes(i);
     if (first) save.cleared.push(i);
     if (i === 0) unlockAch('first');
-    if (LEVELS[i].id === '1-16') unlockAch('master');
-        if (!S.mowerUsed) unlockAch('nomower');
-    persist();
+    if (LEVELS[i].id === '1-20') unlockAch('master');
+    if (!S.mowerUsed) unlockAch('nomower');
+    const rw = battleRewards(true, first);
     if (first) {
       const k = LEVELS[i].reward;
       body.push(el('div', { class: 'reward' }, iconCanvas('plant', k, 64), el('div', {}, el('b', {}, `获得新小伙伴：${PLANTS[k].name}`), el('p', {}, PLANTS[k].desc))));
       setTimeout(() => sfx('unlock'), 700);
     }
     body.unshift(el('p', {}, `守住了 ${CFG.waves} 波进攻，喂饱 ${S.kills} 只团子${S.mowerUsed ? '' : '，扫地机器人一台没动'}。`));
+    body.push(rewardBlock(rw));
     if (i + 1 < LEVELS.length) btns.push(btn(`下一关 ${LEVELS[i + 1].id}`, () => startFlow(advCfg(i + 1))));
-    btns.push(btn('关卡列表', showLevels, 'alt'), btn('主菜单', showMenu, 'alt'));
-  } else if (CFG.mode === 'lucky') {
-    save.luckyWin = true;
-    unlockAch('luckywin');
-    persist();
-    body.push(el('p', {}, `守住了 ${CFG.waves} 波，喂饱 ${S.kills} 只团子${S.boxZombies ? `，盒子里跳出过 ${S.boxZombies} 只团子` : ''}。`));
-    body.push(el('p', {}, `图鉴里已经开出过 ${Object.keys(save.boxGot).length}/${PLANT_ORDER.length} 种小伙伴。`));
-    btns.push(btn('再开一局', () => startGame(CFG, S.deck)), btn('主菜单', showMenu, 'alt'));
+    btns.push(btn('关卡地图', showLevels, 'alt'), btn('主页', showMenu, 'alt'));
   } else if (CFG.mode === 'mini') {
+    const first = !save.mini[CFG.id];
     save.mini[CFG.id] = true;
     if (MINIGAMES.every(m => save.mini[m.id])) unlockAch('minigamer');
-    persist();
-    body.push(el('p', {}, `完成！喂饱 ${S.kills} 只团子。`));
-    btns.push(btn('小游戏列表', showMinigames), btn('主菜单', showMenu, 'alt'));
+    const rw = battleRewards(true, first);
+    body.push(el('p', {}, `完成！喂饱 ${S.kills} 只团子。`), rewardBlock(rw));
+    btns.push(btn('小游戏列表', showMinigames), btn('主页', showMenu, 'alt'));
   } else {
+    const first = !save.chal[CFG.id];
     save.chal[CFG.id] = true;
     if (CHALLENGES.every(c => save.chal[c.id])) unlockAch('challenger');
-    persist();
-    body.push(el('p', {}, `挑战完成，喂饱 ${S.kills} 只团子。`));
-    btns.push(btn('挑战列表', showChallenges), btn('主菜单', showMenu, 'alt'));
+    const rw = battleRewards(true, first);
+    body.push(el('p', {}, `挑战完成，喂饱 ${S.kills} 只团子。`), rewardBlock(rw));
+    btns.push(btn('挑战列表', showChallenges), btn('主页', showMenu, 'alt'));
   }
   setTimeout(() => openOverlay(panel('', el('h1', {}, '守住了！'), el('p', { class: 'sub' }, CFG.label), ...body, el('div', { class: 'btns' }, ...btns))), 1200);
 }
 
 function startGame(cfg, deck) {
+  closeModal(); closeTray();
   S = newState(cfg, deck);
   // 开局赠送的小伙伴（目前没有模式使用）
   if (cfg.freeRow) for (let r = 0; r < ROWS; r++) { const p = makePlant(cfg.freeRow); p.age = 1; S.plants[r][0] = p; }
@@ -3457,7 +5015,8 @@ function throwDart(x, y) {
     if (d < bd) { bd = d; best = z; }
   }
   if (!best) { floatText(x, y, '这里没有气球', '#fffaf4', 16); sfx('cant'); return; }
-  S.sun -= DART_COST; S.dartCd = DART_CD; S.selected = null;
+  if (save.items.dart > 0) { save.items.dart--; persist(); } else { S.sun -= DART_COST; S.dartCd = DART_CD; }
+  S.selected = null;
   const zy = zombieY(best);
   for (let i = 0; i < 6; i++) part({ x: best.x + 10, y: zy - 72, vx: rnd(-200, 200), vy: rnd(-200, 100), grav: 300, life: 0.4, size: rnd(3, 5), color: i % 2 ? '#ffb3c7' : '#ffffff', shape: 'sparkle' });
   hurtZombie(best, 15);
@@ -3491,6 +5050,7 @@ cv.addEventListener('pointerdown', e => {
   if (best) {
     best.fly = true; best.sx = best.x; best.sy = best.y;
     S.sun += best.value;
+    dailyAdd('sun');
     floatText(best.x, best.y - 10, '+' + best.value, '#ffe36b', 22);
     for (let i = 0; i < 12; i++) part({ x: best.x, y: best.y, vx: rnd(-180, 180), vy: rnd(-180, 120), grav: 120, life: 0.5, size: rnd(3, 6), color: i % 2 ? '#ffd56a' : '#ffffff', shape: 'sparkle', vr: 8 });
     S.fx.push({ type: 'ring', x: best.x, y: best.y, t: 0, dur: 0.35, color: '#ffd56a' });
@@ -3515,7 +5075,14 @@ cv.addEventListener('pointerdown', e => {
   const k = S.selected, d = PLANTS[k];
   const free = !!CFG.conveyor;
   if (CFG.bowling && c > 2) { sfx('cant'); floatText(cellCX(c), cellCY(r), '放在红线左边', '#fff3d1', 18); return; }
-  if (!d.special && (S.plants[r][c] || S.graves[r][c])) { sfx('cant'); return; }
+  const old = S.plants[r][c];
+  const replacing = canReplace(old, k);
+  if (!d.special && old && !replacing) {
+    sfx('cant');
+    floatText(cellCX(c), cellCY(r) - 20, old.type === k ? '它还满血哦' : '只能换同种的小伙伴', '#fffaf4', 15);
+    return;
+  }
+  if (!d.special && S.graves[r][c]) { sfx('cant'); return; }
   if (S.craters[r][c] > 0) { sfx('cant'); floatText(cellCX(c), cellCY(r), '坑还没填好', '#fff3d1', 16); return; }
   if (!free && S.sun < d.cost) { nope(); S.selected = null; return; }
   if (d.special) S.rollers.push({ row: r, x: cellCX(c), y: cellCY(r) + 20, kind: k, spin: 0, hits: 0, dir: 0, last: null });
@@ -3523,6 +5090,7 @@ cv.addEventListener('pointerdown', e => {
   if (free) { S.belt = S.belt.filter(i => i.id !== S.selBelt); S.selBelt = null; beltDirty = true; }
   else { S.sun -= d.cost; S.cd[k] = d.cd; }
   S.selected = null;
+  if (replacing) floatText(cellCX(c), cellCY(r) - 30, '换新啦！满血复活', '#a8ecd1', 17);
   S.fx.push({ type: 'plant', x: cellCX(c), y: cellCY(r) + 28, t: 0, dur: 0.4 });
   S.fx.push({ type: 'ring', x: cellCX(c), y: cellCY(r) + 20, t: 0, dur: 0.4, color: '#ff9ec0' });
   for (let i = 0; i < 8; i++) part({ x: cellCX(c) + rnd(-20, 20), y: cellCY(r) + 30, vx: rnd(-90, 90), vy: rnd(-200, -80), life: 0.5, size: rnd(2, 4), color: i % 2 ? '#ffb3c7' : '#fff0f5', shape: 'sparkle', ground: cellCY(r) + 34 });
@@ -3561,7 +5129,7 @@ document.addEventListener('touchend', e => {
 }, { passive: false });
 document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
 for (const ev of ['gesturestart', 'gesturechange']) document.addEventListener(ev, e => e.preventDefault(), { passive: false });
-document.addEventListener('touchmove', e => { if (e.touches.length > 1 || !e.target.closest('.panel, .menu, #bank')) e.preventDefault(); }, { passive: false });
+document.addEventListener('touchmove', e => { if (e.touches.length > 1 || !e.target.closest('.panel, .menu, #bank, .pbody, .mbox, #itemTray')) e.preventDefault(); }, { passive: false });
 
 /* ================= 尺寸与主循环 ================= */
 function fit() {
@@ -3581,6 +5149,10 @@ function measureScreen() {
   const w = document.body.clientWidth || window.innerWidth, h = document.body.clientHeight || window.innerHeight;
   document.documentElement.style.setProperty('--scr-w', w + 'px');
   document.documentElement.style.setProperty('--scr-h', h + 'px');
+  // 游戏区域的高度：竖屏旋转时是屏幕宽度。界面字号按它缩放（不能用 vh，旋转后不对）
+  const rot = window.matchMedia('(orientation:portrait) and (max-width:600px)').matches;
+  document.documentElement.style.setProperty('--ah', (rot ? w : h) + 'px');
+  document.documentElement.style.setProperty('--aw', (rot ? h : w) + 'px');
 }
 measureScreen();
 window.addEventListener('resize', measureScreen);
@@ -3594,7 +5166,7 @@ function frame(now) {
   if (S.demo) update(dt);
   else if (running && !paused && !S.over) for (let i = 0; i < speed; i++) { update(dt); if (S.over) break; }
   else if (S.over) updateEffects(dt);
-  draw();
+  if (!skipDraw) draw();
   updateUI();
   requestAnimationFrame(frame);
 }
@@ -3604,7 +5176,8 @@ fit();
 if (document.fonts && document.fonts.load) document.fonts.load(`20px ${FONT}`).then(() => {}, () => {});
 requestAnimationFrame(frame);
 
-window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, startGame, startFlow, advCfg, chalCfg, endlessCfg, luckyCfg, miniCfg, MINIGAMES, rollBox, showMenu, showLevels, showAlmanac, save: () => save, LEVELS };
+window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, startGame, makePlant, spawnZombie, hurtZombie, canReplace, PLANTS, ZDEF, draw, startFlow, advCfg, chalCfg, endlessCfg, luckyCfg, miniCfg, MINIGAMES, rollBox, showMenu, showLevels, showAlmanac, save: () => save, LEVELS,
+  doGacha, pullOnce, grantCard, showGacha, showAlbum, showShop, showDaily, showSettings, showCard, showModes, useItem, renderTray, ensureDaily, battleRewards, cardTier, BOND, PITY };
 })();
 </script>
 <script>

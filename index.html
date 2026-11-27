@@ -701,6 +701,8 @@ button{font:inherit;color:inherit}
   .stab{font-size:14px;padding:6px 6px}
 }
 
+/* 大屏幕整体放大界面（手机上 --uiz 是 1） */
+.hub,.page,.mbox,.panel,#bank,#itemTray,#toast{zoom:var(--uiz,1)}
 @media (prefers-reduced-motion:reduce){.card,.tool,#toast{transition:none}.card.ready{animation:none}}
 </style>
 
@@ -747,8 +749,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.26-2321·801d33 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.26-2321·801d33';
+// 版本号：打包时 build.py 会把 2026.11.26-2345·8b7762 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.26-2345·8b7762';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -4181,11 +4183,14 @@ function draw() {
   if (S.tip && !S.demo) {
     const a = Math.min(1, S.tip.t * 4, (5 - S.tip.t) * 2);
     g.save(); g.globalAlpha = Math.max(0, a) * 0.92;
-    g.font = `15px ${FONT}`;
-    const tw = Math.min(W - 40, g.measureText(S.tip.text).width + 32);
-    rr(W / 2 - tw / 2, H - 46, tw, 30, 15); g.fillStyle = 'rgba(120,50,80,.78)'; g.fill();
+    const parts = S.tip.text.split('　克制：');
+    const lines = parts.length > 1 ? [parts[0], '克制：' + parts[1]] : [S.tip.text];
+    let fs = 15; g.font = `${fs}px ${FONT}`;
+    while (fs > 10 && Math.max(...lines.map(l => g.measureText(l).width)) > W - 80) { fs--; g.font = `${fs}px ${FONT}`; }
+    const tw = Math.min(W - 40, Math.max(...lines.map(l => g.measureText(l).width)) + 36), th = lines.length * (fs + 5) + 10;
+    rr(W / 2 - tw / 2, H - 16 - th, tw, th, 14); g.fillStyle = 'rgba(120,50,80,.8)'; g.fill();
     g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#fffaf4';
-    g.fillText(S.tip.text, W / 2, H - 31, W - 60);
+    lines.forEach((l, i) => g.fillText(l, W / 2, H - 16 - th + 5 + (fs + 5) * (i + 0.5), W - 80));
     g.restore();
   }
   // 飘字画在顶栏上层，永远不会被挡住
@@ -4426,7 +4431,8 @@ function head(title, back) {
 const modal = document.getElementById('modal');
 const appEl = document.getElementById('app');
 const fmt = n => n >= 100000 ? (n / 10000).toFixed(n >= 1000000 ? 0 : 1) + '万' : String(n);
-function appH() { return appEl.clientHeight || 500; }
+// 界面放大后的设计高度（弹窗里的卡片尺寸按它算）
+function appH() { const z = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--uiz')) || 1; return (appEl.clientHeight || 500) / z; }
 function openPage(node, bg, self) {
   closeModal();
   openOverlay(node);
@@ -5610,14 +5616,35 @@ function fit() {
 }
 new ResizeObserver(fit).observe(stage);
 // 把真实可见区域写进 CSS 变量，竖屏旋转时用它定尺寸（iPhone 上 dvh 在主屏幕 App 里不可靠）
+// 真正能看到的区域：取 100svh、visualViewport、innerHeight、body 里最小的那个。
+// iPhone 的 Safari（不是主屏幕 App）底部有浮动工具栏会盖住页面，竖屏时再给它让出位置
+const IOS = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const STANDALONE = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+function visibleSize() {
+  const probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;left:0;top:0;width:100svw;height:100svh;visibility:hidden;pointer-events:none';
+  document.body.appendChild(probe);
+  const pw = probe.offsetWidth, ph = probe.offsetHeight;
+  probe.remove();
+  const vv = window.visualViewport;
+  const ws = [document.body.clientWidth, window.innerWidth, vv && vv.width, pw].filter(v => v > 0);
+  const hs = [document.body.clientHeight, window.innerHeight, vv && vv.height, ph].filter(v => v > 0);
+  let w = Math.min(...ws), h = Math.min(...hs);
+  if (IOS && !STANDALONE && h > w && screen.height && h > screen.height - 140) h -= 64;
+  return { w: Math.round(w), h: Math.round(h) };
+}
 function measureScreen() {
-  const w = document.body.clientWidth || window.innerWidth, h = document.body.clientHeight || window.innerHeight;
+  const { w, h } = visibleSize();
   document.documentElement.style.setProperty('--scr-w', w + 'px');
   document.documentElement.style.setProperty('--scr-h', h + 'px');
   // 游戏区域的高度：竖屏旋转时是屏幕宽度。界面字号按它缩放（不能用 vh，旋转后不对）
   const rot = window.matchMedia('(orientation:portrait) and (max-width:600px)').matches;
-  document.documentElement.style.setProperty('--ah', (rot ? w : h) + 'px');
-  document.documentElement.style.setProperty('--aw', (rot ? h : w) + 'px');
+  const ah = rot ? w : h, aw = rot ? h : w;
+  // 大屏幕（电脑、平板）：界面按比例放大，按手机横屏约 420×860 的大小来设计
+  const uiz = Math.max(1, Math.min(1.8, ah / 420, aw / 860));
+  document.documentElement.style.setProperty('--uiz', uiz.toFixed(3));
+  document.documentElement.style.setProperty('--ah', (ah / uiz) + 'px');
+  document.documentElement.style.setProperty('--aw', (aw / uiz) + 'px');
 }
 measureScreen();
 window.addEventListener('resize', measureScreen);

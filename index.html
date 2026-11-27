@@ -371,7 +371,7 @@ button{font:inherit;color:inherit}
 .chap{position:absolute;left:14px;top:10px;font:400 15px/1 var(--display);color:#fff;background:linear-gradient(#ffa9c6,#f37aa2);border:2px solid #fff;border-radius:999px;padding:5px 12px;box-shadow:0 3px 0 #c2607e;white-space:nowrap}
 
 /* 玩法、列表 */
-.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;height:100%;min-height:200px}
+.modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;height:100%;min-height:200px}
 .mode{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:22px;border:3px solid #fff;padding:12px;cursor:pointer;color:#fff;font:inherit;box-shadow:0 0 0 2px var(--mc2),0 6px 0 2px var(--mc3);background:linear-gradient(160deg,var(--mc1),var(--mc2))}
 .mode canvas{width:84px;height:84px;background:rgba(255,255,255,.35);border-radius:22px}
 .mode b{font:400 24px/1 var(--display);text-shadow:0 2px 0 var(--mc3)}
@@ -783,8 +783,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.27-0445·7e6c58 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.27-0445·7e6c58';
+// 版本号：打包时 build.py 会把 2026.11.27-0455·f10e9d 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.27-0455·f10e9d';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -4720,7 +4720,8 @@ function showModes() {
   openPage(page('更多玩法', showMenu, el('div', { class: 'modes' },
     card('zombie', 'football', '挑战模式', `规则特殊的关卡 · 完成 ${CHALLENGES.filter(c => save.chal[c.id]).length}/${CHALLENGES.length}`, showChallenges, '--mc1:#ffb3cf;--mc2:#f47aa3;--mc3:#c2607e'),
     card('plant', 'bowlnut', '小游戏', `甜甜圈保龄球等 · 完成 ${MINIGAMES.filter(m => save.mini[m.id]).length}/${MINIGAMES.length}`, showMinigames, '--mc1:#9fe3c6;--mc2:#5cc39a;--mc3:#3f9a74'),
-    card('zombie', 'flag', '无尽模式', save.bestWave ? `最高第 ${save.bestWave} 波 · 波数越多金币越多` : '看你能撑几波 · 波数越多金币越多', () => startFlow(endlessCfg()), '--mc1:#cfb2ff;--mc2:#9b6df0;--mc3:#6a3fc0')), { bodyCls: 'flexcol' }), IMG.menu, showModes);
+    card('zombie', 'flag', '无尽模式', save.bestWave ? `最高第 ${save.bestWave} 波 · 波数越多金币越多` : '看你能撑几波 · 波数越多金币越多', () => startFlow(endlessCfg()), '--mc1:#cfb2ff;--mc2:#9b6df0;--mc3:#6a3fc0'),
+    card('plant', 'twinpop', '好友挑战', Object.keys(save.friendWon || {}).length ? `赢过 ${Object.keys(save.friendWon).length} 个好友挑战 · 发链接比一比` : '发链接给朋友 · 比星星、比波数、出残局', showFriendEntry, '--mc1:#ffd3a8;--mc2:#f5a25c;--mc3:#c9733a')), { bodyCls: 'flexcol' }), IMG.menu, showModes);
 }
 function listPage(title, items, isDone, cfgOf) {
   openPage(page(title, showModes, el('div', { class: 'list' }, ...items.map(x => el('button', { class: 'litem', onclick: () => { sfx('select'); startFlow(cfgOf(x)); } },
@@ -4837,7 +4838,7 @@ function friendCfg(o) {
   const tag = o.t === 'p' ? '残局挑战' : '好友挑战';
   const base = o.idx < 0 ? endlessCfg() : advCfg(o.idx);
   const conveyor = o.t === 'p' ? null : base.conveyor;
-  return Object.assign(base, { mode: 'friend', friend: o, back: showMenu, label: `${tag} · ${o.idx < 0 ? '无尽' : LEVELS[o.idx].id}`,
+  return Object.assign(base, { mode: 'friend', friend: o, back: showModes, label: `${tag} · ${o.idx < 0 ? '无尽' : LEVELS[o.idx].id}`,
     conveyor, plants: o.t === 'p' || conveyor ? [] : o.deck.slice(), preset: o.t === 'p' ? o.grid : null });
 }
 function friendGoal(o) {
@@ -4950,7 +4951,7 @@ function openFriend(o) {
         el('p', { class: 'muted' }, '挑战不需要解锁这一关，也可以用你还没拿到的小伙伴。第一次挑战成功额外奖励 100 金币。'),
         el('div', { class: 'btnrow' }, btn('接受挑战', () => { closeModal(); startFlow(friendCfg(o)); }), btn('以后再说', closeModal, 'alt'))))), 'wide');
 }
-// 主页「好友挑战」：粘贴朋友发来的链接或挑战码
+// 更多玩法「好友挑战」：粘贴朋友发来的链接或挑战码
 function showFriendEntry() {
   const inp = el('textarea', { class: 'pastein', rows: 3, placeholder: '把朋友发来的链接粘贴到这里', 'aria-label': '挑战链接' });
   if (save.pendingFriend) { inp.value = SHARE_BASE + '#f=' + save.pendingFriend; delete save.pendingFriend; persist(); }
@@ -4993,7 +4994,7 @@ function checkShareHash() {
   const o = decodeShare(location.hash);
   try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
   if (!o) { toast('这个挑战链接打不开，可能复制得不完整'); return; }
-  if (running) { toast('收到好友挑战，打完这局去主页「好友挑战」看看'); save.pendingFriend = o.raw; persist(); return; }
+  if (running) { toast('收到好友挑战，打完这局去「更多玩法 → 好友挑战」看看'); save.pendingFriend = o.raw; persist(); return; }
   openFriend(o);
 }
 window.addEventListener('hashchange', checkShareHash);
@@ -5379,12 +5380,11 @@ function showMenu() {
           tile(icon('capsule'), '扭蛋机', d.free ? '今天可以免费扭一次' : (save.items.ticket ? `扭蛋券 ${save.items.ticket} 张` : `闪卡保底还差 ${PITY.flash - save.gacha.pf} 次`), showGacha, d.free ? 1 : 0, '--tc:#dcc2ff;--tcd:#9b6df0'),
           tile(icon('album'), '卡册', `闪卡 ${cardCount('flash')} · 金卡 ${cardCount('gold')}`, showAlbum, newCardCount(), '--tc:#ffe08a;--tcd:#d99a2b'),
           tile(icon('gift'), '甜品盲盒', save.luckyBest ? `无尽开盲盒 · 最高第 ${save.luckyBest} 波` : '花方糖开盲盒放小伙伴', () => startFlow(luckyCfg()), 0, '--tc:#b6f0d8;--tcd:#3f9a74'),
-          tile(cvIcon('zombie', 'cone', 40), '更多玩法', '挑战 · 小游戏 · 无尽', showModes, 0, '--tc:#b9e3ff;--tcd:#4fa6d6')))),
+          tile(cvIcon('zombie', 'cone', 40), '更多玩法', '挑战 · 小游戏 · 无尽 · 好友', showModes, 0, '--tc:#b9e3ff;--tcd:#4fa6d6')))),
     el('div', { class: 'dock' },
       dbtn(cvIcon('plant', 'peaflower'), '图鉴', () => showAlmanac('plants'), 0),
       dbtn(icon('medal'), '成就', () => showAlmanac('ach'), 0),
       dbtn(sceneIco, '战斗场景', () => openShop('scene'), 0),
-      dbtn(cvIcon('plant', 'twinpop'), '好友挑战', showFriendEntry, 0),
       dbtn(cvIcon('zombie', 'normal'), '新手指南', showGuide, 0),
       el('span', { class: 'hub-ver' }, '体验版 · 原创角色与美术')));
   openPage(hub, IMG.menu, showMenu);

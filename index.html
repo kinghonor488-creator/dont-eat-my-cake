@@ -783,8 +783,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.27-0457·c8843d 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.27-0457·c8843d';
+// 版本号：打包时 build.py 会把 2026.11.27-0510·94f9f9 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.27-0510·94f9f9';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -841,6 +841,12 @@ const PLANTS = {
                   stat: '每 15 秒一次：50% 两块方糖 · 30% 给周围回 300 血 · 20% 全场团子减速 3 秒', lore: '原创小伙伴。每次掰开都是一句好话，有时还附赠好运。' },
   chocolava:    { name: '巧克力熔岩', cost: 125, cd: 30,  hp: 300,  desc: '一次性：在前方铺开 3 格熔岩巧克力，持续烫伤团子', original: true,
                   stat: '熔岩持续 8 秒 · 每 0.5 秒 40 · 走过的团子会变慢', lore: '原创小伙伴。切开的一瞬间，滚烫的巧克力流满一地。' },
+  marshmallow:  { name: '棉花糖枕头', cost: 100, cd: 20,  hp: 2000, desc: '软软的防守墙，被啃 2 秒就把团子弹回去一格', original: true,
+                  stat: '4000 耐久 · 被同一只团子啃满 2 秒就把它弹回一格 · 面包熊太重弹不动', lore: '原创小伙伴。一只胖乎乎的方形棉花糖，谁咬上来都会被噗叽一下弹开。' },
+  bubbletea:    { name: '珍珠奶茶',   cost: 150, cd: 7.5, hp: 300,  desc: '珍珠贴着地面滚，能钻过砧板，还能打到地下的地鼠团子', original: true,
+                  stat: '每 1.8 秒滚出 1 颗珍珠（50）· 从砧板底下钻过去 · 打得到地下的地鼠团子', lore: '原创小伙伴。吸管一嘬，珍珠就咕噜咕噜滚出去。' },
+  cookiecutter: { name: '饼干模具',   cost: 200, cd: 7.5, hp: 300,  desc: '咔嚓一下从团子身上印走一块，越胖的团子掉得越多', original: true,
+                  stat: '每 3.5 秒 · 前方 4 格内最近的一只 · 扣掉它当前血量和护甲的 18%（至少 60）· 无视砧板', lore: '原创小伙伴。爱心形状的饼干模具，按下去就是一块。' },
   // —— 甜甜圈保龄球专用 ——
   bowlnut:      { name: '甜甜圈',     cost: 0,   cd: 0,   hp: 300,  desc: '滚出去撞团子，撞到后弹到隔壁行', special: true },
   bombnut:      { name: '跳跳糖甜甜圈', cost: 0, cd: 0,   hp: 300,  desc: '滚出去撞到团子就炸开', special: true },
@@ -851,13 +857,13 @@ const PLANT_ORDER = Object.keys(PLANTS).filter(k => !PLANTS[k].box && !PLANTS[k]
 // 不会被吃、团子直接走过去的地面小伙伴（第一版暂时没有）
 const GROUND = new Set(['taffytrap']);
 const BASE_PLANTS = ['peaflower', 'firepea', 'peanut', 'twinpop'];
-const NUTS = new Set(['peanut', 'cherrynut', 'torchnut', 'frostnut', 'magnetnut']);
+const NUTS = new Set(['peanut', 'cherrynut', 'torchnut', 'frostnut', 'magnetnut', 'marshmallow']);
 const DMG_MUL = 2; // 所有小伙伴伤害的倍率（图鉴里的数字已按倍率写好）
 // 甜品盲盒：稀有度和开盒概率；weights 是同一稀有度里各小伙伴的权重
 const RARITY = {
   common:    { name: '普通', color: '#fff3d1', plants: ['peaflower', 'icemine', 'peanut', 'shieldleaf', 'twinpop', 'taffytrap', 'fortunecookie'], weights: [40, 22, 26, 12, 18, 12, 14] },
-  rare:      { name: '稀有', color: '#7fd3ff', plants: ['cherrynut', 'cherrypepper', 'chompsquash', 'beeflower', 'torchnut', 'frostnut', 'magnetnut', 'gatlingpea', 'peppershaker'], weights: [1, 1, 1, 1, 1, 1, 1, 1, 1] },
-  epic:      { name: '史诗', color: '#d79bff', plants: ['firepea', 'snowrepeater', 'lightningvine', 'icemelon', 'chocolava'], weights: [1, 1, 1, 1, 1] },
+  rare:      { name: '稀有', color: '#7fd3ff', plants: ['cherrynut', 'cherrypepper', 'chompsquash', 'beeflower', 'torchnut', 'frostnut', 'magnetnut', 'gatlingpea', 'peppershaker', 'marshmallow', 'bubbletea'], weights: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] },
+  epic:      { name: '史诗', color: '#d79bff', plants: ['firepea', 'snowrepeater', 'lightningvine', 'icemelon', 'chocolava', 'cookiecutter'], weights: [1, 1, 1, 1, 1, 1] },
   legendary: { name: '传说', color: '#ffb12b', plants: ['clockflower', 'mortar', 'laserbean'], weights: [1, 1, 1] },
 };
 const BOX_ODDS = {
@@ -900,26 +906,36 @@ Object.assign(ZDEF, {
             lore: '双层大福分出来的小家伙，个子小跑得快。' },
   nurse:  { name: '小护士团子', hp: 320, armor: 0, armorType: null, speed: 15, cost: 4,
             lore: '戴着护士帽，每秒给身边的团子回血。看到它要优先打。' },
+  thief:  { name: '偷糖团子',   hp: 270, armor: 0, armorType: null, speed: 20, cost: 3,
+            lore: '戴着小眼罩、背着布袋，在餐桌上每 6 秒偷走你 25 块方糖。喂饱它，偷走的方糖会全部掉出来。' },
+  jelly:  { name: '果冻团子',   hp: 480, armor: 0, armorType: null, speed: 14, cost: 4,
+            lore: '软弹弹的果冻做的，直线射来的糖豆打上去会弹开一半。投掷、爆炸、光束和饼干模具都不受影响。' },
+  frosty: { name: '冻冻团子',   hp: 400, armor: 0, armorType: null, speed: 14, cost: 4,
+            lore: '浑身冒冷气，啃到哪个小伙伴就把它冻住，冻住的小伙伴会停工。它很怕烫，灼伤和熔岩对它伤害翻倍。' },
 });
+const NEW_Z = ['thief', 'jelly', 'frosty'];
 const ZOMBIE_ORDER = Object.keys(ZDEF);
 // 团子的颜色、头顶标记、特点和克制它的小伙伴（关卡情报、图鉴、出场提示都用这份）
 const ZINFO = {
   normal:  { color: '#fffaf4', badge: null, trait: '普通团子，走得慢', counters: ['peaflower', 'firepea', 'snowrepeater'] },
   flag:    { color: '#ffe3cc', badge: '旗', badgeColor: '#ff8fb5', trait: '它一出现，后面马上跟来一大群', counters: ['cherrypepper', 'gatlingpea', 'icemelon', 'cherrynut'] },
   cone:    { color: '#ffe8f0', badge: null, trait: '纸杯帽能多挡一阵', counters: ['firepea', 'torchnut', 'snowrepeater'] },
-  bucket:  { color: '#ebe3ff', badge: '硬', badgeColor: '#a48ce0', trait: '锅盖特别硬，普通糖豆要打很久', counters: ['magnetnut', 'chompsquash', 'laserbean', 'icemine', 'cherrypepper', 'torchnut'] },
-  shield:  { color: '#f7ecd9', badge: '盾', badgeColor: '#c98a4a', trait: '砧板挡住正面射来的糖豆', counters: ['laserbean', 'magnetnut', 'beeflower', 'mortar', 'chompsquash', 'cherrypepper'] },
-  pole:     { color: '#e6f4ff', badge: '跳', badgeColor: '#5fb3e8', trait: '撑筷子跳过第一个小伙伴，跳不过防守墙', counters: ['peanut', 'cherrynut', 'torchnut', 'frostnut', 'magnetnut'] },
+  bucket:  { color: '#ebe3ff', badge: '硬', badgeColor: '#a48ce0', trait: '锅盖特别硬，普通糖豆要打很久', counters: ['cookiecutter', 'magnetnut', 'chompsquash', 'laserbean', 'icemine', 'cherrypepper', 'torchnut'] },
+  shield:  { color: '#f7ecd9', badge: '盾', badgeColor: '#c98a4a', trait: '砧板挡住正面射来的糖豆', counters: ['bubbletea', 'laserbean', 'magnetnut', 'beeflower', 'mortar', 'chompsquash', 'cherrypepper'] },
+  pole:     { color: '#e6f4ff', badge: '跳', badgeColor: '#5fb3e8', trait: '撑筷子跳过第一个小伙伴，跳不过防守墙', counters: ['marshmallow', 'peanut', 'cherrynut', 'torchnut', 'frostnut', 'magnetnut'] },
   football: { color: '#ffe0d1', badge: '快', badgeColor: '#ff7a59', trait: '戴头盔狂奔，又硬又快', counters: ['icemine', 'snowrepeater', 'magnetnut', 'clockflower', 'laserbean'] },
-  zomboni:  { color: '#e2f3e8', badge: '碾', badgeColor: '#4fae8a', trait: '碾碎普通小伙伴，撞上防守墙会停下', counters: ['peanut', 'cherrynut', 'chompsquash', 'icemine', 'laserbean'] },
-  digger:   { color: '#f5e6d3', badge: '钻', badgeColor: '#a8673a', trait: '第 15 波以后才出现，钻到最左边再掉头，从背后啃小伙伴', counters: ['twinpop', 'beeflower', 'lightningvine', 'mortar'] },
+  zomboni:  { color: '#e2f3e8', badge: '碾', badgeColor: '#4fae8a', trait: '碾碎普通小伙伴，撞上防守墙会停下', counters: ['marshmallow', 'cookiecutter', 'peanut', 'cherrynut', 'chompsquash', 'icemine', 'laserbean'] },
+  digger:   { color: '#f5e6d3', badge: '钻', badgeColor: '#a8673a', trait: '第 15 波以后才出现，钻到最左边再掉头，从背后啃小伙伴', counters: ['bubbletea', 'twinpop', 'beeflower', 'lightningvine', 'mortar'] },
   dancer:   { color: '#f3e3ff', badge: '舞', badgeColor: '#b69cf0', trait: '一进场就召唤 4 个伴舞', counters: ['cherrypepper', 'icemelon', 'gatlingpea', 'mortar'] },
-  garg:     { color: '#f3d2a2', badge: '巨', badgeColor: '#c2601e', trait: '超耐打，每锤很重，防守墙能扛五六下，半血扔小团子', counters: ['icemine', 'chompsquash', 'clockflower', 'laserbean', 'cherrypepper'] },
+  garg:     { color: '#f3d2a2', badge: '巨', badgeColor: '#c2601e', trait: '超耐打，每锤很重，防守墙能扛五六下，半血扔小团子', counters: ['cookiecutter', 'icemine', 'chompsquash', 'clockflower', 'laserbean', 'cherrypepper'] },
   imp:      { color: '#fff6ee', badge: null, trait: '面包熊扔出来的小团子，跑得很快', counters: ['gatlingpea', 'twinpop', 'beeflower'] },
   hide:     { color: '#efeaff', badge: '隐', badgeColor: '#9a8cff', trait: '隐身瞄不到；啃小伙伴 2.5 秒或走到餐桌中间就现身；炸弹类照样能炸到', counters: ['cherrypepper', 'chocolava', 'taffytrap', 'cherrynut', 'chompsquash'] },
   mochi2:   { color: '#fffaf4', badge: '裂', badgeColor: '#ff8fb5', trait: '喂饱后分裂成两个小大福', counters: ['peppershaker', 'gatlingpea', 'icemelon', 'chocolava'] },
   mini:     { color: '#fffaf4', badge: null, trait: '分裂出来的小大福，跑得快', counters: ['gatlingpea', 'peppershaker', 'twinpop'] },
   nurse:    { color: '#ffeef3', badge: '医', badgeColor: '#ff6b8a', trait: '每秒给身边的团子回血，要优先打', counters: ['laserbean', 'lightningvine', 'mortar', 'beeflower'] },
+  thief:    { color: '#f6efe2', badge: '偷', badgeColor: '#8a6ad0', trait: '每 6 秒偷走 25 方糖；喂饱它，偷的方糖会掉出来', counters: ['laserbean', 'mortar', 'lightningvine', 'cookiecutter'] },
+  jelly:    { color: '#c8f2dc', badge: '弹', badgeColor: '#4fbf8f', trait: '软弹弹，直线射来的糖豆伤害减半', counters: ['cookiecutter', 'icemelon', 'laserbean', 'cherrypepper', 'chocolava'] },
+  frosty:   { color: '#e3f4ff', badge: '冻', badgeColor: '#5fb3e8', trait: '啃到的小伙伴会被冻住停工；怕烫，灼伤和熔岩伤害翻倍', counters: ['torchnut', 'chocolava', 'cherrypepper', 'marshmallow'] },
   balloon: { color: '#fff4c2', badge: '飞', badgeColor: '#ff9e3d', trait: '飘在空中，直射的糖豆打不到', counters: ['beeflower', 'lightningvine', 'mortar', 'icemelon', 'chompsquash'] },
 };
 // 小伙伴的职能：决定脚下碟子和卡片色条的颜色
@@ -933,7 +949,7 @@ const ROLES = {
 const ROLE_OF = { peaflower: 'eco', firepea: 'atk', snowrepeater: 'atk', beeflower: 'atk', peanut: 'def', cherrynut: 'def', torchnut: 'def', frostnut: 'def',
   icemine: 'boom', chompsquash: 'boom', cherrypepper: 'boom', clockflower: 'sup',
   twinpop: 'atk', gatlingpea: 'atk', icemelon: 'atk', lightningvine: 'atk', mortar: 'atk', laserbean: 'atk', magnetnut: 'sup', shieldleaf: 'sup',
-  peppershaker: 'atk', taffytrap: 'sup', fortunecookie: 'eco', chocolava: 'boom' };
+  peppershaker: 'atk', taffytrap: 'sup', fortunecookie: 'eco', chocolava: 'boom', marshmallow: 'def', bubbletea: 'atk', cookiecutter: 'atk' };
 const P5 = ['normal', 'cone', 'bucket', 'shield', 'balloon'];
 const ALL_POOL = [...P5, 'pole', 'football', 'zomboni', 'digger', 'dancer', 'garg', 'hide', 'mochi2', 'nurse'];
 // 金属护甲：第一版暂时没有会吸护甲的小伙伴
@@ -1006,10 +1022,13 @@ for (let c = 2; c <= 4; c++) for (let j = 1; j <= 20; j++) {
   // ↓ 难度数值：以 1-20（26 波、基础 2.1、增长 0.84、血量 ×1.1）为参照，第 4 章最后一关大约是它的 1.3 倍血量
   const waves = j === 20 ? 26 : 16 + Math.floor(j / 2);
   const flags = [6, 12, 18, 24].filter(f => f < waves).concat([waves]);
-  const pool = boss || j > 16 ? ALL_POOL
+  const pool = boss || j > 16 ? ALL_POOL.slice()
     : j > 12 ? [...P5, 'pole', 'football', 'dancer', 'zomboni', 'hide', 'mochi2', 'nurse', 'digger']
     : j > 8 ? [...P5, 'pole', 'football', 'dancer', 'zomboni', 'hide', 'mochi2']
     : j > 4 ? [...P5, 'pole', 'football', 'dancer'] : [...P5, 'pole'];
+  // 新团子：第 2 章起偷糖团子，第 3 章起果冻团子，第 4 章起冻冻团子（本章新来的从第 3 关开始出现）
+  const newZ = NEW_Z.slice(0, c - 1).filter((zt, m) => m < c - 2 || j >= 3);
+  pool.push(...newZ.filter(zt => !pool.includes(zt)));
   const night = c === 2 || (c === 3 && j >= 16);
   const L = {
     id: `${c}-${j}`, name: CH_NAMES[c][j - 1], chapter: c, pool, waves, flags,
@@ -1019,6 +1038,7 @@ for (let c = 2; c <= 4; c++) for (let j = 1; j <= 20; j++) {
     startSun: night ? 200 : 150,
     give: j === 20 ? { goldPick: 1, gems: 50 } : j === 10 ? { flashPick: 1, coins: 300 } : j % 5 === 0 ? { ticket: 3, coins: 200 } : { coins: 150 },
   };
+  if (j === 5) L.reward = { 2: 'marshmallow', 3: 'bubbletea', 4: 'cookiecutter' }[c];
   if (j === 7 && c >= 3) { L.conveyor = { items: MINIGAMES[1].cfg.conveyor.items, interval: 3.2 }; L.night = false; L.startSun = 0; }
   LEVELS.push(L);
 }
@@ -1771,6 +1791,11 @@ function hurtZombie(z, dmg, opt = {}) {
   if (z.dead) return false;
   const src = CUR_SRC;
   dmg *= DMG_MUL * (src && S.cardMul ? S.cardMul[src] || 1 : 1);
+  if (z.type === 'jelly' && opt.pea) {
+    dmg *= 0.5;
+    if (Math.random() < 0.15) floatText(z.x, zombieY(z) - 80, '弹开了～', '#8fe0bf', 14);
+  }
+  if (z.type === 'frosty' && (opt.burn || opt.dot || opt.hot || src === 'chocolava')) dmg *= 2;
   if (src) (z.hitBy || (z.hitBy = new Set())).add(src);
   const y = cellCY(z.row) + 32;
   if (z.fly) {
@@ -1821,6 +1846,12 @@ function hurtZombie(z, dmg, opt = {}) {
     if (z.type === 'mochi2') {
       for (const dx of [-22, 22]) { spawnZombie('mini', z.row, z.x + dx); const m = S.zombies[S.zombies.length - 1]; m.landT = 0.3; }
       floatText(z.x, zombieY(z) - 80, '分裂啦！', '#ff9ec0', 18);
+    }
+    if (z.stolen > 0) {
+      // 偷糖团子：偷走的方糖全部掉出来
+      for (let n = z.stolen, i = 0; n > 0; n -= 25, i++) addSun(z.x + rnd(-24, 24), zombieY(z) - 50 - i * 6, cellCY(z.row) + 16 + rnd(-6, 6), Math.min(25, n));
+      floatText(z.x, zombieY(z) - 100, `方糖还回来啦 +${z.stolen}`, '#ffd56a', 16);
+      z.stolen = 0;
     }
     z.dead = true; z.deadT = 0; S.kills++; save.kills++;
     dailyAdd('kills'); creditKill(z);
@@ -2095,6 +2126,8 @@ function update(dt) {
     CUR_SRC = p.type;
     const px = cellCX(c), py = cellCY(r);
     p.age += dt; p.hurt = Math.max(0, p.hurt - dt); p.recoil = Math.max(0, p.recoil - dt);
+    // 被冻冻团子冻住：停工
+    if (p.iced > 0) { p.iced -= dt; if (Math.random() < dt * 5) part({ x: px + rnd(-20, 20), y: py + rnd(-40, 10), vx: 0, vy: -20, grav: 0, life: 0.6, size: rnd(2, 3.5), color: '#ffffff', shape: 'sparkle' }); continue; }
     if (p.tier && Math.random() < dt * 1.3) part({ x: px + rnd(-24, 24), y: py + rnd(-36, 16), vx: 0, vy: -26, grav: 0, life: 0.8, size: rnd(2.5, 4.5), color: p.tier === 'gold' ? (Math.random() < 0.5 ? '#ffd56a' : '#fff3c4') : RAINBOW[Math.floor(Math.random() * 6)], shape: 'sparkle', vr: 4 });
     switch (p.type) {
       case 'peaflower':
@@ -2250,6 +2283,35 @@ function update(dt) {
             S.fx.push({ type: 'spray', x: px + 24, y: py - 18, t: 0, dur: 0.45 });
             for (let i = 0; i < 18; i++) part({ x: px + 26, y: py - 18, vx: rnd(160, 460), vy: rnd(-70, 70), grav: 40, life: rnd(0.3, 0.5), size: rnd(1.5, 3), color: i % 3 ? '#5a4a52' : '#c9a3b4' });
             sfx('hit');
+          }
+        }
+        break;
+      }
+      case 'bubbletea': {
+        // 珍珠奶茶：珍珠贴地滚，打得到地下的地鼠，能从砧板底下钻过去
+        p.shootT -= dt;
+        if (p.shootT <= 0 && S.zombies.some(z => z.row === r && !z.dead && !z.fly && !z.hid && z.x > px - 10 && z.x < VIS_X)) {
+          p.shootT = 1.8; p.recoil = 0.25;
+          S.peas.push({ src: CUR_SRC, row: r, x: px + 18, y: cellCY(r) + 22, kind: 'pearl', dmg: 25, spin: 0 });
+          for (let i = 0; i < 4; i++) part({ x: px + 16, y: cellCY(r) + 22, vx: rnd(20, 120), vy: rnd(-60, 0), grav: 200, life: 0.3, size: rnd(2, 3), color: '#e8c9a8' });
+          sfx('shoot');
+        }
+        break;
+      }
+      case 'cookiecutter': {
+        // 饼干模具：前方 4 格内最近的团子，扣掉当前血量 + 护甲的 18%
+        p.shootT -= dt;
+        if (p.shootT <= 0) {
+          let tgt = null;
+          for (const z of S.zombies) if (z.row === r && !z.dead && !z.fly && !z.under && !z.hid && z.x > px - 10 && z.x < Math.min(VIS_X, px + CW * 4) && (!tgt || z.x < tgt.x)) tgt = z;
+          if (tgt) {
+            p.shootT = 3.5; p.recoil = 0.45;
+            hurtZombie(tgt, Math.max(30, (tgt.hp + tgt.armor) * 0.09));
+            tgt.hitJ = 0.2;
+            S.fx.push({ type: 'stamp', x: tgt.x, y: zombieY(tgt) - 30, t: 0, dur: 0.45 });
+            for (let i = 0; i < 10; i++) part({ x: tgt.x + rnd(-14, 14), y: zombieY(tgt) - 30, vx: rnd(-160, 160), vy: rnd(-200, -40), grav: 500, life: 0.5, size: rnd(2.5, 4.5), color: i % 2 ? '#f2c98a' : '#ff9ec0', shape: 'rect', vr: 8 });
+            floatText(tgt.x, zombieY(tgt) - 80, '咔嚓！', '#ff8fb5', 18);
+            sfx('slam');
           }
         }
         break;
@@ -2496,6 +2558,20 @@ function update(dt) {
         }
       }
     }
+    if (z.type === 'thief' && !S.demo && !CFG.conveyor && z.x < VIS_X && !(z.frozen > 0)) {
+      // 偷糖团子：每 6 秒偷走 25 方糖，喂饱它时还回来
+      z.stealT = (z.stealT ?? 4) - dt;
+      if (z.stealT <= 0) {
+        z.stealT = 6;
+        const n = Math.min(25, S.sun);
+        if (n > 0) {
+          S.sun -= n; z.stolen = (z.stolen || 0) + n;
+          floatText(z.x, zombieY(z) - 80, `偷走 ${n} 方糖！`, '#ffd56a', 16);
+          for (let i = 0; i < 5; i++) part({ x: z.x + 22, y: zombieY(z) - 40, vx: rnd(-40, 40), vy: rnd(-120, -60), grav: 300, life: 0.5, size: rnd(3, 5), color: '#fffaf0', shape: 'rect', vr: 6 });
+          sfx('pop');
+        }
+      }
+    }
     z.dmgT = (z.dmgT || 0) - dt;
     if (z.dmgT <= 0 && (z.dmgAcc >= 1 || z.blockAcc >= 1)) flushDamage(z);
     if (z.burnT > 0) {
@@ -2588,6 +2664,21 @@ function update(dt) {
           continue;
         }
       }
+      if (tg.p.type === 'marshmallow') {
+        // 棉花糖枕头：被同一只团子啃满 2 秒就把它弹回一格
+        z.squishT = (z.squishT || 0) + dt;
+        if (z.squishT >= 2) {
+          z.squishT = 0; z.eating = false; z.bounce = 0.27; tg.p.recoil = 0.4;
+          floatText(z.x, zombieY(z) - 70, '噗叽～', '#ff9ec0', 18);
+          for (let i = 0; i < 8; i++) part({ x: cellCX(tg.c) + 20, y: cellCY(z.row) - 10, vx: rnd(40, 180), vy: rnd(-160, -40), grav: 300, life: 0.5, size: rnd(3, 5), color: i % 2 ? '#fffaf6' : '#ffd1e1' });
+          sfx('jump');
+          continue;
+        }
+      } else z.squishT = 0;
+      if (z.type === 'frosty') {
+        tg.p.iced = 0.6;
+        if (Math.random() < dt * 10) part({ x: z.x - 24, y: zombieY(z) - 30, vx: rnd(-90, -40), vy: rnd(-20, 20), grav: 0, life: 0.4, size: rnd(2, 4), color: '#bfe9ff' });
+      }
       z.eating = true;
       tg.p.hp -= 100 * dt * k; tg.p.hurt = 0.1;
       z.chompT -= dt;
@@ -2635,9 +2726,25 @@ function update(dt) {
       for (const z of S.zombies) {
         if (z.row !== p.row || z.dead || z.fly || z.under || z.hid || p.hitSet.has(z) || Math.abs(p.x - z.x) > 22) continue;
         p.hitSet.add(z);
-        hurtZombie(z, p.dmg, { front: !p.back });
+        hurtZombie(z, p.dmg, { front: !p.back, pea: true });
         sfx('hit');
       }
+      continue;
+    }
+    if (p.kind === 'pearl') {
+      // 珍珠：贴地滚，从砧板底下钻过去，也打得到地下的地鼠团子
+      p.x += 260 * dt; p.spin += dt * 14;
+      let hz = null;
+      for (const z of S.zombies)
+        if (z.row === p.row && !z.dead && !z.fly && !z.hid && z.landT <= 0 && p.x >= z.x - 22 && p.x <= z.x + 18 && (!hz || z.x < hz.x)) hz = z;
+      if (hz) {
+        if (hz.under) floatText(hz.x, cellCY(hz.row) - 10, '打到地鼠啦！', '#e8c9a8', 15);
+        hurtZombie(hz, p.dmg);
+        hz.hitJ = 0.1;
+        for (let i = 0; i < 6; i++) part({ x: p.x, y: p.y, vx: rnd(-140, 40), vy: rnd(-160, -20), grav: 500, life: 0.35, size: rnd(2, 3.5), color: i % 2 ? '#5a3a2a' : '#e8c9a8' });
+        sfx('hit');
+        p.gone = true;
+      } else if (p.x > W + 20) p.gone = true;
       continue;
     }
     p.x += 320 * (p.dir || 1) * dt;
@@ -2661,7 +2768,7 @@ function update(dt) {
       for (const z of S.zombies) {
         if (z.row !== p.row || z.dead || (z.fly && !p.air) || z.under || z.hid || p.hitSet.has(z) || p.x < z.x - 22 || p.x > z.x + 18) continue;
         p.hitSet.add(z);
-        hurtZombie(z, p.dmg, { front: true });
+        hurtZombie(z, p.dmg, { front: true, pea: true });
         z.hitJ = 0.1;
         hitRing(p.x, p.y, p.kind === 'spike' ? '#c9e77a' : '#6fd6f2');
         if (p.pierceLeft != null && --p.pierceLeft <= 0) { p.gone = true; break; }
@@ -2688,7 +2795,7 @@ function update(dt) {
       const blocked = hit.shield > 0;
       if (blocked) hitRing(p.x, p.y, '#e8b27a');
       else impact(p.kind === 'fire' ? (p.burn ? 'caramel' : 'pop') : p.kind === 'ice' ? 'frost' : 'candy', p.x, p.y);
-      hurtZombie(hit, p.dmg, { front: true, burn: p.kind === 'fire' && hit.armor <= 0 && hit.hp <= p.dmg && Math.random() < 0.3 });
+      hurtZombie(hit, p.dmg, { front: true, pea: true, hot: !!p.burn, burn: p.kind === 'fire' && hit.armor <= 0 && hit.hp <= p.dmg && Math.random() < 0.3 });
       if (blocked) sfx('pop');
       if (p.kind === 'fire') {
         for (const z of S.zombies) if (z !== hit && !z.fly && !z.under && !z.hid && z.row === p.row && Math.abs(z.x - hit.x) < 50) hurtZombie(z, 13);
@@ -2938,6 +3045,12 @@ const FACES = {
   z_mochi2:   { eyes: 'half',  mouth: 'w', blush: 1.6 },
   z_mini:     { eyes: 'x',     mouth: 'o' },
   z_nurse:    { eyes: 'closed', mouth: 'w', extra: 'cross' },
+  z_thief:    { eyes: 'dot',   mouth: 'smirk', brows: 'smug' },
+  z_jelly:    { eyes: 'gloss', mouth: 'w', blush: 1.6 },
+  z_frosty:   { eyes: 'snow',  mouth: 'o' },
+  marshmallow:  { eyes: 'closed', mouth: 'w', blush: 1.6 },
+  bubbletea:    { eyes: 'sparkle', mouth: 'cat' },
+  cookiecutter: { eyes: 'focus', mouth: 'grin' },
 };
 // 当前正在画的角色的表情（drawPlant / drawZombie 里设置）
 let FACE_SIG = null;
@@ -3314,6 +3427,50 @@ function drawPlant(type, x, y, t, p) {
       g.restore();
       break;
     }
+    case 'marshmallow': {
+      // 棉花糖枕头：胖乎乎的方形棉花糖，被咬会压扁
+      shadow(x, y + 2, 26);
+      const sq = p && (p.hurt > 0 || p.recoil > 0) ? 0.9 + Math.sin(t * 30) * 0.03 : 1;
+      g.save(); g.translate(x, y); g.scale(2 - sq, sq); g.translate(-x, -y);
+      rr(x - 24, y - 52, 48, 50, 18); g.fillStyle = '#fffaf6'; g.fill(); g.strokeStyle = '#e3b9c8'; g.lineWidth = 2.5; g.stroke();
+      g.save(); rr(x - 24, y - 52, 48, 50, 18); g.clip(); g.fillStyle = 'rgba(255,190,210,.55)'; g.fillRect(x - 26, y - 16, 52, 16); g.restore();
+      rr(x - 24, y - 52, 48, 50, 18); g.strokeStyle = '#e3b9c8'; g.lineWidth = 2.5; g.stroke();
+      ell(x, y - 50, 20, 6, 'rgba(255,255,255,.95)');
+      ell(x - 12, y - 40, 5, 3, 'rgba(255,255,255,.9)');
+      if (ratio < 0.5) { ell(x + 20, y - 38, 6, 5, 'rgba(240,200,215,.9)'); ell(x + 22, y - 30, 5, 4, 'rgba(240,200,215,.9)'); }
+      cuteFace(x, y - 30, 0.85, 1, p && p.recoil > 0 ? 'open' : ratio < 0.4 ? 'hurt' : 'smile');
+      g.restore();
+      break;
+    }
+    case 'bubbletea': {
+      // 珍珠奶茶：透明杯子、底下一层珍珠、粉色吸管
+      shadow(x, y + 2, 22);
+      const wig = p && p.recoil > 0 ? Math.sin(t * 50) * 0.15 : Math.sin(t * 2) * 0.04;
+      g.beginPath(); g.moveTo(x - 19, y - 46); g.lineTo(x + 19, y - 46); g.lineTo(x + 14, y - 2); g.lineTo(x - 14, y - 2); g.closePath();
+      g.fillStyle = '#ecd2b4'; g.fill();
+      for (let i = 0; i < 7; i++) ell(x - 11 + (i % 4) * 7.3 + (i > 3 ? 3.6 : 0), y - 8 - (i > 3 ? 6 : 0), 3.6, 3.6, '#4a2c1e');
+      g.strokeStyle = '#b88a6a'; g.lineWidth = 2.5; g.stroke();
+      ell(x - 10, y - 38, 3, 6, 'rgba(255,255,255,.55)');
+      g.beginPath(); g.ellipse(x, y - 46, 21, 7, 0, Math.PI, Math.PI * 2); g.fillStyle = 'rgba(255,255,255,.85)'; g.fill(); g.strokeStyle = '#d9b8c4'; g.lineWidth = 2; g.stroke();
+      g.save(); g.translate(x + 4, y - 50); g.rotate(0.25 + wig);
+      rr(-3, -26, 6, 30, 3); g.fillStyle = '#ff8fb5'; g.fill(); g.strokeStyle = '#c2607e'; g.lineWidth = 1.5; g.stroke();
+      g.restore();
+      cuteFace(x, y - 28, 0.8, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      break;
+    }
+    case 'cookiecutter': {
+      // 饼干模具：一块饼干面团上立着爱心模具，出手时抬起来
+      shadow(x, y + 2, 26);
+      ell(x, y - 4, 28, 9, '#f2c98a', '#c9904a', 2);
+      ell(x - 10, y - 6, 3, 1.5, '#e0a860'); ell(x + 9, y - 3, 2.5, 1.4, '#e0a860');
+      const lift = p && p.recoil > 0 ? -10 * Math.sin(p.recoil / 0.45 * Math.PI) : Math.sin(t * 2.4) * 1.5;
+      g.save(); g.translate(x, y - 30 + lift);
+      g.beginPath(); g.moveTo(0, 22); g.bezierCurveTo(-34, 2, -24, -30, 0, -14); g.bezierCurveTo(24, -30, 34, 2, 0, 22); g.closePath();
+      g.fillStyle = '#fff3f6'; g.fill(); g.lineWidth = 6; g.strokeStyle = '#ff8fb5'; g.stroke(); g.lineWidth = 2; g.strokeStyle = '#ffd1e1'; g.stroke();
+      g.restore();
+      cuteFace(x, y - 30 + lift, 0.78, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      break;
+    }
     case 'taffytrap': {
       // 麦芽糖粘粘：地上一摊亮晶晶的糖
       g.beginPath(); g.ellipse(x, y - 2, 32, 11, 0, 0, Math.PI * 2);
@@ -3596,6 +3753,25 @@ function drawZombie(z, ox, oy) {
     g.fillStyle = '#fffaf6'; g.fill(); g.strokeStyle = '#e3b9a8'; g.lineWidth = 1.5; g.stroke();
     g.fillStyle = '#ff6b8a'; g.fillRect(x - 1.5, by - ry - 4, 3, 8); g.fillRect(x - 4, by - ry - 1.5, 8, 3);
   }
+  // 偷糖团子：背上的布袋（装着方糖）
+  if (z.type === 'thief' && !z.dead) {
+    ell(x + 22, by - 2, 12, 13, '#e8d3b0', '#a8865e', 2);
+    line(x + 16, by - 14, x + 28, by - 14, '#a8865e', 2.5);
+    rr(x + 18, by - 22, 8, 8, 2); g.fillStyle = '#fffaf0'; g.fill(); g.strokeStyle = '#d9c9a8'; g.lineWidth = 1; g.stroke();
+  }
+  // 果冻团子：顶上一颗樱桃，身上亮晶晶
+  if (z.type === 'jelly' && !z.dead) {
+    line(x + 2, by - ry - 2, x + 6, by - ry - 12, '#4fae5a', 2);
+    ell(x + 1, by - ry - 2, 5, 5, '#ff4f6e', '#b8304e', 1.2);
+    ell(x + 10, by - 6, 4, 8, 'rgba(255,255,255,.55)');
+  }
+  // 冻冻团子：头顶一片雪花
+  if (z.type === 'frosty' && !z.dead) {
+    const sx2 = x + 2, sy2 = by - ry - 6;
+    for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; line(sx2 - Math.cos(a) * 8, sy2 - Math.sin(a) * 8, sx2 + Math.cos(a) * 8, sy2 + Math.sin(a) * 8, '#7fc4ee', 2.2); }
+    ell(sx2, sy2, 2.5, 2.5, '#ffffff', '#7fc4ee', 1);
+    for (let i = 0; i < 3; i++) poly([x - 12 + i * 12, by + ry - 4, x - 8 + i * 12, by + ry - 4, x - 10 + i * 12, by + ry + 4], '#bfe9ff');
+  }
   // 躲猫猫：隐身斗篷的兜帽
   if (z.type === 'hide' && !z.dead) {
     g.beginPath(); g.arc(x, by - 2, ry + 3, Math.PI * 1.05, Math.PI * 1.95); g.lineTo(x + ry + 6, by + 8); g.lineTo(x - ry - 6, by + 8); g.closePath();
@@ -3612,6 +3788,8 @@ function drawZombie(z, ox, oy) {
     ell(x - 9, by - ry + 2, 9, 6, '#d79bff', '#9a6ad0', 1.5); ell(x + 9, by - ry + 2, 9, 6, '#d79bff', '#9a6ad0', 1.5); ell(x, by - ry + 2, 4, 4, '#b07ae8');
     if (!z.dead) for (let i = 0; i < 3; i++) { const a = S.t * 3 + i * 2.1; ell(x + Math.cos(a) * 30, by + Math.sin(a) * 16, 2.5, 2.5, ['#ffd56a', '#ff9ec0', '#7fd3ff'][i]); }
   }
+  // 偷糖团子：眼罩（画在脸下面，眼睛露出来）
+  if (z.type === 'thief' && !z.dead) { rr(x - 27, by - 5, 38, 9, 4.5); g.fillStyle = '#5a4a7a'; g.fill(); line(x + 11, by - 1, x + 20, by - 6, '#5a4a7a', 2.5); }
   // 脸（朝左）
   const mood = z.dead ? 'happy' : z.flash > 0 ? 'hurt' : z.eating && Math.sin(z.anim * 14) > 0 ? 'open' : 'smile';
   const prevSig = FACE_SIG; FACE_SIG = FACES['z_' + z.type] || FACES.z_normal;
@@ -4127,6 +4305,13 @@ function drawFx(f) {
   } else if (f.type === 'shock') {
     ell(f.x, f.y, 20 + k * f.r, 14 + k * f.r * 0.62, null, `rgba(255,255,255,${0.9 * (1 - k)})`, 8 * (1 - k) + 1);
     ell(f.x, f.y, 10 + k * f.r * 0.7, 8 + k * f.r * 0.45, null, `rgba(255,158,192,${0.8 * (1 - k)})`, 5 * (1 - k) + 1);
+  } else if (f.type === 'stamp') {
+    // 饼干模具：爱心模具从上面压下来
+    const drop = Math.max(0, 1 - k * 3), sc = 1.2 - Math.min(1, k * 3) * 0.2;
+    g.save(); g.globalAlpha = k < 0.7 ? 1 : (1 - k) / 0.3; g.translate(f.x, f.y - drop * 50); g.scale(sc, sc);
+    g.beginPath(); g.moveTo(0, 12); g.bezierCurveTo(-26, -4, -16, -26, 0, -12); g.bezierCurveTo(16, -26, 26, -4, 0, 12); g.closePath();
+    g.lineWidth = 5; g.strokeStyle = '#ff8fb5'; g.stroke(); g.lineWidth = 2; g.strokeStyle = '#fff'; g.stroke();
+    g.restore();
   } else if (f.type === 'prism') {
     // 彩虹圈：六段彩色弧一边转一边扩散
     const rr2 = 6 + k * f.r;
@@ -4240,6 +4425,7 @@ function draw() {
       if (p && !p.atk) {
         if (p.tier) drawTierAura(cellCX(c), cellCY(r) + 28, p.tier, t, false);
         drawPlant(p.type, cellCX(c), cellCY(r) + 28, t, p);
+        if (p.iced > 0) { const ix = cellCX(c), iy = cellCY(r) + 28; rr(ix - 30, iy - 62, 60, 64, 12); g.fillStyle = 'rgba(191,233,255,.5)'; g.fill(); g.strokeStyle = 'rgba(255,255,255,.9)'; g.lineWidth = 2; g.stroke(); line(ix - 20, iy - 52, ix - 8, iy - 40, 'rgba(255,255,255,.8)', 3); }
         if (p.tier) drawTierAura(cellCX(c), cellCY(r) + 28, p.tier, t, true);
       }
     }
@@ -4250,6 +4436,14 @@ function draw() {
     }
   }
   for (const p of S.peas) {
+    if (p.kind === 'pearl') {
+      const tk = projTier(p.src);
+      if (tk) tierTrail(p.x, p.y, tk, 8, 1);
+      ell(p.x, p.y + 8, 8, 2.5, 'rgba(80,40,20,.2)');
+      ell(p.x, p.y, 8, 8, '#4a2c1e', '#2a160c', 1.5);
+      const a = p.spin; ell(p.x + Math.cos(a) * 3, p.y + Math.sin(a) * 3 - 1, 2.4, 2.4, 'rgba(255,255,255,.55)');
+      continue;
+    }
     const tierK = projTier(p.src);
     if (tierK) tierTrail(p.x, p.y, tierK, p.kind === 'boomer' ? 15 : 11, p.dir || (p.kind === 'boomer' && p.back ? -1 : 1));
     if (p.kind === 'fire' && p.burn) {
@@ -4710,7 +4904,7 @@ function advCfg(i) {
 }
 function miniCfg(m) { return makeCfg(Object.assign({ mode: 'mini', id: m.id, label: `小游戏：${m.name}`, back: showMinigames, plants: m.cfg.conveyor ? [] : PICKABLE.slice() }, m.cfg)); }
 function chalCfg(c) { return makeCfg(Object.assign({ mode: 'challenge', id: c.id, label: `挑战：${c.name}`, back: showChallenges, plants: PICKABLE.slice() }, c.cfg)); }
-function endlessCfg() { return makeCfg({ mode: 'endless', label: '无尽模式', back: showModes, pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 1, grow: 0.6, startSun: 300, plants: PICKABLE.slice() }); }
+function endlessCfg() { return makeCfg({ mode: 'endless', label: '无尽模式', back: showModes, pool: [...ALL_POOL, ...NEW_Z], waves: Infinity, flagEvery: 10, base: 1, grow: 0.6, startSun: 300, plants: PICKABLE.slice() }); }
 // 甜品盲盒：无尽模式，开局 400 方糖，每 10 波一次旗帜波
 function luckyCfg() { return makeCfg({ mode: 'lucky', label: '甜品盲盒', back: showMenu, pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 0.8, grow: 0.55, startSun: 400, diff: 1.3, hpMul: 1.15, plants: ['luckybox', 'goldbox'] }); }
 

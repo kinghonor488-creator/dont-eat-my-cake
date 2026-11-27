@@ -610,6 +610,97 @@ button{font:inherit;color:inherit}
   .agrid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 }
 
+
+/* ================= 第二轮：商店、礼包、场景、关卡总览、道具栏 ================= */
+.ico.it-ticket{background-image:url(img/ico_ticket.webp)}
+.ico.it-flashpick{background-image:url(img/ico_flashpick.webp)}
+.ico.it-goldpick{background-image:url(img/ico_goldpick.webp)}
+.ico.it-sugar{background-image:url(img/ico_sugar.webp)}
+.ico.it-freeze{background-image:url(img/ico_freeze.webp)}
+.ico.it-heal{background-image:url(img/ico_heal.webp)}
+.ico.it-robot{background-image:url(img/ico_robot.webp)}
+.ico.it-bomb{background-image:url(img/ico_bomb.webp)}
+/* 主页顶部的每日任务条 */
+.dailybar{position:relative;display:flex;align-items:center;gap:7px;height:34px;padding:0 10px 0 4px;border-radius:999px;background:rgba(255,250,244,.96);border:2px solid #fff;box-shadow:0 0 0 2px #f3b3c8,0 3px 0 2px rgba(194,96,126,.35);cursor:pointer;font:400 15px/1 var(--display);color:#b24d73;min-width:0;white-space:nowrap}
+.dailybar .ico{width:28px;height:28px}
+.dailybar .bar{width:64px;height:8px;border-radius:999px;background:#ffe4ee;box-shadow:inset 0 0 0 1.5px #f6c0d3;overflow:hidden;flex:none}
+.dailybar .bar i{display:block;height:100%;background:linear-gradient(90deg,#ff9ec0,#d79bff)}
+.dailybar .claim{font:400 12px/1 var(--display);color:#fff;background:#ff4f7b;border-radius:999px;padding:4px 8px;animation:dotpop 1.6s ease-in-out infinite}
+.dailybar:active{transform:translateY(2px)}
+/* 主页上的甜品小店 */
+.hub-logo{position:relative}
+.stall{position:absolute;right:2px;bottom:0;display:flex;flex-direction:column;align-items:center;background:none;border:0;padding:0;cursor:pointer;font:inherit;z-index:1}
+.stall img{width:clamp(80px,calc(var(--ah,500px)*.26),150px);height:auto;filter:drop-shadow(0 6px 8px rgba(160,60,100,.3));animation:stallbob 3s ease-in-out infinite;transform-origin:50% 100%}
+.stall b{margin-top:-10px;font:400 15px/1 var(--display);color:#fff;background:linear-gradient(#ffa9c6,#f37aa2);border:2px solid #fff;border-radius:999px;padding:5px 12px;box-shadow:0 3px 0 #c2607e;white-space:nowrap;position:relative}
+.stall .tagx{position:absolute;top:-4px;right:-10px;font:700 11px/1 var(--body);color:#fff;background:#ff4f7b;border:2px solid #fff;border-radius:999px;padding:4px 7px;transform:rotate(8deg);animation:dotpop 1.4s ease-in-out infinite;white-space:nowrap}
+@keyframes stallbob{0%,100%{transform:scale(1)}50%{transform:scale(1.03,.98)}}
+.stall:active img{transform:scale(.95)}
+/* 商店：左边分类，右边商品 */
+.shop{display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px;flex:1 1 auto;min-height:0}
+.srail{display:flex;flex-direction:column;gap:6px;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;padding:2px}
+.srail img{width:86px;align-self:center;filter:drop-shadow(0 4px 6px rgba(160,60,100,.25))}
+.stab{position:relative;flex:none;padding:8px 8px;border-radius:14px;border:2px solid #fff;background:rgba(255,250,244,.94);color:#b24d73;font:400 15px/1.1 var(--display);box-shadow:0 0 0 2px #f6c0d3;cursor:pointer;text-align:center}
+.stab.on{background:linear-gradient(#ffb8d0,#f47aa3);color:#fff;box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e}
+.sbody .shop-banner{height:clamp(52px,calc(var(--ah,500px)*.15),90px)}
+.sbody{min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:4px 6px 12px;display:flex;flex-direction:column;gap:10px}
+.shead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.shead h2{margin:0;font:400 19px/1 var(--display);color:#fff;text-shadow:0 2px 0 #c2607e,0 0 6px rgba(194,96,126,.6)}
+.cdown{font:700 12px/1 var(--body);color:#fff;background:rgba(194,96,126,.85);border-radius:999px;padding:4px 9px;font-variant-numeric:tabular-nums}
+.packs{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:12px 10px;padding-top:4px}
+.pack{position:relative;display:flex;flex-direction:column;gap:6px;padding:10px;border-radius:18px;border:3px solid #fff;background:linear-gradient(160deg,#fffaf4,#ffeef5);box-shadow:0 0 0 2px #f3b3c8,0 4px 0 2px #e48aa9;color:var(--ink)}
+.pack.newbie{background:linear-gradient(160deg,#fffaf0,#fff0c9);box-shadow:0 0 0 2px #ffd56a,0 4px 0 2px #d99a2b}
+.pack .top{display:flex;align-items:center;gap:8px}
+.pack .top img{width:56px;height:56px;object-fit:contain;flex:none}
+.pack b{font:400 18px/1.1 var(--display);color:#d0567f}
+.pack.newbie b{color:#b0701a}
+.pack .lim{font-size:11px;color:#9a6a7e}
+.gives{display:flex;flex-wrap:wrap;gap:4px}
+.gv{display:inline-flex;align-items:center;gap:2px;font:700 12px/1 var(--body);color:#7a5566;background:#fff;border-radius:999px;padding:2px 7px 2px 2px;box-shadow:0 0 0 1.5px #f6d3e0;white-space:nowrap}
+.gv .ico{width:20px;height:20px}
+.pack .buy{display:flex;align-items:center;gap:8px;margin-top:auto}
+.pack .was{font-size:12px;color:#b9a0aa;text-decoration:line-through}
+.pack .buy .btn{margin-left:auto;font-size:16px;padding:5px 14px}
+.pack .off{position:absolute;top:-9px;right:-6px;font:700 12px/1 var(--body);color:#fff;background:#ff4f7b;border:2px solid #fff;border-radius:999px;padding:4px 8px;transform:rotate(6deg)}
+.pack.done{filter:grayscale(.5);opacity:.72}
+.rewards .gv{font-size:13px}
+/* 战斗场景 */
+.scenes{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.scard{position:relative;display:flex;flex-direction:column;gap:6px;padding:8px;border-radius:18px;border:3px solid #fff;background:rgba(255,250,244,.96);box-shadow:0 0 0 2px #f3b3c8,0 4px 0 2px #e48aa9;color:var(--ink)}
+.scard.on{box-shadow:0 0 0 3px #7fd6ae,0 4px 0 3px #3f9a74}
+.scard canvas{width:100%;height:auto;aspect-ratio:16/9;border-radius:12px;box-shadow:0 0 0 2px #fff,0 0 0 3px #f6d3e0}
+.scard b{font:400 17px/1.1 var(--display);color:#d0567f}
+.scard .row{display:flex;align-items:center;gap:8px}
+.scard .row .btn{margin-left:auto}
+.scard .using{margin-left:auto;font:400 14px/1 var(--display);color:#3f9a74}
+/* 关卡地图：可以拖动，两侧箭头，底部总览 */
+.lwrap{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:6px}
+.lstage{position:relative;flex:1 1 auto;min-height:0;display:flex}
+.lmap{flex:1 1 auto;overflow:hidden;touch-action:none;cursor:grab}
+.lmap *{touch-action:none}
+.larrow{position:absolute;top:calc(50% - 20px);z-index:3;width:40px;height:40px;border-radius:50%;border:2px solid #fff;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:700 24px/1 var(--body);box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e;cursor:pointer;padding:0}
+.larrow.l{left:4px}.larrow.r{right:4px}
+.larrow:disabled{opacity:.3;cursor:default}
+.lscrub{flex:none;display:flex;align-items:center;gap:10px;background:rgba(255,250,244,.94);border:2px solid #fff;border-radius:999px;box-shadow:0 0 0 2px #f3b3c8;padding:5px 14px}
+.lscrub .lbl{font:400 13px/1 var(--display);color:#b24d73;white-space:nowrap}
+.ldots{position:relative;flex:1;display:flex;justify-content:space-between;align-items:center;height:22px;min-width:0}
+.ldot{position:relative;z-index:1;width:13px;height:13px;border-radius:50%;background:#e6dde1;border:2px solid #fff;box-shadow:0 0 0 1px #d9cfd3;padding:0;cursor:pointer;flex:none}
+.ldot.done{background:#7fd6ae;box-shadow:0 0 0 1px #3f9a74}
+.ldot.open{background:#ffb3cd;box-shadow:0 0 0 1px #e77ca0}
+.ldot.cur{background:#ff6fa0;transform:scale(1.35);box-shadow:0 0 0 1px #c2607e}
+.ldot.soon{background:#fff;border:2px dashed #e4b9c8;box-shadow:none}
+.lwin{position:absolute;top:-2px;bottom:-2px;border-radius:999px;background:rgba(255,158,192,.2);box-shadow:inset 0 0 0 2px rgba(255,111,160,.6);pointer-events:none}
+.lnode.soon .disc{background:repeating-linear-gradient(45deg,#fff 0 6px,#fdeef4 6px 12px);color:#c9a3b4;box-shadow:0 0 0 3px #f3d3de,0 5px 0 3px #e4b9c8}
+.lhint{position:absolute;left:50%;bottom:10px;z-index:3;font:400 15px/1 var(--display);color:#fff;background:rgba(194,96,126,.88);border-radius:999px;padding:8px 14px;pointer-events:none;white-space:nowrap;animation:hintslide 1.6s ease-in-out infinite}
+@keyframes hintslide{0%,100%{transform:translateX(-50%)}50%{transform:translateX(calc(-50% - 16px))}}
+/* 道具栏：可以收起 */
+.tray-x{align-self:stretch;flex:none;width:46px;border-radius:12px;border:2px solid #fff;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:400 13px/1.2 var(--display);box-shadow:0 0 0 2px #e77ca0;cursor:pointer;padding:0}
+.tool.bag small{font:400 10px/1 var(--display);color:#c2507a;margin-top:-1px}
+@media (max-height:420px), (orientation:portrait) and (max-width:600px){
+  .shop{grid-template-columns:96px minmax(0,1fr)}
+  .srail img{width:70px}
+  .stab{font-size:14px;padding:6px 6px}
+}
+
 @media (prefers-reduced-motion:reduce){.card,.tool,#toast{transition:none}.card.ready{animation:none}}
 </style>
 
@@ -634,7 +725,7 @@ body{margin:0}
     <div id="cards"></div>
     <div id="tools">
       <button id="dartBtn" class="tool dart" aria-label="牙签飞镖：戳破气球，25 方糖"><canvas width="72" height="72"></canvas><span class="cost">25</span><span class="mask"></span></button>
-      <button id="bagBtn" class="tool bag" aria-label="道具"><i class="ico bag"></i><span class="badge" hidden>0</span></button>
+      <button id="bagBtn" class="tool bag" aria-label="道具"><i class="ico bag"></i><small>道具</small><span class="badge" hidden>0</span></button>
       <button id="shovel" class="tool" aria-label="铲子：移除小伙伴"><canvas width="72" height="72"></canvas></button>
       <div id="side">
         <button id="speedBtn" class="tool" aria-label="切换速度">1×</button>
@@ -869,8 +960,9 @@ const ACH = [
 /* ================= 存档 ================= */
 const SAVE_KEY = 'cake-save-v1';
 const defaultSave = () => ({ cleared: [], chal: {}, seen: {}, ach: {}, kills: 0, bestWave: 0, sfx: true, music: true, pick: [], boxGot: {}, luckyWin: false, luckyBest: 0, mini: {}, tutorialDone: false,
-  coins: 0, gems: 0, cards: {}, cardNew: {}, bond: {}, items: { dart: 0, sugar: 0, freeze: 0, heal: 0, robot: 0, bomb: 0 },
-  gacha: { pulls: 0, pf: 0, pg: 0, log: [] }, daily: { date: '', prog: {}, got: {}, free: false, bonus: false }, starter: false, dev: false, v2: false });
+  coins: 0, gems: 0, cards: {}, cardNew: {}, bond: {}, items: { dart: 0, sugar: 0, freeze: 0, heal: 0, robot: 0, bomb: 0, ticket: 0, flashPick: 0, goldPick: 0 },
+  gacha: { pulls: 0, pf: 0, pg: 0, log: [] }, daily: { date: '', prog: {}, got: {}, free: false, bonus: false }, starter: false, dev: false, v2: false,
+  born: 0, bought: {}, scenes: { pink: true }, scene: 'pink', mapHint: false });
 let save = defaultSave();
 try { const s = JSON.parse(localStorage.getItem(SAVE_KEY)); if (s) save = Object.assign(defaultSave(), s); } catch (e) {}
 // 新版本加的嵌套字段：旧存档补齐默认值
@@ -893,6 +985,7 @@ const PICKABLE = PLANT_ORDER.filter(k => !PLANTS[k].luckyOnly);
 const IMG = {
   menu: 'img/menu_bg.jpg', album: 'img/album_bg.jpg', gacha: 'img/gacha_bg.jpg', levels: 'img/levels_bg.jpg',
   shop: 'img/shop_banner.jpg', machine: 'img/gacha_machine.webp',
+  stall: 'img/shop_stall.webp', newbie: 'img/pack_newbie.webp', daily: 'img/pack_daily.webp',
 };
 const CARDABLE = new Set(PLANT_ORDER);
 const TIER_NAME = { flash: '闪卡', gold: '金卡' };
@@ -923,6 +1016,9 @@ const ITEMS = {
   robot:  { name: '机器人充电', desc: '用掉的扫地机器人全部回来', none: '机器人都还在岗' },
   bomb:   { name: '奶油大炮',   desc: '全场团子挨一发 600 伤害的奶油炮', none: '场上还没有团子' },
   dart:   { name: '牙签飞镖',   desc: '免费戳一个气球：不花方糖、不用等冷却（自动用在飞镖按钮上）' },
+  ticket:    { name: '扭蛋券',     desc: '免费扭 1 次扭蛋（扭 10 次要 10 张）' },
+  flashPick: { name: '自选闪卡券', desc: '在卡册里任选一位小伙伴，兑换它的闪卡' },
+  goldPick:  { name: '自选金卡券', desc: '在卡册里任选一位小伙伴，兑换它的金卡' },
 };
 const TRAY_ITEMS = ['sugar', 'freeze', 'heal', 'robot', 'bomb'];
 const DAILY = [
@@ -945,10 +1041,69 @@ const COIN_GOODS = [
 const GEM_GOODS = [
   { id: 'g_party', name: '派对礼包', desc: '飞镖×5 方糖罐×3 冰冻棒棒糖×1', price: 60,  give: { dart: 5, sugar: 3, freeze: 1 } },
   { id: 'g_guard', name: '守护礼包', desc: '爱心蛋糕×3 机器人充电×2 奶油大炮×2', price: 120, give: { heal: 3, robot: 2, bomb: 2 } },
+  { id: 'g_ticket', name: '扭蛋券 ×10', desc: '可以直接扭 10 次（和 900 金币十连一样）', price: 90, give: { ticket: 10 } },
 ];
 // 充值档位：体验版不接支付，点了只弹说明
 const TOPUP = [{ rmb: 6, gems: 60 }, { rmb: 30, gems: 300, bonus: 30 }, { rmb: 68, gems: 680, bonus: 80 }, { rmb: 128, gems: 1280, bonus: 200 }, { rmb: 328, gems: 3280, bonus: 600 }, { rmb: 648, gems: 6480, bonus: 1500 }];
 // ↑↑ 数值区结束 ↑↑
+
+// ↓↓ 礼包和场景的数值 ↓↓
+// 新手特惠：第一次打开游戏后 7 天内有效，每个限购 1 次；每日特惠：每天 0 点刷新，每个每天限 1 次。
+// price：null 表示免费领取，否则 { gems } 或 { coins }；worth：原价（同一种货币），用来算折扣
+const NEWBIE_DAYS = 7;
+const NEWBIE_PACKS = [
+  { id: 'n1', name: '新手尝鲜礼包', price: { gems: 10 },  worth: 100,  give: { ticket: 3, coins: 600, dart: 5 } },
+  { id: 'n2', name: '新手成长礼包', price: { gems: 60 },  worth: 408,  give: { flashPick: 1, ticket: 10, coins: 1000, freeze: 2, heal: 2 } },
+  { id: 'n3', name: '新手豪华礼包', price: { gems: 300 }, worth: 1298, give: { goldPick: 1, ticket: 20, coins: 3000, bomb: 3, robot: 3 } },
+];
+const DAILY_PACKS = [
+  { id: 'd0', name: '每日福利',     price: null,           give: { coins: 100, dart: 1 } },
+  { id: 'd1', name: '每日道具特惠', price: { coins: 320 }, worth: 640, give: { sugar: 2, freeze: 1, heal: 1 } },
+  { id: 'd2', name: '每日扭蛋特惠', price: { gems: 30 },   worth: 60,  give: { ticket: 3, coins: 300 } },
+  { id: 'd3', name: '每日十连特惠', price: { gems: 68 },   worth: 100, give: { ticket: 10 } },
+];
+// 战斗场景（餐桌布皮肤）：tiles 两种格子颜色，side 左边蛋糕台，door 右边门口地砖，deco 格子上的装饰
+const SCENES = {
+  pink:     { name: '草莓野餐布', desc: '粉白格子，甜品店最经典的餐桌', price: null,
+              bg: '#f6d7c3', side: ['#fff3ea', '#ffe9de'], tiles: ['#fffaf6', '#ffd9e5'], line: 'rgba(255,150,180,.25)', door: ['#d8eef0', '#c4e3e6'], edge: '#f0b8c8', floor: '#e8b9a0', deco: 'dots', decoColor: 'rgba(255,140,170,.18)' },
+  mint:     { name: '薄荷苏打', desc: '清爽的薄荷格子，小气泡慢慢往上冒', price: { coins: 1500 },
+              bg: '#cfeee0', side: ['#f2fff9', '#e2f8ee'], tiles: ['#f6fffb', '#cdf3e2'], line: 'rgba(80,190,150,.22)', door: ['#ffe9f0', '#ffd9e6'], edge: '#9fdcc3', floor: '#a8d8c4', deco: 'bubbles', decoColor: 'rgba(70,180,140,.38)' },
+  lemon:    { name: '柠檬下午茶', desc: '奶黄格子配柠檬片，阳光满满', price: { coins: 2500 },
+              bg: '#f7e2a8', side: ['#fffbea', '#fff3cf'], tiles: ['#fffdf2', '#fff0bd'], line: 'rgba(230,180,60,.25)', door: ['#e6f6ff', '#d3eefc'], edge: '#f2d27a', floor: '#e8c98a', deco: 'lemons', decoColor: 'rgba(240,190,40,.55)' },
+  lavender: { name: '薰衣草星空', desc: '淡紫色的星空餐桌，星星一闪一闪', price: { gems: 120 },
+              bg: '#d9c8f2', side: ['#f6f0ff', '#ece2ff'], tiles: ['#f8f4ff', '#e3d6ff'], line: 'rgba(150,110,220,.22)', door: ['#fff0f6', '#ffe2ee'], edge: '#c8b0f0', floor: '#bba4dd', deco: 'stars', decoColor: '#ffd56a' },
+  choco:    { name: '巧克力工坊', desc: '拿铁色格子，撒满彩色糖针', price: { gems: 200 },
+              bg: '#d9b79a', side: ['#fff4ea', '#f6e3d2'], tiles: ['#fbf1e6', '#ead3bd'], line: 'rgba(150,100,60,.22)', door: ['#fde8ef', '#f8d5e2'], edge: '#c99a74', floor: '#a8764e', deco: 'sprinkles', decoColor: '' },
+  sakura:   { name: '樱花和果子', desc: '限定餐桌：樱花花瓣会一直慢慢飘落', price: { gems: 300 },
+              bg: '#f6cfdc', side: ['#fff7fa', '#ffeef4'], tiles: ['#fffafc', '#ffe3ec'], line: 'rgba(240,140,170,.2)', door: ['#eaf7ee', '#d8f0df'], edge: '#f4b3c8', floor: '#e2a3b6', deco: 'petals', decoColor: '#ffb0c8' },
+};
+const SCENE_ORDER = Object.keys(SCENES);
+// ↑↑ 礼包和场景数值结束 ↑↑
+const ICON_IMG = { ticket: 'ticket', flashPick: 'flashpick', goldPick: 'goldpick', sugar: 'sugar', freeze: 'freeze', heal: 'heal', robot: 'robot', bomb: 'bomb' };
+// 把一包奖励发到存档里：coins / gems 是货币，其它是道具或券
+function grantAll(give) {
+  for (const [k, n] of Object.entries(give)) {
+    if (k === 'coins') save.coins += n;
+    else if (k === 'gems') save.gems += n;
+    else save.items[k] = (save.items[k] || 0) + n;
+  }
+}
+function newbieLeft() { return save.born + NEWBIE_DAYS * 86400000 - Date.now(); }
+function newbieOpen() { return newbieLeft() > 0 && NEWBIE_PACKS.some(x => !save.bought[x.id]); }
+function msToMidnight() { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1) - d; }
+function fmtLeft(ms) {
+  ms = Math.max(0, ms);
+  const dd = Math.floor(ms / 86400000), h = Math.floor(ms / 3600000) % 24, m = Math.floor(ms / 60000) % 60, s = Math.floor(ms / 1000) % 60;
+  const two = n => String(n).padStart(2, '0');
+  return dd > 0 ? `${dd} 天 ${h} 小时` : `${two(h)}:${two(m)}:${two(s)}`;
+}
+function dealsReady() { return ensureDaily().packs.d0 ? 0 : 1; }
+// 扭蛋怎么付：每天第一次单抽免费 → 扭蛋券 → 金币
+function gachaPay(n) {
+  if (n === 1 && ensureDaily().free) return 'free';
+  if ((save.items.ticket || 0) >= n) return 'ticket';
+  return 'coins';
+}
 
 function cardTier(k) { const c = save.cards[k]; return c ? (c.gold ? 'gold' : c.flash ? 'flash' : null) : null; }
 function cardMul(k) { const t = cardTier(k); return t ? CARD_BONUS[t] : 1; }
@@ -956,7 +1111,8 @@ function cardCount(tier) { return PLANT_ORDER.filter(k => save.cards[k] && save.
 function today() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
 function ensureDaily() {
   const t = today();
-  if (save.daily.date !== t) save.daily = { date: t, prog: { login: 1 }, got: {}, free: true, bonus: false };
+  if (save.daily.date !== t) save.daily = { date: t, prog: { login: 1 }, got: {}, free: true, bonus: false, packs: {} };
+  if (!save.daily.packs) save.daily.packs = {};
   return save.daily;
 }
 function dailyAdd(id, n = 1) {
@@ -1036,12 +1192,12 @@ function pullOnce() {
 }
 // 扭 n 次（1 或 10）；钱不够返回 null
 function doGacha(n) {
-  const d = ensureDaily();
-  const free = n === 1 && d.free;
-  const cost = free ? 0 : n === 1 ? GACHA_COST.one : GACHA_COST.ten;
-  if (save.coins < cost) return null;
-  save.coins -= cost;
-  if (free) d.free = false;
+  const d = ensureDaily(), how = gachaPay(n);
+  const cost = n === 1 ? GACHA_COST.one : GACHA_COST.ten;
+  if (how === 'coins' && save.coins < cost) return null;
+  if (how === 'free') d.free = false;
+  else if (how === 'ticket') save.items.ticket -= n;
+  else save.coins -= cost;
   const out = [];
   for (let i = 0; i < n; i++) out.push(pullOnce());
   dailyAdd('gacha', n);
@@ -1072,6 +1228,10 @@ function battleRewards(won, first) {
 
 // 老玩家升级到这个版本：已经拿到的成就和已经通关的关卡，按新规则补发钻石
 if (!save.v2) { save.v2 = true; save.gems += Object.keys(save.ach).filter(id => ACH.some(a => a.id === id)).length * ACH_GEMS + save.cleared.length * 20; persist(); }
+// 第一次打开的时间（新手特惠 7 天倒计时从这里算）；场景存档补齐
+if (!save.born) { save.born = Date.now(); persist(); }
+if (!save.scenes.pink) save.scenes.pink = true;
+if (!SCENES[save.scene]) save.scene = 'pink';
 
 /* ================= 声音（全部用 WebAudio 合成） ================= */
 const Sound = (() => {
@@ -1919,8 +2079,8 @@ function update(dt) {
           for (const z of S.zombies) if (!z.dead && !z.under && !z.hid && z.x < VIS_X && z.jumping <= 0 && (!tgt || z.x < tgt.x)) tgt = z;
           if (tgt) {
             p.shootT = 5; p.recoil = 0.35;
-            S.lobs.push({ src: CUR_SRC, kind: 'shell', row: tgt.row, sx: px + 10, sy: py - 50, z: tgt, tx: tgt.x, t: 0, dur: 1.2 });
-            for (let i = 0; i < 6; i++) part({ x: px + 14, y: py - 52, vx: rnd(-40, 40), vy: rnd(-120, -40), grav: -30, life: 0.6, size: rnd(3, 6), color: 'rgba(200,200,200,.8)' });
+            S.lobs.push({ src: CUR_SRC, kind: 'shell', row: tgt.row, sx: px + 26, sy: py - 36, z: tgt, tx: tgt.x, t: 0, dur: 1.2 });
+            for (let i = 0; i < 6; i++) part({ x: px + 28, y: py - 38, vx: rnd(-40, 40), vy: rnd(-120, -40), grav: -30, life: 0.6, size: rnd(3, 6), color: 'rgba(255,240,245,.85)' });
             S.shake = Math.max(S.shake, 2);
             sfx('slam');
           }
@@ -2603,16 +2763,16 @@ const FACES = {
   frostnut:      { eyes: 'snow',    mouth: 'w' },
   twinpop:       { eyes: 'dot',     mouth: 'cat' },
   shieldleaf:    { eyes: 'closed',  mouth: 'w', blush: 1.5 },
-  gatlingpea:    { eyes: 'wink',    mouth: 'tongue' },
+  gatlingpea:    { eyes: 'gloss',   mouth: 'tongue' },
   magnetnut:     { eyes: 'wide',    mouth: 'o' },
-  icemelon:      { eyes: 'cool',    mouth: 'smirk' },
+  icemelon:      { eyes: 'cool',    mouth: 'grin' },
   lightningvine: { eyes: 'spiral',  mouth: 'wavy' },
   mortar:        { eyes: 'focus',   mouth: 'flat' },
   laserbean:     { eyes: 'sparkle', mouth: 'w' },
   peppershaker:  { eyes: 'x',       mouth: 'o', extra: 'sneeze' },
   taffytrap:     { eyes: 'closed',  mouth: 'tongue', blush: 1.4 },
   fortunecookie: { eyes: 'wink',    mouth: 'grin' },
-  chocolava:     { eyes: 'fire',    mouth: 'smirk', brows: 'smug' },
+  chocolava:     { eyes: 'fire',    mouth: 'cat' },
   z_normal:   { eyes: 'dot',   mouth: 'drool' },
   z_flag:     { eyes: 'x',     mouth: 'o' },
   z_cone:     { eyes: 'dot',   mouth: 'pout', blush: 1.7 },
@@ -2645,7 +2805,8 @@ function eyeShape(kind, ex, ey, s, dir, side) {
       line(x - 2.4 * s, y, x + 2.4 * s, y, LINE, 1.6 * s); return;
     case 'x':
       g.strokeStyle = LINE; g.lineWidth = 1.5 * s; g.lineCap = 'round';
-      g.beginPath(); const k = side * dir;
+      // "> <"：两只眼睛的尖角都朝向中间
+      g.beginPath(); const k = -side;
       g.moveTo(x - 2.2 * s * k, y - 2.2 * s); g.lineTo(x + 2.2 * s * k, y); g.lineTo(x - 2.2 * s * k, y + 2.2 * s); g.stroke(); return;
     case 'star': {
       g.beginPath();
@@ -2659,8 +2820,12 @@ function eyeShape(kind, ex, ey, s, dir, side) {
       line(x - 3 * s, y - 0.2 * s, x + 3 * s, y - 0.2 * s, LINE, 1.4 * s); return;
     case 'wide':
       ell(x, y, 3.3 * s, 3.8 * s, '#fff', LINE, 1.2 * s);
-      ell(x + dir * 0.6 * s, y + 0.4 * s, 1.9 * s, 2.3 * s, INK);
-      ell(x + dir * 0.6 * s + 0.7 * s, y - 0.6 * s, 0.7 * s, 0.7 * s, '#fff'); return;
+      ell(x, y + 0.4 * s, 1.9 * s, 2.3 * s, INK);
+      ell(x + 0.7 * s, y - 0.6 * s, 0.7 * s, 0.7 * s, '#fff'); return;
+    case 'gloss':
+      ell(x, y, 3 * s, 3.6 * s, INK);
+      ell(x - 0.9 * s, y - 1.3 * s, 1.2 * s, 1.2 * s, '#fff');
+      ell(x + 1 * s, y + 1.2 * s, 0.6 * s, 0.6 * s, '#fff'); return;
     case 'sparkle':
       ell(x, y, 2.9 * s, 3.6 * s, INK);
       ell(x + 0.9 * s, y - 1.3 * s, 1.1 * s, 1.1 * s, '#fff');
@@ -2668,7 +2833,9 @@ function eyeShape(kind, ex, ey, s, dir, side) {
       ell(x, y + 2.2 * s, 1.6 * s, 0.7 * s, 'rgba(255,150,190,.8)'); return;
     case 'teary':
       ell(x, y, 2.4 * s, 3 * s, INK); ell(x + 0.8 * s, y - 1.1 * s, 0.9 * s, 0.9 * s, '#fff');
-      g.beginPath(); g.moveTo(x + 1.5 * s, y + 2.6 * s); g.quadraticCurveTo(x + 3.2 * s, y + 5.6 * s, x + 1.5 * s, y + 6 * s); g.quadraticCurveTo(x - 0.2 * s, y + 5.6 * s, x + 1.5 * s, y + 2.6 * s);
+      // 泪滴挂在眼睛外侧（左右对称）
+      const tx = x + side * 1.5 * s;
+      g.beginPath(); g.moveTo(tx, y + 2.6 * s); g.quadraticCurveTo(tx + 1.7 * s, y + 5.6 * s, tx, y + 6 * s); g.quadraticCurveTo(tx - 1.7 * s, y + 5.6 * s, tx, y + 2.6 * s);
       g.fillStyle = 'rgba(127,211,255,.9)'; g.fill(); return;
     case 'fire':
       ell(x, y, 2.6 * s, 3.1 * s, INK);
@@ -2676,14 +2843,15 @@ function eyeShape(kind, ex, ey, s, dir, side) {
       g.fillStyle = '#ffb347'; g.fill(); return;
     case 'snow':
       ell(x, y, 2.4 * s, 3 * s, INK); ell(x + 0.8 * s, y - 1.1 * s, 0.9 * s, 0.9 * s, '#fff');
-      if (side > 0) { const cx = x + 3.6 * s, cy = y - 3 * s; for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; line(cx - Math.cos(a) * 1.8 * s, cy - Math.sin(a) * 1.8 * s, cx + Math.cos(a) * 1.8 * s, cy + Math.sin(a) * 1.8 * s, '#ffffff', 0.9 * s); } }
+      { const cx = x + side * 3.6 * s, cy = y - 3 * s; for (let i = 0; i < 3; i++) { const a = i * Math.PI / 3; line(cx - Math.cos(a) * 1.6 * s, cy - Math.sin(a) * 1.6 * s, cx + Math.cos(a) * 1.6 * s, cy + Math.sin(a) * 1.6 * s, '#ffffff', 0.9 * s); } }
       return;
     case 'spiral':
       g.beginPath(); for (let i = 0; i < 26; i++) { const a = i * 0.5 + (Date.now() / 160), r = i * 0.12 * s; g.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r); }
       g.strokeStyle = LINE; g.lineWidth = 1.1 * s; g.stroke(); return;
     case 'focus':
-      if (side * dir < 0) line(x - 2.4 * s, y + 0.4 * s, x + 2.4 * s, y - 0.4 * s, LINE, 1.6 * s);
-      else { ell(x, y, 3 * s, 3.6 * s, '#fff', LINE, 1.1 * s); ell(x + dir * 0.6 * s, y, 1.6 * s, 1.9 * s, INK); }
+      // 认真瞄准：两只眼睛一样，上眼皮朝鼻子斜下来
+      ell(x, y + 0.3 * s, 2.5 * s, 2.9 * s, INK); ell(x + 0.7 * s, y - 0.6 * s, 0.8 * s, 0.8 * s, '#fff');
+      line(x - 3.4 * s, y - 2.6 * s + side * 1.1 * s, x + 3.4 * s, y - 2.6 * s - side * 1.1 * s, LINE, 1.7 * s);
       return;
     default: // dot
       ell(x, y, 2.4 * s, 3 * s, INK);
@@ -2701,7 +2869,7 @@ function mouthShape(kind, mx, my, s, dir) {
       g.beginPath(); g.moveTo(mx - 2.6 * s * dir, my + 0.6 * s); g.quadraticCurveTo(mx, my + 2.2 * s, mx + 2.8 * s * dir, my - 0.8 * s); g.stroke(); return;
     case 'tongue':
       g.beginPath(); g.arc(mx - 1.6 * s, my, 1.6 * s, 0, Math.PI); g.arc(mx + 1.6 * s, my, 1.6 * s, 0, Math.PI); g.stroke();
-      ell(mx + 0.8 * s * dir, my + 2.2 * s, 1.4 * s, 1.6 * s, '#ff8fa8'); return;
+      ell(mx, my + 2.2 * s, 1.4 * s, 1.6 * s, '#ff8fa8'); return;
     case 'wavy':
       g.beginPath(); g.moveTo(mx - 3 * s, my + 1 * s);
       g.quadraticCurveTo(mx - 1.5 * s, my - 0.5 * s, mx, my + 1 * s); g.quadraticCurveTo(mx + 1.5 * s, my + 2.5 * s, mx + 3 * s, my + 1 * s); g.stroke(); return;
@@ -2733,7 +2901,7 @@ function cuteFace(x, y, s, dir = 1, mood = 'smile') {
   // 每隔几秒眨一下眼（不同位置错开节奏）
   const blinkable = ['dot', 'wide', 'sparkle', 'teary', 'snow', 'fire'].includes(eyes);
   if (mood === 'smile' && blinkable && ((Date.now() / 1000 + x * 0.013 + y * 0.007) % 3.3) < 0.13) eyes = 'closed';
-  const ox = dir * 2 * s, ex = 5.5 * s, ey = -2 * s;
+  const ox = 0, ex = 5.5 * s, ey = -2 * s; // 脸居中（以前往朝向偏 2px，正面看会显得歪）
   // 腮红
   const bl = sig.blush || 1;
   ell(x - 9 * s + ox, y + 3 * s, 3.2 * s * bl, 2 * s * Math.min(bl, 1.4), 'rgba(255,120,150,.45)');
@@ -2830,8 +2998,8 @@ function drawPlant(type, x, y, t, p) {
       g.strokeStyle = '#f0d9c4'; g.lineWidth = 1.5; g.stroke();
       ell(0, 0, 13, 13, '#ffcf4a', '#e8a21a', 2);
       ell(-4, -5, 4, 3, 'rgba(255,255,255,.7)');
+      cuteFace(0, 1, 0.85, 1, p && p.recoil > 0 ? 'open' : 'smile'); // 脸跟着蛋黄一起摇
       g.restore();
-      cuteFace(hx + 1, hy + 1, 0.85, 1, p && p.recoil > 0 ? 'open' : 'smile');
       break;
     }
     case 'firepea': {
@@ -2877,7 +3045,7 @@ function drawPlant(type, x, y, t, p) {
         g.beginPath(); g.moveTo(x - 22 - w, y); g.lineTo(x - 18 + w, y - 32); g.quadraticCurveTo(x, y - 40, x + 18 - w, y - 32); g.lineTo(x + 22 + w, y); g.closePath();
         g.fillStyle = 'rgba(127,211,255,.85)'; g.fill(); g.strokeStyle = '#3f9ac8'; g.lineWidth = 2.5; g.stroke();
         ell(x - 9, y - 26, 4, 7, 'rgba(255,255,255,.6)');
-        cuteFace(x + 1, y - 16, 0.8, 1, 'smile');
+        cuteFace(x, y - 16, 0.8, 1, 'smile');
         g.save(); g.translate(x + 12, y - 36); g.rotate(t);
         for (let i = 0; i < 3; i++) { g.rotate(Math.PI / 3); line(-5, 0, 5, 0, '#fff', 2); }
         g.restore();
@@ -2911,7 +3079,7 @@ function drawPlant(type, x, y, t, p) {
       ell(hx, hy - 10, 14, 11, '#ffb3c7', '#d77a93', 2);
       ell(hx + 2, hy - 26, 13, 11, '#a8ecd1', '#4fae8a', 2);
       ell(hx - 3, hy - 30, 4, 3, 'rgba(255,255,255,.7)');
-      cuteFace(hx + 3, hy - 24, 0.7, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      cuteFace(hx + 2, hy - 25, 0.7, 1, p && p.recoil > 0 ? 'open' : 'smile');
       for (let i = 0; i < 4; i++) ell(hx - 8 + i * 5, hy - 8 + (i % 2) * 3, 1.3, 1.3, ['#fff', '#7fd3ff', '#ffe36b', '#9be07a'][i]);
       break;
     }
@@ -2962,7 +3130,7 @@ function drawPlant(type, x, y, t, p) {
       g.fillStyle = '#ffdf8a'; g.fill();
       rr(x - 16, hy - 52, 32, 8, 3); g.fillStyle = '#ff9ec0'; g.fill(); g.strokeStyle = '#c2406e'; g.lineWidth = 1.5; g.stroke();
       ell(x - 8, hy - 30, 4, 6, 'rgba(255,255,255,.4)');
-      cuteFace(x + 1, hy - 20, 0.85, 1, 'smile');
+      cuteFace(x, hy - 20, 0.85, 1, 'smile');
       if (!p || p.recoil <= 0) {
         const bx = x + 22 + Math.sin(t * 4) * 6, by = hy - 52 + Math.cos(t * 5) * 4;
         ell(bx - 2, by - 4, 4, 2.5, 'rgba(255,255,255,.8)'); ell(bx + 2, by - 4, 4, 2.5, 'rgba(255,255,255,.8)');
@@ -2975,14 +3143,14 @@ function drawPlant(type, x, y, t, p) {
       shadow(x, y + 2, 22);
       const hy = y - 26 + bob * 0.5;
       ell(x, hy, 24, 22, '#ff6b6b', '#c23e3e', 2.5);
-      ell(x - 8, hy - 9, 6, 4, 'rgba(255,255,255,.4)');
+      ell(x - 12, hy - 11, 5, 3.5, 'rgba(255,255,255,.4)');
       for (let i = 0; i < 5; i++) { const a = -Math.PI / 2 + (i - 2) * 0.5; ell(x + Math.cos(a) * 6, hy - 22 + Math.sin(a) * 3, 5, 2.5, '#6fbf7a', '#3f8a4a', 1); }
-      ell(x, hy + 2, 13, 13, '#fffaf0', '#c23e3e', 1.5);
-      const ct = p ? p.clockT : 6;
-      for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; line(x + Math.cos(a) * 10, hy + 2 + Math.sin(a) * 10, x + Math.cos(a) * 12, hy + 2 + Math.sin(a) * 12, '#e8a0a0', 1.2); }
-      line(x, hy + 2, x + Math.sin(-ct / 18 * Math.PI * 2) * 9, hy + 2 - Math.cos(-ct / 18 * Math.PI * 2) * 9, '#c23e3e', 2.5);
-      ell(x - 16, hy + 8, 3.2, 2, 'rgba(255,255,255,.5)');
-      cuteFace(x, hy - 3, 0.6, 1, 'smile');
+      const dy = hy + 11, ct = p ? p.clockT : 6;
+      ell(x, dy, 9, 8, '#fffaf0', '#c23e3e', 1.5);
+      for (let i = 0; i < 12; i += 3) { const a = i * Math.PI / 6; line(x + Math.cos(a) * 6, dy + Math.sin(a) * 5.5, x + Math.cos(a) * 7.6, dy + Math.sin(a) * 6.8, '#e8a0a0', 1.2); }
+      line(x, dy, x + Math.sin(-ct / 18 * Math.PI * 2) * 6, dy - Math.cos(-ct / 18 * Math.PI * 2) * 5.5, '#c23e3e', 2);
+      ell(x, dy, 1.4, 1.4, '#c23e3e');
+      cuteFace(x, hy - 7, 0.72, 1, 'smile');
       break;
     }
     case 'peppershaker': {
@@ -2994,8 +3162,8 @@ function drawPlant(type, x, y, t, p) {
       rr(-15, -54, 30, 14, 6); g.fillStyle = '#c9d6e3'; g.fill(); g.strokeStyle = '#7a8fa3'; g.stroke();
       for (const [dx, dy] of [[-6, -48], [0, -50], [6, -48]]) ell(dx, dy, 1.6, 1.6, '#5a6a7a');
       for (let i = 0; i < 6; i++) ell(-9 + (i % 3) * 9, -10 - Math.floor(i / 3) * 6, 1.4, 1.4, '#5a4a52');
+      cuteFace(0, -24, 0.8, 1, p && p.recoil > 0 ? 'open' : 'smile');
       g.restore();
-      cuteFace(x, y - 28, 0.8, 1, p && p.recoil > 0 ? 'open' : 'smile');
       break;
     }
     case 'taffytrap': {
@@ -3043,7 +3211,8 @@ function drawPlant(type, x, y, t, p) {
       rr(x, y - 46, 26, 32, 10); g.fillStyle = '#ff9ec0'; g.fill(); g.strokeStyle = '#c2607e'; g.stroke();
       ell(x - 18, y - 40, 4, 3, 'rgba(255,255,255,.7)'); ell(x + 8, y - 40, 4, 3, 'rgba(255,255,255,.7)');
       ell(x - 26, y - 30, 3, 4.5, '#2a5a88'); ell(x + 26, y - 30, 3, 4.5, '#8a2a4e');
-      cuteFace(x - 2, y - 30, 0.7, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      cuteFace(x - 13, y - 30, 0.58, -1, p && p.recoil > 0 ? 'open' : 'smile');
+      cuteFace(x + 13, y - 30, 0.58, 1, p && p.recoil > 0 ? 'open' : 'smile');
       break;
     }
     case 'shieldleaf': {
@@ -3074,7 +3243,7 @@ function drawPlant(type, x, y, t, p) {
       const bc = ['#ff9ec0', '#7fd3ff', '#ffe36b', '#9be07a', '#d79bff', '#ff8a5c'];
       for (let i = 0; i < 9; i++) ell(hx + sh - 11 + (i % 3) * 11, y - 54 + Math.floor(i / 3) * 9, 4.5, 4.5, bc[i % 6]);
       ell(hx - 7, y - 58, 5, 3, 'rgba(255,255,255,.8)');
-      cuteFace(hx - 2, y - 13, 0.65, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      cuteFace(hx, y - 13, 0.65, 1, p && p.recoil > 0 ? 'open' : 'smile');
       break;
     }
     case 'magnetnut': {
@@ -3098,8 +3267,8 @@ function drawPlant(type, x, y, t, p) {
       g.beginPath(); g.moveTo(x - 18, y - 40); g.lineTo(x + 18, y - 40); g.lineTo(x + 13, y - 2); g.lineTo(x - 13, y - 2); g.closePath();
       g.fillStyle = '#ff8fa3'; g.fill(); g.strokeStyle = '#c2405e'; g.lineWidth = 2.5; g.stroke();
       rr(x - 19, y - 44, 38, 7, 3); g.fillStyle = '#7fd08a'; g.fill(); g.strokeStyle = '#3f9a52'; g.lineWidth = 2; g.stroke();
-      for (let i = 0; i < 4; i++) ell(x - 9 + i * 6, y - 28 + (i % 2) * 6, 1.4, 2, '#3a2424');
-      cuteFace(x, y - 18, 0.7, 1, 'smile');
+      for (let i = 0; i < 5; i++) ell(x - 10 + i * 5, y - 32 + (i % 2) * 1.5, 1, 1.5, '#7a2e3e');
+      cuteFace(x, y - 17, 0.8, 1, p && p.shootT > 2.6 ? 'open' : 'smile');
       line(x - 4, y - 44, x - 18, y - 64 - lift, '#ffffff', 5); line(x - 4, y - 44, x - 18, y - 64 - lift, '#ff9ec0', 2);
       if (!p || p.shootT > 0.4) { ell(x - 20, y - 70 - lift, 10, 9, '#ffc2cf', '#c2405e', 2); ell(x - 23, y - 73 - lift, 3, 2, '#fff'); }
       break;
@@ -3118,18 +3287,20 @@ function drawPlant(type, x, y, t, p) {
       break;
     }
     case 'mortar': {
-      // 奶油裱花炮：斜向上的裱花袋
+      // 奶油裱花炮：圆滚滚的泡芙身体（正脸），背后斜插一支裱花袋，袋口朝右上
       shadow(x, y + 2, 24);
       const kick = p && p.recoil > 0 ? 4 : 0;
-      g.save(); g.translate(x - 2, y - 14 + kick); g.rotate(-0.8);
-      g.beginPath(); g.moveTo(-18, 6); g.quadraticCurveTo(-20, -24, 0, -46); g.quadraticCurveTo(20, -24, 18, 6); g.closePath();
+      g.save(); g.translate(x + 4, y - 26 + kick); g.rotate(0.55);
+      g.beginPath(); g.moveTo(-12, 8); g.quadraticCurveTo(-14, -18, 0, -36); g.quadraticCurveTo(14, -18, 12, 8); g.closePath();
       g.fillStyle = '#fffaf6'; g.fill(); g.strokeStyle = '#d77a93'; g.lineWidth = 2.5; g.stroke();
-      line(-14, -6, 14, -6, '#ffb3c7', 3); line(-10, -20, 10, -20, '#ffb3c7', 3);
-      poly([-5, -44, 5, -44, 0, -56], '#c9d6e3', '#7a8fa3', 1.5);
-      ell(0, -58, 6, 4, '#ffd1e1');
+      line(-9, -6, 9, -6, '#ffb3c7', 3); line(-6, -18, 6, -18, '#ffb3c7', 3);
+      poly([-4, -34, 4, -34, 0, -44], '#c9d6e3', '#7a8fa3', 1.5);
+      ell(0, -46, 5, 3.5, '#ffd1e1');
       g.restore();
-      ell(x, y - 6, 22, 8, '#ffd1e1', '#d77a93', 2);
-      cuteFace(x - 4, y - 18, 0.75, 1, p && p.recoil > 0 ? 'open' : 'smile');
+      ell(x, y - 16 + kick * 0.5, 21, 17, '#ffe6c9', '#c98a4b', 2.5);
+      ell(x, y - 28 + kick * 0.5, 15, 5.5, '#fffaf6', '#e8cfb3', 1.5);
+      ell(x - 8, y - 22, 4, 2.5, 'rgba(255,255,255,.7)');
+      cuteFace(x, y - 14 + kick * 0.5, 0.75, 1, p && p.recoil > 0 ? 'open' : 'smile');
       break;
     }
     case 'laserbean': {
@@ -3500,34 +3671,109 @@ function drawCake(x, y, s) {
   for (const [dx, dy, c] of [[-14, -14, '#7fd3ff'], [8, -10, '#ffe36b'], [16, -20, '#9be07a'], [-6, -50, '#d79bff']]) ell(dx, dy, 2, 2, c);
   g.restore();
 }
-function drawLawn() {
-  g.fillStyle = '#f6d7c3'; g.fillRect(0, 0, W, H);
+// 餐桌格子 + 场景装饰（对局和商店预览共用）；scale 是装饰的大小倍率
+function paintBoard(sc, x0, y0, cols, rows, cw, ch, t, scale = 1) {
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    g.fillStyle = sc.tiles[(r + c) % 2];
+    g.fillRect(x0 + c * cw, y0 + r * ch, cw, ch);
+  }
+  g.strokeStyle = sc.line; g.lineWidth = 1;
+  for (let c = 0; c <= cols; c++) { g.beginPath(); g.moveTo(x0 + c * cw + 0.5, y0); g.lineTo(x0 + c * cw + 0.5, y0 + rows * ch); g.stroke(); }
+  const w = cols * cw, h = rows * ch, n = Math.round(cols * rows * 1.55);
+  g.save();
+  g.beginPath(); g.rect(x0, y0, w, h); g.clip();
+  switch (sc.deco) {
+    case 'dots':
+      g.fillStyle = sc.decoColor;
+      for (let i = 0; i < n; i++) { const gx = x0 + ((i * 137) % w), gy = y0 + ((i * 211) % h); g.beginPath(); g.arc(gx, gy, 2 * scale, 0, Math.PI * 2); g.fill(); }
+      break;
+    case 'bubbles':
+      // 小气泡慢慢往上冒
+      g.strokeStyle = sc.decoColor; g.lineWidth = 1.5 * scale;
+      for (let i = 0; i < n * 0.6; i++) {
+        const gx = x0 + ((i * 173) % w) + Math.sin(t * 1.3 + i) * 3 * scale;
+        const gy = y0 + ((((i * 97) - t * 14 * (1 + i % 3) * scale) % h) + h) % h;
+        const r0 = (2.2 + (i % 3) * 1.6) * scale;
+        g.beginPath(); g.arc(gx, gy, r0, 0, Math.PI * 2); g.stroke();
+        ell(gx - r0 * 0.35, gy - r0 * 0.35, r0 * 0.25, r0 * 0.25, 'rgba(255,255,255,.8)');
+      }
+      break;
+    case 'lemons':
+      for (let i = 0; i < n * 0.28; i++) {
+        const gx = x0 + ((i * 251) % w), gy = y0 + ((i * 163) % h), r0 = 6 * scale;
+        ell(gx, gy, r0, r0, 'rgba(255,226,120,.6)', sc.decoColor, 1.4 * scale);
+        for (let k = 0; k < 3; k++) { const a = k * Math.PI / 3 + i; line(gx - Math.cos(a) * r0 * 0.8, gy - Math.sin(a) * r0 * 0.8, gx + Math.cos(a) * r0 * 0.8, gy + Math.sin(a) * r0 * 0.8, 'rgba(255,252,235,.9)', 0.9 * scale); }
+      }
+      break;
+    case 'stars':
+      // 星星一闪一闪
+      for (let i = 0; i < n * 0.5; i++) {
+        const gx = x0 + ((i * 149) % w), gy = y0 + ((i * 223) % h), s0 = (2.6 + (i % 3)) * scale;
+        g.globalAlpha = 0.3 + 0.7 * Math.abs(Math.sin(t * 1.6 + i * 1.7));
+        poly([gx, gy - s0, gx + s0 * 0.3, gy - s0 * 0.3, gx + s0, gy, gx + s0 * 0.3, gy + s0 * 0.3, gx, gy + s0, gx - s0 * 0.3, gy + s0 * 0.3, gx - s0, gy, gx - s0 * 0.3, gy - s0 * 0.3], sc.decoColor, null);
+      }
+      g.globalAlpha = 1;
+      break;
+    case 'sprinkles': {
+      const cols2 = ['#ff9ec0', '#7fd3ff', '#ffe36b', '#9be07a', '#d79bff', '#ffffff'];
+      for (let i = 0; i < n; i++) {
+        const gx = x0 + ((i * 137) % w), gy = y0 + ((i * 211) % h);
+        g.save(); g.translate(gx, gy); g.rotate(i * 0.9);
+        rr(-3.2 * scale, -1.1 * scale, 6.4 * scale, 2.2 * scale, 1.1 * scale); g.fillStyle = cols2[i % 6]; g.globalAlpha = 0.8; g.fill();
+        g.restore();
+      }
+      break;
+    }
+    case 'petals':
+      // 樱花花瓣慢慢飘落
+      for (let i = 0; i < n * 0.45; i++) {
+        const sp = (10 + (i % 4) * 4) * scale;
+        const gx = x0 + ((((i * 191) + Math.sin(t * 0.8 + i) * 14 * scale) % w) + w) % w;
+        const gy = y0 + (((i * 137) + t * sp) % h);
+        g.save(); g.translate(gx, gy); g.rotate(t * 0.6 + i);
+        ell(0, 0, 3.8 * scale, 2.3 * scale, sc.decoColor); ell(0.9 * scale, -0.4 * scale, 1.2 * scale, 0.7 * scale, 'rgba(255,255,255,.75)');
+        g.restore();
+      }
+      break;
+  }
+  g.restore();
+}
+function drawLawn(t = 0) {
+  const sc = SCENES[save.scene] || SCENES.pink;
+  g.fillStyle = sc.bg; g.fillRect(0, 0, W, H);
   // 左边：蛋糕台
-  g.fillStyle = '#fff3ea'; g.fillRect(0, TOP, LX, CH * ROWS);
-  for (let i = 0; i < ROWS; i++) { g.fillStyle = i % 2 ? '#ffe9de' : '#fff3ea'; g.fillRect(0, TOP + i * CH, LX, CH); }
+  for (let i = 0; i < ROWS; i++) { g.fillStyle = sc.side[i % 2]; g.fillRect(0, TOP + i * CH, LX, CH); }
   // 蛋糕放在最左边，扫地机器人在它右边一列（x 约 58～94），两者不重叠
   drawCake(30, TOP + CH * 2.5 + 30, 0.8);
-  // 野餐布
-  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-    g.fillStyle = (r + c) % 2 ? '#ffd9e5' : '#fffaf6';
-    g.fillRect(LX + c * CW, TOP + r * CH, CW, CH);
-  }
-  g.strokeStyle = 'rgba(255,150,180,.25)'; g.lineWidth = 1;
-  for (let c = 0; c <= COLS; c++) { g.beginPath(); g.moveTo(LX + c * CW + 0.5, TOP); g.lineTo(LX + c * CW + 0.5, TOP + CH * ROWS); g.stroke(); }
-  // 野餐布上的小点点
-  g.fillStyle = 'rgba(255,140,170,.18)';
-  for (let i = 0; i < 70; i++) {
-    const gx = LX + ((i * 137) % (CW * COLS)), gy = TOP + ((i * 211) % (CH * ROWS));
-    g.beginPath(); g.arc(gx, gy, 2, 0, Math.PI * 2); g.fill();
-  }
+  // 餐桌（场景皮肤）
+  paintBoard(sc, LX, TOP, COLS, ROWS, CW, CH, t);
   // 右边：厨房门口的地砖
   const sx = LX + CW * COLS;
   for (let r = 0; r < ROWS * 2; r++) for (let i = 0; i < 2; i++) {
-    g.fillStyle = (r + i) % 2 ? '#d8eef0' : '#c4e3e6';
+    g.fillStyle = sc.door[(r + i) % 2];
     g.fillRect(sx + i * ((W - sx) / 2), TOP + r * CH / 2, (W - sx) / 2, CH / 2);
   }
-  g.fillStyle = '#f0b8c8'; g.fillRect(sx, TOP, 6, CH * ROWS);
-  g.fillStyle = '#e8b9a0'; g.fillRect(0, H - 10, W, 10);
+  g.fillStyle = sc.edge; g.fillRect(sx, TOP, 6, CH * ROWS);
+  g.fillStyle = sc.floor; g.fillRect(0, H - 10, W, 10);
+}
+// 商店里的场景预览：缩小版餐桌 + 一位小伙伴
+function drawScenePreview(canvas, k) {
+  const c2 = canvas.getContext('2d'), prev = g; g = c2;
+  const sc = SCENES[k], w = canvas.width, h = canvas.height;
+  c2.setTransform(1, 0, 0, 1, 0, 0);
+  g.fillStyle = sc.bg; g.fillRect(0, 0, w, h);
+  const top = h * 0.06, ch = (h - top - 10) / 3, cw = ch * 0.9, x0 = cw * 0.7;
+  for (let i = 0; i < 3; i++) { g.fillStyle = sc.side[i % 2]; g.fillRect(0, top + i * ch, x0, ch); }
+  const cols = Math.floor((w - x0 - cw * 0.5) / cw);
+  paintBoard(sc, x0, top, cols, 3, cw, ch, Date.now() / 1000, ch / CH * 1.4);
+  const sx = x0 + cols * cw;
+  for (let r = 0; r < 6; r++) { g.fillStyle = sc.door[r % 2]; g.fillRect(sx, top + r * ch / 2, w - sx, ch / 2); }
+  g.fillStyle = sc.edge; g.fillRect(sx, top, 4, ch * 3);
+  g.fillStyle = sc.floor; g.fillRect(0, h - 10, w, 10);
+  const k2 = ch / CH;
+  g.save(); g.translate(x0 + cw * 0.5, top + ch * 1.5 + 28 * k2); g.scale(k2, k2); drawPlant('peaflower', 0, 0, 0, null); g.restore();
+  g.save(); g.translate(x0 + cw * 2.5, top + ch * 1.5 + 28 * k2); g.scale(k2, k2); drawPlant('firepea', 0, 0, 0, null); g.restore();
+  g = prev;
 }
 // 扫地机器人
 function drawVacuum(x, y, going) {
@@ -3776,7 +4022,7 @@ function draw() {
   const t = S.t + S.intro;
   g.save();
   if (S.shake > 0) g.translate(rnd(-S.shake, S.shake) * 0.5, rnd(-S.shake, S.shake) * 0.5);
-  drawLawn();
+  drawLawn(t);
   // 顶栏先画，第一排的团子和气球可以盖在顶栏上面，不会被挡住
   if (!S.demo) drawHUD();
   if (CFG && CFG.night && !S.demo) { g.fillStyle = 'rgba(16,24,64,.42)'; g.fillRect(0, TOP, W, CH * ROWS); }
@@ -4175,12 +4421,13 @@ const modal = document.getElementById('modal');
 const appEl = document.getElementById('app');
 const fmt = n => n >= 100000 ? (n / 10000).toFixed(n >= 1000000 ? 0 : 1) + '万' : String(n);
 function appH() { return appEl.clientHeight || 500; }
-function openPage(node, bg) {
+function openPage(node, bg, self) {
   closeModal();
   openOverlay(node);
   overlay.className = 'scene';
   overlay.style.setProperty('--scene-bg', `url(${bg || IMG.menu})`);
   skipDraw = true;
+  curPage = self || null;
 }
 function openModal(node, cls = '', onClose = null) {
   modal.innerHTML = '';
@@ -4198,10 +4445,9 @@ function closeModal() {
 }
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 function walletPills() {
-  const go = () => { sfx('select'); showShop(); };
   return [
-    el('button', { class: 'pill coin', 'aria-label': `金币 ${save.coins}，打开商店`, onclick: go }, el('i', { class: 'ico coin' }), el('b', {}, fmt(save.coins)), el('span', { class: 'plus' }, '+')),
-    el('button', { class: 'pill gem', 'aria-label': `钻石 ${save.gems}，打开商店`, onclick: go }, el('i', { class: 'ico gem' }), el('b', {}, fmt(save.gems)), el('span', { class: 'plus' }, '+')),
+    el('button', { class: 'pill coin', 'aria-label': `金币 ${save.coins}，去商店换金币`, onclick: () => { sfx('select'); openShop('exchange'); } }, el('i', { class: 'ico coin' }), el('b', {}, fmt(save.coins)), el('span', { class: 'plus' }, '+')),
+    el('button', { class: 'pill gem', 'aria-label': `钻石 ${save.gems}，去商店`, onclick: () => { sfx('select'); openShop('topup'); } }, el('i', { class: 'ico gem' }), el('b', {}, fmt(save.gems)), el('span', { class: 'plus' }, '+')),
   ];
 }
 function refreshWallet() {
@@ -4221,7 +4467,7 @@ const icon = k => el('i', { class: 'ico ' + k });
 function cvIcon(kind, key, px = 44) { const w = el('i', { class: 'ico cv' }); w.append(iconCanvas(kind, key, px)); return w; }
 const dotEl = n => n ? el('span', { class: 'dot' }, n > 9 ? '9+' : String(n)) : null;
 function rwPill(kind, n) { return el('span', { class: 'rw-pill ' + kind }, icon(kind), '+' + n); }
-function itemPill(k, n) { const c = iconCanvas('item', k, 24); c.style.cssText = 'width:24px;height:24px'; return el('span', { class: 'rw-pill' }, c, `${ITEMS[k].name}×${n}`); }
+function itemPill(k, n) { return el('span', { class: 'rw-pill' }, itemIcon(k, 24), `${ITEMS[k].name}×${n}`); }
 
 /* ---------- 卡片 ---------- */
 // tier：null 普通卡 / 'flash' 闪卡 / 'gold' 金卡
@@ -4261,44 +4507,6 @@ function demoScene() {
   s.demo = true; s.intro = INTRO;
   return s;
 }
-function showMenu() {
-  running = false; paused = false;
-  S = demoScene();
-  bankEl.hidden = true; closeTray();
-  wantMusic = 'menu'; Sound.music('menu');
-  const d = ensureDaily();
-  const done = save.cleared.length;
-  const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
-  const nextLv = firstOpen === -1 ? LEVELS.length - 1 : firstOpen;
-  const L = LEVELS[nextLv];
-  const allDone = done >= LEVELS.length;
-  const tile = (ico, name, sub, fn, n, colors) => el('button', { class: 'mtile', style: colors, onclick: () => { sfx('select'); fn(); } }, ico, el('span', {}, el('b', {}, name), el('small', {}, sub)), dotEl(n));
-  const dbtn = (ico, name, fn, n) => el('button', { class: 'dbtn', onclick: () => { sfx('select'); fn(); } }, ico, name, dotEl(n));
-  const hub = el('div', { class: 'hub' },
-    el('div', { class: 'topbar' }, el('div', { class: 'grow' }), ...walletPills(),
-      el('button', { class: 'rbtn', 'aria-label': '设置', onclick: () => { sfx('select'); showSettings(); } }, icon('gear'))),
-    el('div', { class: 'hub-main' },
-      el('div', { class: 'hub-logo' }, el('div', { class: 'logo2' }, '别偷吃', el('br'), '我的蛋糕', el('em', {}, '！')), el('div', { class: 'hub-sub' }, '甜品店保卫战 · 原创塔防')),
-      el('div', { class: 'hub-menu' },
-        el('button', { class: 'cta', onclick: () => { sfx('select'); showLevels(); } },
-          iconCanvas('plant', allDone ? 'chocolava' : L.reward, 58),
-          el('span', {}, el('b', {}, '冒险模式'), el('small', {}, allDone ? `全部 ${LEVELS.length} 关通关！随时可以重玩` : `下一关 ${L.id}「${L.name}」· 已通关 ${done}/${LEVELS.length}`)),
-          el('span', { class: 'go' }, '出发')),
-        el('div', { class: 'hub-grid' },
-          tile(icon('capsule'), '扭蛋机', d.free ? '今天可以免费扭一次' : `闪卡保底还差 ${PITY.flash - save.gacha.pf} 次`, showGacha, d.free ? 1 : 0, '--tc:#dcc2ff;--tcd:#9b6df0'),
-          tile(icon('album'), '卡册', `闪卡 ${cardCount('flash')} · 金卡 ${cardCount('gold')}`, showAlbum, newCardCount(), '--tc:#ffe08a;--tcd:#d99a2b'),
-          tile(icon('gift'), '甜品盲盒', save.luckyBest ? `无尽开盲盒 · 最高第 ${save.luckyBest} 波` : '花方糖开盲盒放小伙伴', () => startFlow(luckyCfg()), 0, '--tc:#b6f0d8;--tcd:#3f9a74'),
-          tile(cvIcon('zombie', 'cone', 40), '更多玩法', '挑战 · 小游戏 · 无尽', showModes, 0, '--tc:#b9e3ff;--tcd:#4fa6d6')))),
-    el('div', { class: 'dock' },
-      dbtn(icon('tasks'), '每日任务', showDaily, dailyReady()),
-      dbtn(icon('bag'), '甜品商店', showShop, 0),
-      dbtn(cvIcon('plant', 'peaflower'), '图鉴', () => showAlmanac('plants'), 0),
-      dbtn(icon('medal'), '成就', () => showAlmanac('ach'), 0),
-      dbtn(cvIcon('zombie', 'normal'), '新手指南', showGuide, 0),
-      el('span', { class: 'hub-ver' }, '体验版 · 原创角色与美术')));
-  openPage(hub, IMG.menu);
-  if (!save.starter) setTimeout(() => { if (!running && !save.starter && modal.hidden && overlay.querySelector('.hub')) showStarter(); }, 400);
-}
 function showStarter() {
   const it = STARTER.items;
   openModal(el('div', { class: 'cstage', style: 'gap:12px;text-align:center' },
@@ -4328,54 +4536,17 @@ function endlessCfg() { return makeCfg({ mode: 'endless', label: '无尽模式',
 // 甜品盲盒：无尽模式，开局 400 方糖，每 10 波一次旗帜波
 function luckyCfg() { return makeCfg({ mode: 'lucky', label: '甜品盲盒', back: showMenu, pool: ALL_POOL, waves: Infinity, flagEvery: 10, base: 0.8, grow: 0.55, startSun: 400, diff: 1.3, hpMul: 1.15, plants: ['luckybox', 'goldbox'] }); }
 
-function showLevels() {
-  const n = LEVELS.length, gap = 118, pad = 96;
-  const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
-  const width = pad * 2 + gap * (n - 1);
-  const xs = LEVELS.map((L, i) => pad + i * gap);
-  const ys = LEVELS.map((L, i) => 52 + Math.sin(i * 1.15 + 0.4) * 24);
-  const inner = el('div', { class: 'lmap-in', style: `width:${width}px` });
-  const NS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(NS, 'svg');
-  svg.setAttribute('viewBox', `0 0 ${width} 100`);
-  svg.setAttribute('preserveAspectRatio', 'none');
-  let dpath = `M ${xs[0]} ${ys[0]}`;
-  for (let i = 1; i < n; i++) { const mx = (xs[i - 1] + xs[i]) / 2; dpath += ` C ${mx} ${ys[i - 1]}, ${mx} ${ys[i]}, ${xs[i]} ${ys[i]}`; }
-  const path = (stroke, w, dash) => {
-    const p = document.createElementNS(NS, 'path');
-    p.setAttribute('d', dpath); p.setAttribute('fill', 'none'); p.setAttribute('stroke', stroke); p.setAttribute('stroke-width', w);
-    p.setAttribute('stroke-linecap', 'round'); p.setAttribute('vector-effect', 'non-scaling-stroke');
-    if (dash) p.setAttribute('stroke-dasharray', dash);
-    return p;
-  };
-  svg.append(path('rgba(255,255,255,.92)', 16), path('#f39ab5', 5, '1 13'));
-  inner.append(svg, el('span', { class: 'chap' }, '第一章 · 甜蜜厨房'));
-  LEVELS.forEach((L, i) => {
-    const open = levelOpen(i), done = save.cleared.includes(i);
-    inner.append(el('button', { class: 'lnode' + (done ? ' done' : '') + (i === firstOpen ? ' cur' : ''), style: `left:${xs[i]}px;top:${ys[i]}%`, disabled: !open,
-      'aria-label': `${L.id} ${open ? L.name : '未解锁'}`, onclick: () => { sfx('select'); startFlow(advCfg(i)); } },
-      el('span', { class: 'disc' }, open ? L.id : '', open ? null : el('span', { class: 'lock' }, '🔒'), done ? el('span', { class: 'ok' }, '✓') : null,
-        el('span', { class: 'rwb', title: done ? `已获得${PLANTS[L.reward].name}` : '通关奖励' }, iconCanvas('plant', L.reward, 30, { locked: !done && i !== firstOpen }))),
-      el('span', { class: 'lname' }, open ? L.name : '？？？')));
-  });
-  const map = el('div', { class: 'lmap' }, inner);
-  map.addEventListener('wheel', e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { map.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
-  openPage(page('冒险模式', showMenu, map, { bodyCls: 'flexcol' }), IMG.levels);
-  const target = firstOpen === -1 ? n - 1 : firstOpen;
-  requestAnimationFrame(() => { map.scrollLeft = Math.max(0, xs[target] - map.clientWidth / 2); });
-}
-
 /* ---------- 更多玩法 ---------- */
 function showModes() {
   const card = (kind, key, name, sub, fn, colors) => el('button', { class: 'mode', style: colors, onclick: () => { sfx('select'); fn(); } }, iconCanvas(kind, key, 84), el('b', {}, name), el('small', {}, sub));
   openPage(page('更多玩法', showMenu, el('div', { class: 'modes' },
     card('zombie', 'football', '挑战模式', `规则特殊的关卡 · 完成 ${CHALLENGES.filter(c => save.chal[c.id]).length}/${CHALLENGES.length}`, showChallenges, '--mc1:#ffb3cf;--mc2:#f47aa3;--mc3:#c2607e'),
     card('plant', 'bowlnut', '小游戏', `甜甜圈保龄球等 · 完成 ${MINIGAMES.filter(m => save.mini[m.id]).length}/${MINIGAMES.length}`, showMinigames, '--mc1:#9fe3c6;--mc2:#5cc39a;--mc3:#3f9a74'),
-    card('zombie', 'flag', '无尽模式', save.bestWave ? `最高第 ${save.bestWave} 波 · 波数越多金币越多` : '看你能撑几波 · 波数越多金币越多', () => startFlow(endlessCfg()), '--mc1:#cfb2ff;--mc2:#9b6df0;--mc3:#6a3fc0')), { bodyCls: 'flexcol' }), IMG.menu);
+    card('zombie', 'flag', '无尽模式', save.bestWave ? `最高第 ${save.bestWave} 波 · 波数越多金币越多` : '看你能撑几波 · 波数越多金币越多', () => startFlow(endlessCfg()), '--mc1:#cfb2ff;--mc2:#9b6df0;--mc3:#6a3fc0')), { bodyCls: 'flexcol' }), IMG.menu, showModes);
 }
 function listPage(title, items, isDone, cfgOf) {
   openPage(page(title, showModes, el('div', { class: 'list' }, ...items.map(x => el('button', { class: 'litem', onclick: () => { sfx('select'); startFlow(cfgOf(x)); } },
-    el('b', {}, x.name), el('span', {}, x.desc), isDone(x) ? el('span', { class: 'st' }, '已完成') : null)))), IMG.levels);
+    el('b', {}, x.name), el('span', {}, x.desc), isDone(x) ? el('span', { class: 'st' }, '已完成') : null)))), IMG.levels, () => listPage(title, items, isDone, cfgOf));
 }
 function showChallenges() { listPage('挑战模式', CHALLENGES, c => save.chal[c.id], chalCfg); }
 function showMinigames() { listPage('小游戏', MINIGAMES, m => save.mini[m.id], miniCfg); }
@@ -4415,7 +4586,7 @@ function startFlow(cfg) {
       el('div', { class: 'sheet deck-r' }, el('h2', {}, '准备好了吗？'), el('p', {}, tip),
         cfg.mode === 'lucky' ? null : el('div', { class: 'slots' }, ...cfg.plants.map(k => { const t = cardTier(k); return el('div', { class: 'tile' + (t ? ' tg-' + t : '') }, iconCanvas('plant', k, 44), el('span', { class: 'tn' }, PLANTS[k].name), t ? el('span', { class: 'tgb' }, TIER_NAME[t]) : null); })),
         bagSummary(),
-        el('div', { class: 'startbar' }, btn('开始', () => startGame(cfg, cfg.plants.slice()), 'big')))), { bodyCls: 'flexcol' }), IMG.levels);
+        el('div', { class: 'startbar' }, btn('开始', () => startGame(cfg, cfg.plants.slice()), 'big')))), { bodyCls: 'flexcol' }), IMG.levels, () => startFlow(cfg));
     return;
   }
   let pick = save.pick.filter(k => cfg.plants.includes(k)).slice(0, MAX_SLOTS);
@@ -4445,7 +4616,7 @@ function startFlow(cfg) {
   render();
   openPage(page('选择小伙伴', back, el('div', { class: 'deck' }, el('div', { class: 'sheet' }, intel.node),
     el('div', { class: 'sheet deck-r' }, el('p', { class: 'muted' }, `${cfg.label} · 最多带 ${MAX_SLOTS} 种。标「推荐」的能克制这关的团子，带闪卡、金卡的小伙伴更强。`), slots, tiles,
-      el('div', { class: 'startbar' }, bagSummary(), go))), { bodyCls: 'flexcol' }), IMG.levels);
+      el('div', { class: 'startbar' }, bagSummary(), go))), { bodyCls: 'flexcol' }), IMG.levels, () => startFlow(cfg));
 }
 
 /* ---------- 新手指南 ---------- */
@@ -4476,9 +4647,10 @@ function showGuide() {
       el('li', {}, '每局都能拿金币：喂饱一只团子 1 金币，守住关卡还有额外奖励；第一次通关送钻石。'),
       el('li', {}, '金币用来扭蛋，能扭到小伙伴的闪卡、金卡和对局道具；钻石可以兑换金币、礼包，或者直接自选卡片。'),
       el('li', {}, `带闪卡的小伙伴攻击、产出、耐久 +${Math.round((CARD_BONUS.flash - 1) * 100)}%，金卡 +${Math.round((CARD_BONUS.gold - 1) * 100)}%，在餐桌上会闪闪发光。`),
-      el('li', {}, `多用某个小伙伴也能拿卡：它累计参与喂饱 ${BOND.flash} 只团子送闪卡，${BOND.gold} 只送金卡。`))),
+      el('li', {}, `多用某个小伙伴也能拿卡：它累计参与喂饱 ${BOND.flash} 只团子送闪卡，${BOND.gold} 只送金卡。`),
+      el('li', {}, '主页上的甜品小店里有新手特惠、每日特惠礼包，还能买不同的战斗场景（餐桌布）。'))),
     sec('团子和克制方法', el('div', { class: 'intel' }, ...zrows)),
-    el('div', { class: 'btns' }, btn('再走一遍新手引导', () => { save.tutorialDone = false; persist(); startFlow(advCfg(0)); })))), IMG.menu);
+    el('div', { class: 'btns' }, btn('再走一遍新手引导', () => { save.tutorialDone = false; persist(); startFlow(advCfg(0)); })))), IMG.menu, showGuide);
 }
 
 /* ---------- 图鉴 ---------- */
@@ -4531,7 +4703,7 @@ function showAlmanac(tab) {
     body = el('div', { class: 'alm' }, grid, detail);
     show(keys[0]);
   }
-  openPage(page(tab === 'ach' ? '成就' : '图鉴', showMenu, el('div', { class: 'sheet', style: 'display:flex;flex-direction:column;gap:10px' }, tabs, body)), IMG.album);
+  openPage(page(tab === 'ach' ? '成就' : '图鉴', showMenu, el('div', { class: 'sheet', style: 'display:flex;flex-direction:column;gap:10px' }, tabs, body)), IMG.album, () => showAlmanac(tab));
 }
 
 /* ---------- 卡册 ---------- */
@@ -4552,9 +4724,10 @@ function showAlbum() {
   }
   const headRow = el('div', { class: 'album-head' },
     el('span', { class: 'stat f' }, `闪卡 ${cardCount('flash')}/${total}`), el('span', { class: 'stat g' }, `金卡 ${cardCount('gold')}/${total}`),
+    (save.items.flashPick || 0) + (save.items.goldPick || 0) ? el('span', { class: 'chip hot' }, `有 ${(save.items.flashPick || 0) + (save.items.goldPick || 0)} 张自选券：点一张卡片挑选`) : null,
     el('button', { class: 'chip light', onclick: () => { sfx('select'); showCardHelp(); } }, '卡片有什么用？'),
     el('button', { class: 'chip hot', onclick: () => { sfx('select'); showGacha(); } }, '去扭蛋'));
-  openPage(page('卡册', showMenu, [headRow, grid]), IMG.album);
+  openPage(page('卡册', showMenu, [headRow, grid]), IMG.album, showAlbum);
 }
 function showCardHelp() {
   openModal(el('div', { class: 'rules mscroll' },
@@ -4568,7 +4741,7 @@ function showCardHelp() {
 function showCard(k, sel, onClose) {
   const c = save.cards[k] || {};
   const owned = t => !t || !!c[t];
-  sel = sel || cardTier(k) || 'base';
+  sel = sel || (save.items.flashPick > 0 && !c.flash ? 'flash' : save.items.goldPick > 0 && !c.gold ? 'gold' : cardTier(k) || 'base');
   if (save.cardNew[k]) { delete save.cardNew[k]; persist(); }
   const t = sel === 'base' ? null : sel;
   const w = bigCardW();
@@ -4583,16 +4756,21 @@ function showCard(k, sel, onClose) {
     sfx('select');
     confirmSpend(`用 ${GEM_CARD[t]} 钻石兑换「${d.name}」的${TIER_NAME[t]}？`, 'gems', GEM_CARD[t], () => { grantCard(k, t); delete save.cardNew[k]; persist(); sfx('unlock'); toast(`获得${d.name}的${TIER_NAME[t]}！`); showCard(k, t, onClose); }, () => showCard(k, sel, onClose));
   } }, icon('gem'), `${GEM_CARD[t]} 自选这张`) : null;
+  const pk = t === 'gold' ? 'goldPick' : 'flashPick';
+  const usePick = t && !owned(t) && save.items[pk] > 0 ? el('button', { class: 'btn ' + (t === 'gold' ? 'gold' : 'gem'), onclick: () => {
+    sfx('select');
+    confirmDo(`用 1 张${ITEMS[pk].name}兑换「${d.name}」的${TIER_NAME[t]}？`, '确定兑换', () => { save.items[pk]--; grantCard(k, t); delete save.cardNew[k]; persist(); sfx('unlock'); toast(`获得${d.name}的${TIER_NAME[t]}！`); showCard(k, t, onClose); }, () => showCard(k, sel, onClose));
+  } }, itemIcon(pk, 20), `用自选券兑换（剩 ${save.items[pk]} 张）`) : null;
   const info = el('div', { class: 'cinfo' },
     el('h3', {}, d.name),
     el('div', { class: 'muted' }, `No.${String(PLANT_ORDER.indexOf(k) + 1).padStart(2, '0')} · ${role ? role.name : ''} · 盲盒稀有度 ${RARITY[rarityOf(k)].name}${plantUnlocked(k) ? '' : ' · 还没解锁'}`),
     el('div', { class: 'perk' }, t ? `${TIER_NAME[t]}加成：攻击伤害、方糖产出速度、耐久 +${Math.round((CARD_BONUS[t] - 1) * 100)}%，放上餐桌会闪闪发光。` : d.desc),
     el('div', { class: 'muted' }, '累计参与喂饱团子'), prog('flash'), prog('gold'),
-    el('div', { class: 'btnrow' }, buy, el('button', { class: 'chip light', onclick: () => { sfx('select'); modal.onClose = null; showGacha(); } }, '去扭蛋')));
+    el('div', { class: 'btnrow' }, usePick, buy, el('button', { class: 'chip light', onclick: () => { sfx('select'); modal.onClose = null; showGacha(); } }, '去扭蛋')));
   openModal(el('div', { class: 'cdetail' }, el('div', { class: 'cstage' }, big, tabs), info), '', onClose);
 }
 function confirmSpend(text, cur, price, onOk, onBack) {
-  const ic = cur === 'gems' ? 'gem' : 'coin';
+  const ic = cur === 'gems' ? 'gem' : 'coin', prev = modal.onClose;
   openModal(el('div', { class: 'cstage', style: 'gap:12px;text-align:center' },
     el('h2', { style: 'padding:0' }, '确认一下'), el('p', {}, text),
     el('p', { class: 'muted' }, `现在有 ${cur === 'gems' ? save.gems + ' 钻石' : save.coins + ' 金币'}`),
@@ -4601,7 +4779,7 @@ function confirmSpend(text, cur, price, onOk, onBack) {
         if (save[cur] < price) { sfx('cant'); toast(cur === 'gems' ? '钻石不够啦，做每日任务、第一次通关和成就都能拿钻石' : '金币不够啦，打关卡和做每日任务都能赚金币'); return; }
         save[cur] -= price; persist(); refreshWallet(); onOk();
       } }, icon(ic), `${price} 确定`),
-      btn('再想想', () => { if (onBack) onBack(); else closeModal(); }, 'alt'))), 'narrow');
+      btn('再想想', () => { if (onBack) onBack(); else closeModal(); }, 'alt'))), 'narrow', prev);
 }
 
 /* ---------- 扭蛋机 ---------- */
@@ -4621,29 +4799,10 @@ function gachaPull(n) {
 function pityBar(label, v, max, cls) {
   return el('div', { class: 'prog ' + cls }, el('span', {}, label), el('span', { class: 'bar' }, el('i', { style: `width:${v / max * 100}%` })), el('b', {}, `还差 ${max - v} 次`));
 }
-function showGacha() {
-  const d = ensureDaily(), G = save.gacha;
-  const machine = el('div', { class: 'gm' }, el('img', { src: IMG.machine, alt: '扭蛋机', draggable: 'false' }));
-  const odds = el('div', { class: 'odds' },
-    el('span', { class: 'tg g' }, '金卡'), el('span', { class: 'muted' }, `含保底约 ${GACHA_REAL.gold}%`), el('b', {}, '1%'),
-    el('span', { class: 'tg f' }, '闪卡'), el('span', { class: 'muted' }, `含保底约 ${GACHA_REAL.flash}%`), el('b', {}, '6%'),
-    el('span', { class: 'tg i' }, '道具'), el('span', { class: 'muted' }, '飞镖、方糖罐、冰冻棒棒糖、金币…'), el('b', {}, '93%'));
-  const side = el('div', { class: 'gside' },
-    el('div', { class: 'sheet' }, el('h2', {}, '甜蜜扭蛋机'), odds, pityBar('闪卡保底', G.pf, PITY.flash, ''), pityBar('金卡保底', G.pg, PITY.gold, 'gold'),
-      el('div', { class: 'muted' }, `十连必出闪卡或金卡 · 不会扭到重复的卡 · 已扭 ${G.pulls} 次`)),
-    el('div', { class: 'gbtns' },
-      el('button', { class: 'gbtn', style: '--b1:#ffb8d0;--b2:#f47aa3;--b3:#c2607e', onclick: () => gachaPull(1) }, el('b', {}, '扭 1 次'), el('span', {}, d.free ? '今日免费' : [icon('coin'), String(GACHA_COST.one)])),
-      el('button', { class: 'gbtn', style: '--b1:#cfb2ff;--b2:#9b6df0;--b3:#6a3fc0', onclick: () => gachaPull(10) }, el('b', {}, '扭 10 次'), el('span', {}, icon('coin'), String(GACHA_COST.ten)))),
-    el('div', { class: 'glinks' },
-      el('button', { class: 'chip light', onclick: () => { sfx('select'); showRules(); } }, '概率与规则'),
-      el('button', { class: 'chip light', onclick: () => { sfx('select'); showGachaLog(); } }, '扭蛋记录'),
-      el('button', { class: 'chip light', onclick: () => { sfx('select'); showAlbum(); } }, '看卡册')));
-  openPage(page('扭蛋机', showMenu, el('div', { class: 'gacha' }, machine, side), { bodyCls: 'flexcol' }), IMG.gacha);
-}
 function resultVisual(r, px) {
   if (r.card) return cardEl(r.card, r.tier, { size: Math.round(px * 0.8) });
   const box = el('div', { class: 'rbox', style: `width:${px}px;height:${px}px` });
-  if (r.item) { const c = iconCanvas('item', r.item, Math.round(px * 0.8)); c.style.cssText = `width:${Math.round(px * 0.8)}px;height:${Math.round(px * 0.8)}px`; box.append(c); }
+  if (r.item) box.append(itemIcon(r.item, Math.round(px * 0.8)));
   else box.append(el('i', { class: 'ico ' + (r.gems ? 'gem' : 'coin'), style: `width:${Math.round(px * 0.68)}px;height:${Math.round(px * 0.68)}px` }));
   return box;
 }
@@ -4672,7 +4831,7 @@ function revealOne(r) {
     }
     stage.append(show, el('div', { class: 'rname' + (r.tier === 'gold' ? ' g' : r.tier === 'flash' ? ' f' : '') }, resultLabel(r)),
       el('div', { class: 'btnrow', style: 'justify-content:center' },
-        btn(ensureDaily().free ? '再扭一次（免费）' : `再扭一次 · ${GACHA_COST.one} 金币`, () => { modal.onClose = null; closeModal(); showGacha(); gachaPull(1); }, ''), btn('收下', () => closeModal(), 'alt')));
+        btn(['再扭一次 · ', ...payLabel(1)], () => { modal.onClose = null; closeModal(); showGacha(); gachaPull(1); }, ''), btn('收下', () => closeModal(), 'alt')));
   };
   cap.addEventListener('click', open);
   setTimeout(open, 1600);
@@ -4697,7 +4856,7 @@ function revealTen(res) {
       if (i === res.length - 1) {
         const cards = res.filter(x => x.card);
         bar.append(el('span', { class: 'muted' }, cards.length ? `新卡片：${cards.map(x => `${PLANTS[x.card].name}${TIER_NAME[x.tier]}`).join('、')}` : ''),
-          btn(`再扭 10 次 · ${GACHA_COST.ten} 金币`, () => { modal.onClose = null; closeModal(); showGacha(); gachaPull(10); }), btn('收下', () => closeModal(), 'alt'));
+          btn(['再扭 10 次 · ', ...payLabel(10)], () => { modal.onClose = null; closeModal(); showGacha(); gachaPull(10); }), btn('收下', () => closeModal(), 'alt'));
       }
     }, 150 * i));
   };
@@ -4746,32 +4905,6 @@ function showGachaLog() {
 }
 
 /* ---------- 甜品商店 ---------- */
-function showShop() {
-  const sec = (title, ...kids) => el('div', { class: 'shop-sec' }, el('h2', {}, title), ...kids);
-  const good = (vis, name, sub, priceCls, priceKids, fn, tag) => el('button', { class: 'good', onclick: () => { sfx('select'); fn(); } },
-    vis, el('b', {}, name), el('small', {}, sub), el('span', { class: 'price ' + priceCls }, ...[].concat(priceKids)), tag ? el('span', { class: 'tagx' }, tag) : null);
-  const itemsVis = give => { const k = Object.keys(give)[0]; const c = iconCanvas('item', k, 44); return c; };
-  const giveText = give => Object.entries(give).map(([k, n]) => `${ITEMS[k].name}×${n}`).join(' ');
-  const buyItems = (cur, price, give, name) => confirmSpend(`用 ${price} ${cur === 'gems' ? '钻石' : '金币'}买「${name}」？`, cur, price, () => {
-    for (const [k, n] of Object.entries(give)) save.items[k] += n;
-    persist(); sfx('unlock'); toast(`买到了：${giveText(give)}`); closeModal();
-  });
-  const topups = el('div', { class: 'goods' }, ...TOPUP.map((t, i) => good(
-    el('span', { class: 'gemstack' }, ...Array.from({ length: Math.min(3, 1 + Math.floor(i / 2)) }, () => icon('gem'))),
-    `${t.gems} 钻石`, t.bonus ? `再送 ${t.bonus} 钻石` : '小小心意', '', `¥${t.rmb}`, () => showTopupInfo(t), t.bonus ? `+${t.bonus}` : null)));
-  const exch = el('div', { class: 'goods' }, ...EXCHANGE.map(e => good(icon('coin'), `${e.coins} 金币`, e.tag || '扭蛋要用金币', 'gp', [icon('gem'), String(e.gems)],
-    () => confirmSpend(`用 ${e.gems} 钻石换 ${e.coins} 金币？`, 'gems', e.gems, () => { save.coins += e.coins; persist(); refreshWallet(); sfx('sun'); toast(`得到 ${e.coins} 金币`); closeModal(); }), e.tag ? '划算' : null)));
-  const coinGoods = el('div', { class: 'goods' }, ...COIN_GOODS.map(x => good(itemsVis(x.give), x.name, ITEMS[Object.keys(x.give)[0]].desc, 'cp', [icon('coin'), String(x.price)], () => buyItems('coins', x.price, x.give, x.name))));
-  const gemGoods = el('div', { class: 'goods' }, ...GEM_GOODS.map(x => good(icon('gift'), x.name, x.desc, 'gp', [icon('gem'), String(x.price)], () => buyItems('gems', x.price, x.give, x.name))),
-    good(icon('album'), '自选卡片', `闪卡 ${GEM_CARD.flash} 钻石 · 金卡 ${GEM_CARD.gold} 钻石，在卡册里挑`, 'gp', '去卡册', showAlbum));
-  openPage(page('甜品商店', showMenu, [
-    el('div', { class: 'shop-banner' }, el('b', {}, '甜品商店')),
-    sec('钻石礼包', gemGoods),
-    sec('金币小铺', coinGoods),
-    sec('钻石换金币', exch),
-    sec('充值钻石（体验版暂未开放）', topups),
-  ]), IMG.menu);
-}
 function showTopupInfo(t) {
   openModal(el('div', { class: 'rules' },
     el('h2', {}, `¥${t.rmb} · ${t.gems} 钻石${t.bonus ? ` + 送 ${t.bonus}` : ''}`),
@@ -4781,6 +4914,328 @@ function showTopupInfo(t) {
       el('li', {}, '会按国家规定对未成年人设置充值限额，并提供消费记录查询。'),
       el('li', {}, `现在可以免费拿钻石：每日任务全部完成送 ${DAILY_BONUS_GEMS}、每关第一次通关送 20、每个成就送 ${ACH_GEMS}。`))), 'narrow');
 }
+
+/* ---------- 第二轮：页面记录、商店、礼包、场景、关卡总览 ---------- */
+let curPage = null;   // 当前整页怎么重新打开（从商店返回原来的页面要用）
+let shopBack = null;  // 商店的"返回"回到哪里
+function openShop(tab) {
+  if (!(curPage && curPage.isShop)) shopBack = curPage || showMenu;
+  showShop(tab);
+}
+function itemIcon(k, px) {
+  if (ICON_IMG[k]) return el('i', { class: 'ico it-' + ICON_IMG[k], style: `width:${px}px;height:${px}px` });
+  const c = iconCanvas('item', k, px); c.style.cssText = `width:${px}px;height:${px}px`; return c;
+}
+function giveNodes(give) {
+  return Object.entries(give).map(([k, n]) => {
+    const cur = k === 'coins' || k === 'gems';
+    return el('span', { class: 'gv', title: cur ? (k === 'coins' ? '金币' : '钻石') : ITEMS[k].desc },
+      cur ? icon(k === 'coins' ? 'coin' : 'gem') : itemIcon(k, 20), (cur ? '' : ITEMS[k].name) + '×' + n);
+  });
+}
+function showGot(title, give, after) {
+  openModal(el('div', { class: 'cstage', style: 'gap:12px;text-align:center' },
+    el('h2', { style: 'padding:0' }, '获得啦！'), el('p', {}, title),
+    el('div', { class: 'rewards', style: 'justify-content:center' }, ...giveNodes(give)),
+    el('div', { class: 'btnrow', style: 'justify-content:center' }, btn('好的', () => closeModal()))), 'narrow', after);
+}
+function confirmDo(text, okLabel, onOk, onBack) {
+  const prev = modal.onClose;
+  openModal(el('div', { class: 'cstage', style: 'gap:12px;text-align:center' }, el('h2', { style: 'padding:0' }, '确认一下'), el('p', {}, text),
+    el('div', { class: 'btnrow', style: 'justify-content:center' }, btn(okLabel, onOk), btn('再想想', () => { if (onBack) onBack(); else closeModal(); }, 'alt'))), 'narrow', prev);
+}
+function payLabel(n) {
+  const how = gachaPay(n);
+  if (how === 'free') return ['今日免费'];
+  if (how === 'ticket') return [itemIcon('ticket', 18), `扭蛋券×${n}`];
+  return [icon('coin'), String(n === 1 ? GACHA_COST.one : GACHA_COST.ten)];
+}
+// 场景的小方块图标（3×3 格子）
+function sceneTileIcon(k, px) {
+  const c = document.createElement('canvas');
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  c.width = c.height = Math.round(px * dpr);
+  c.style.cssText = `width:${px}px;height:${px}px;border-radius:${Math.round(px * 0.24)}px;box-shadow:0 0 0 2px #fff,0 2px 0 2px rgba(194,96,126,.35)`;
+  const c2 = c.getContext('2d'), sc = SCENES[k] || SCENES.pink, cs = c.width / 3;
+  for (let r = 0; r < 3; r++) for (let q = 0; q < 3; q++) { c2.fillStyle = sc.tiles[(r + q) % 2]; c2.fillRect(q * cs, r * cs, cs + 1, cs + 1); }
+  return c;
+}
+
+/* ---------- 主页 ---------- */
+function showMenu() {
+  running = false; paused = false;
+  S = demoScene();
+  bankEl.hidden = true; closeTray();
+  wantMusic = 'menu'; Sound.music('menu');
+  const d = ensureDaily();
+  const done = save.cleared.length;
+  const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
+  const nextLv = firstOpen === -1 ? LEVELS.length - 1 : firstOpen;
+  const L = LEVELS[nextLv];
+  const allDone = done >= LEVELS.length;
+  const tile = (ico, name, sub, fn, n, colors) => el('button', { class: 'mtile', style: colors, onclick: () => { sfx('select'); fn(); } }, ico, el('span', {}, el('b', {}, name), el('small', {}, sub)), dotEl(n));
+  const dbtn = (ico, name, fn, n) => el('button', { class: 'dbtn', onclick: () => { sfx('select'); fn(); } }, ico, name, dotEl(n));
+  // 顶部的每日任务条：一眼看到今天完成了几个，有奖励可领时会提示
+  const gotN = DAILY.filter(T => d.got[T.id]).length, ready = dailyReady();
+  const dailyBar = el('button', { class: 'dailybar', 'aria-label': `每日任务，已领取 ${gotN}/${DAILY.length}`, onclick: () => { sfx('select'); showDaily(); } },
+    icon('tasks'), '每日任务', el('span', { class: 'bar' }, el('i', { style: `width:${gotN / DAILY.length * 100}%` })), `${gotN}/${DAILY.length}`,
+    ready ? el('span', { class: 'claim' }, '有奖励可领') : null);
+  // 甜品小店：独立的商店入口
+  const stall = el('button', { class: 'stall', 'aria-label': '甜品商店', onclick: () => { sfx('select'); shopBack = showMenu; showShop('deal'); } },
+    el('img', { src: IMG.stall, alt: '', draggable: 'false' }), el('b', {}, '甜品商店'),
+    el('span', { class: 'tagx' }, newbieOpen() ? '新手特惠' : dealsReady() ? '每日福利' : '特惠'));
+  const sceneIco = el('i', { class: 'ico cv' }); sceneIco.append(sceneTileIcon(save.scene, 38));
+  const hub = el('div', { class: 'hub' },
+    el('div', { class: 'topbar' }, dailyBar, el('div', { class: 'grow' }), ...walletPills(),
+      el('button', { class: 'rbtn', 'aria-label': '设置', onclick: () => { sfx('select'); showSettings(); } }, icon('gear'))),
+    el('div', { class: 'hub-main' },
+      el('div', { class: 'hub-logo' }, el('div', { class: 'logo2' }, '别偷吃', el('br'), '我的蛋糕', el('em', {}, '！')), el('div', { class: 'hub-sub' }, '甜品店保卫战 · 原创塔防'), stall),
+      el('div', { class: 'hub-menu' },
+        el('button', { class: 'cta', onclick: () => { sfx('select'); showLevels(); } },
+          iconCanvas('plant', allDone ? 'chocolava' : L.reward, 58),
+          el('span', {}, el('b', {}, '冒险模式'), el('small', {}, allDone ? `全部 ${LEVELS.length} 关通关！随时可以重玩` : `下一关 ${L.id}「${L.name}」· 已通关 ${done}/${LEVELS.length}`)),
+          el('span', { class: 'go' }, '出发')),
+        el('div', { class: 'hub-grid' },
+          tile(icon('capsule'), '扭蛋机', d.free ? '今天可以免费扭一次' : (save.items.ticket ? `扭蛋券 ${save.items.ticket} 张` : `闪卡保底还差 ${PITY.flash - save.gacha.pf} 次`), showGacha, d.free ? 1 : 0, '--tc:#dcc2ff;--tcd:#9b6df0'),
+          tile(icon('album'), '卡册', `闪卡 ${cardCount('flash')} · 金卡 ${cardCount('gold')}`, showAlbum, newCardCount(), '--tc:#ffe08a;--tcd:#d99a2b'),
+          tile(icon('gift'), '甜品盲盒', save.luckyBest ? `无尽开盲盒 · 最高第 ${save.luckyBest} 波` : '花方糖开盲盒放小伙伴', () => startFlow(luckyCfg()), 0, '--tc:#b6f0d8;--tcd:#3f9a74'),
+          tile(cvIcon('zombie', 'cone', 40), '更多玩法', '挑战 · 小游戏 · 无尽', showModes, 0, '--tc:#b9e3ff;--tcd:#4fa6d6')))),
+    el('div', { class: 'dock' },
+      dbtn(cvIcon('plant', 'peaflower'), '图鉴', () => showAlmanac('plants'), 0),
+      dbtn(icon('medal'), '成就', () => showAlmanac('ach'), 0),
+      dbtn(sceneIco, '战斗场景', () => openShop('scene'), 0),
+      dbtn(cvIcon('zombie', 'normal'), '新手指南', showGuide, 0),
+      el('span', { class: 'hub-ver' }, '体验版 · 原创角色与美术')));
+  openPage(hub, IMG.menu, showMenu);
+  if (!save.starter) setTimeout(() => { if (!running && !save.starter && modal.hidden && overlay.querySelector('.hub')) showStarter(); }, 400);
+}
+
+/* ---------- 冒险：可拖动的关卡地图 + 底部总览 ---------- */
+function smoothScroll(box, to) {
+  const from = box.scrollLeft, max = box.scrollWidth - box.clientWidth;
+  to = Math.max(0, Math.min(max, to));
+  const t0 = performance.now(), dur = 380;
+  cancelAnimationFrame(box._anim);
+  const step = now => {
+    const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    box.scrollLeft = from + (to - from) * e;
+    if (box._onScroll) box._onScroll();
+    if (k < 1) box._anim = requestAnimationFrame(step);
+  };
+  box._anim = requestAnimationFrame(step);
+}
+// 用手指 / 鼠标拖着横向滚动（自己算，竖屏旋转时方向也对），松手后带惯性；拖动过就不当成点击
+function dragScroll(box, onStart) {
+  const along = e => rotatedMQ.matches ? e.clientY : e.clientX;
+  let moved = 0;
+  box.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    cancelAnimationFrame(box._anim);
+    const x0 = along(e), s0 = box.scrollLeft;
+    let lastX = x0, lastT = performance.now(), vel = 0;
+    moved = 0;
+    if (onStart) onStart();
+    const move = ev => {
+      const x = along(ev), now = performance.now();
+      box.scrollLeft = s0 - (x - x0);
+      vel = 0.75 * vel + 0.25 * ((lastX - x) / Math.max(1, now - lastT));
+      lastX = x; lastT = now;
+      moved = Math.max(moved, Math.abs(x - x0));
+      if (box._onScroll) box._onScroll();
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); window.removeEventListener('pointercancel', up);
+      let v = vel * 16;
+      const glide = () => {
+        if (Math.abs(v) < 0.5) return;
+        box.scrollLeft += v; v *= 0.92;
+        if (box._onScroll) box._onScroll();
+        box._anim = requestAnimationFrame(glide);
+      };
+      box._anim = requestAnimationFrame(glide);
+    };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+  });
+  box.addEventListener('click', e => { if (moved > 8) { e.stopPropagation(); e.preventDefault(); } moved = 0; }, true);
+  box.addEventListener('wheel', e => {
+    box.scrollLeft += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (box._onScroll) box._onScroll();
+    e.preventDefault();
+  }, { passive: false });
+}
+function showLevels() {
+  const n = LEVELS.length, gap = 118, pad = 132; // 两头留宽一点，不被左右箭头挡住
+  const firstOpen = LEVELS.findIndex((L, i) => levelOpen(i) && !save.cleared.includes(i));
+  const done = save.cleared.length;
+  const width = pad * 2 + gap * n;
+  const xs = [], ys = [];
+  for (let i = 0; i <= n; i++) { xs.push(pad + i * gap); ys.push(52 + Math.sin(i * 1.15 + 0.4) * 24); }
+  const inner = el('div', { class: 'lmap-in', style: `width:${width}px` });
+  const NS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${width} 100`);
+  svg.setAttribute('preserveAspectRatio', 'none');
+  const seg = (a, b) => { let dp = `M ${xs[a]} ${ys[a]}`; for (let i = a + 1; i <= b; i++) { const mx = (xs[i - 1] + xs[i]) / 2; dp += ` C ${mx} ${ys[i - 1]}, ${mx} ${ys[i]}, ${xs[i]} ${ys[i]}`; } return dp; };
+  const path = (d, stroke, w, dash) => {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', stroke); p.setAttribute('stroke-width', w);
+    p.setAttribute('stroke-linecap', 'round'); p.setAttribute('vector-effect', 'non-scaling-stroke');
+    if (dash) p.setAttribute('stroke-dasharray', dash);
+    return p;
+  };
+  svg.append(path(seg(0, n - 1), 'rgba(255,255,255,.92)', 16), path(seg(0, n - 1), '#f39ab5', 5, '1 13'), path(seg(n - 1, n), 'rgba(255,255,255,.7)', 10, '2 10'));
+  inner.append(svg, el('span', { class: 'chap' }, `第一章 · 甜蜜厨房 · 共 ${n} 关`));
+  LEVELS.forEach((L, i) => {
+    const open = levelOpen(i), cleared = save.cleared.includes(i);
+    inner.append(el('button', { class: 'lnode' + (cleared ? ' done' : '') + (i === firstOpen ? ' cur' : ''), style: `left:${xs[i]}px;top:${ys[i]}%`, disabled: !open,
+      'aria-label': `${L.id} ${open ? L.name : '未解锁'}`, onclick: () => { sfx('select'); startFlow(advCfg(i)); } },
+      el('span', { class: 'disc' }, open ? L.id : '', open ? null : el('span', { class: 'lock' }, '🔒'), cleared ? el('span', { class: 'ok' }, '✓') : null,
+        el('span', { class: 'rwb', title: cleared ? `已获得${PLANTS[L.reward].name}` : '通关奖励' }, iconCanvas('plant', L.reward, 30, { locked: !cleared && i !== firstOpen }))),
+      el('span', { class: 'lname' }, open ? L.name : '？？？')));
+  });
+  inner.append(el('div', { class: 'lnode soon', style: `left:${xs[n]}px;top:${ys[n]}%` }, el('span', { class: 'disc' }, '?'), el('span', { class: 'lname' }, '第二章 · 敬请期待')));
+  const map = el('div', { class: 'lmap' }, inner);
+  const centerOn = x => smoothScroll(map, x - map.clientWidth / 2);
+  const left = el('button', { class: 'larrow l', 'aria-label': '往前看', onclick: () => { sfx('select'); smoothScroll(map, map.scrollLeft - map.clientWidth * 0.7); } }, '‹');
+  const right = el('button', { class: 'larrow r', 'aria-label': '往后看', onclick: () => { sfx('select'); smoothScroll(map, map.scrollLeft + map.clientWidth * 0.7); } }, '›');
+  const dots = el('div', { class: 'ldots' });
+  const win = el('span', { class: 'lwin' });
+  LEVELS.forEach((L, i) => dots.append(el('button', { class: 'ldot' + (save.cleared.includes(i) ? ' done' : levelOpen(i) ? ' open' : '') + (i === firstOpen ? ' cur' : ''),
+    'aria-label': `看 ${L.id} ${L.name}`, title: `${L.id} ${L.name}`, onclick: () => { sfx('select'); centerOn(xs[i]); } })));
+  dots.append(el('button', { class: 'ldot soon', 'aria-label': '第二章 敬请期待', title: '第二章 敬请期待', onclick: () => centerOn(xs[n]) }), win);
+  const hint = save.mapHint ? null : el('div', { class: 'lhint' }, `👈 左右滑动，查看全部 ${n} 关 👉`);
+  const stage = el('div', { class: 'lstage' }, map, left, right, hint);
+  const scrub = el('div', { class: 'lscrub' }, el('span', { class: 'lbl' }, '关卡总览'), dots, el('span', { class: 'lbl' }, `已通关 ${done}/${n}`));
+  map._onScroll = () => {
+    const max = map.scrollWidth - map.clientWidth;
+    left.disabled = map.scrollLeft <= 2; right.disabled = map.scrollLeft >= max - 2;
+    const dw = dots.clientWidth;
+    win.style.left = (map.scrollLeft / map.scrollWidth * dw) + 'px';
+    win.style.width = Math.max(14, map.clientWidth / map.scrollWidth * dw) + 'px';
+  };
+  dragScroll(map, () => { if (hint && hint.isConnected) { hint.remove(); save.mapHint = true; persist(); } });
+  openPage(page('冒险模式', showMenu, el('div', { class: 'lwrap' }, stage, scrub), { bodyCls: 'flexcol' }), IMG.levels, showLevels);
+  const target = firstOpen === -1 ? n - 1 : firstOpen;
+  requestAnimationFrame(() => { map.scrollLeft = Math.max(0, xs[target] - map.clientWidth / 2); map._onScroll(); });
+}
+
+/* ---------- 扭蛋机（含扭蛋券） ---------- */
+function showGacha() {
+  const G = save.gacha;
+  const machine = el('div', { class: 'gm' }, el('img', { src: IMG.machine, alt: '扭蛋机', draggable: 'false' }));
+  const odds = el('div', { class: 'odds' },
+    el('span', { class: 'tg g' }, '金卡'), el('span', { class: 'muted' }, `含保底约 ${GACHA_REAL.gold}%`), el('b', {}, '1%'),
+    el('span', { class: 'tg f' }, '闪卡'), el('span', { class: 'muted' }, `含保底约 ${GACHA_REAL.flash}%`), el('b', {}, '6%'),
+    el('span', { class: 'tg i' }, '道具'), el('span', { class: 'muted' }, '飞镖、方糖罐、冰冻棒棒糖、金币…'), el('b', {}, '93%'));
+  const side = el('div', { class: 'gside' },
+    el('div', { class: 'sheet' }, el('h2', {}, '甜蜜扭蛋机'), odds, pityBar('闪卡保底', G.pf, PITY.flash, ''), pityBar('金卡保底', G.pg, PITY.gold, 'gold'),
+      el('div', { class: 'muted' }, `十连必出闪卡或金卡 · 不会扭到重复的卡 · 扭蛋券 ${save.items.ticket || 0} 张`)),
+    el('div', { class: 'gbtns' },
+      el('button', { class: 'gbtn', style: '--b1:#ffb8d0;--b2:#f47aa3;--b3:#c2607e', onclick: () => gachaPull(1) }, el('b', {}, '扭 1 次'), el('span', {}, ...payLabel(1))),
+      el('button', { class: 'gbtn', style: '--b1:#cfb2ff;--b2:#9b6df0;--b3:#6a3fc0', onclick: () => gachaPull(10) }, el('b', {}, '扭 10 次'), el('span', {}, ...payLabel(10)))),
+    el('div', { class: 'glinks' },
+      el('button', { class: 'chip light', onclick: () => { sfx('select'); showRules(); } }, '概率与规则'),
+      el('button', { class: 'chip light', onclick: () => { sfx('select'); showGachaLog(); } }, '扭蛋记录'),
+      el('button', { class: 'chip light', onclick: () => { sfx('select'); showAlbum(); } }, '看卡册'),
+      el('button', { class: 'chip hot', onclick: () => { sfx('select'); openShop('deal'); } }, '买扭蛋券')));
+  openPage(page('扭蛋机', showMenu, el('div', { class: 'gacha' }, machine, side), { bodyCls: 'flexcol' }), IMG.gacha, showGacha);
+}
+
+/* ---------- 甜品商店：左边分类，右边商品 ---------- */
+const SHOP_TABS = [['deal', '特惠礼包'], ['gems', '钻石礼包'], ['coins', '金币小铺'], ['scene', '战斗场景'], ['exchange', '钻石换金币'], ['topup', '充值钻石']];
+function goodEl(vis, name, sub, priceCls, priceKids, fn, tag) {
+  return el('button', { class: 'good', onclick: () => { sfx('select'); fn(); } },
+    vis, el('b', {}, name), el('small', {}, sub), el('span', { class: 'price ' + priceCls }, ...[].concat(priceKids)), tag ? el('span', { class: 'tagx' }, tag) : null);
+}
+function buyGoods(cur, price, give, name) {
+  confirmSpend(`用 ${price} ${cur === 'gems' ? '钻石' : '金币'}买「${name}」？`, cur, price, () => {
+    grantAll(give); persist(); refreshWallet(); sfx('unlock');
+    showGot(name, give, () => { if (curPage) curPage(); });
+  });
+}
+function packCard(x, kind) {
+  const d = ensureDaily();
+  const done = kind === 'newbie' ? !!save.bought[x.id] : !!d.packs[x.id];
+  const cur = x.price ? (x.price.gems ? 'gems' : 'coins') : null;
+  const price = x.price ? (x.price.gems || x.price.coins) : 0;
+  const off = x.worth ? Math.round(price / x.worth * 100) / 10 : 0;
+  const act = done ? el('span', { class: 'muted', style: 'margin-left:auto' }, kind === 'newbie' ? '已购买' : x.price ? '今天已买' : '今天已领')
+    : btn(x.price ? [icon(cur === 'gems' ? 'gem' : 'coin'), String(price)] : '免费领取', () => buyPack(x, kind), x.price ? (cur === 'gems' ? 'gem' : 'gold') : '');
+  return el('div', { class: 'pack ' + kind + (done ? ' done' : '') },
+    el('div', { class: 'top' }, el('img', { src: kind === 'newbie' ? IMG.newbie : IMG.daily, alt: '' }),
+      el('div', {}, el('b', {}, x.name), el('div', { class: 'lim' }, kind === 'newbie' ? '新手限购 1 次' : '每天限 1 次'))),
+    el('div', { class: 'gives' }, ...giveNodes(x.give)),
+    el('div', { class: 'buy' }, x.worth ? el('span', { class: 'was' }, `原价 ${x.worth}`) : null, act),
+    x.price ? (off < 10 ? el('span', { class: 'off' }, `${off} 折`) : null) : el('span', { class: 'off' }, '免费'));
+}
+function buyPack(x, kind) {
+  const d = ensureDaily();
+  const finish = () => {
+    grantAll(x.give);
+    if (kind === 'newbie') save.bought[x.id] = Date.now(); else d.packs[x.id] = true;
+    persist(); refreshWallet(); sfx('unlock');
+    showGot(x.name, x.give, () => showShop('deal'));
+  };
+  if (!x.price) { sfx('select'); finish(); return; }
+  const cur = x.price.gems ? 'gems' : 'coins', price = x.price.gems || x.price.coins;
+  confirmSpend(`用 ${price} ${cur === 'gems' ? '钻石' : '金币'}购买「${x.name}」？`, cur, price, finish);
+}
+function sceneCard(k, after) {
+  const sc = SCENES[k], own = !!save.scenes[k], on = save.scene === k;
+  const pv = document.createElement('canvas'); pv.width = 320; pv.height = 180; drawScenePreview(pv, k);
+  const again = after || (() => showShop('scene'));
+  const act = on ? el('span', { class: 'using' }, '使用中 ✓')
+    : own ? btn('换上', () => { save.scene = k; persist(); sfx('select'); toast(`战斗场景换成「${sc.name}」`); again(); }, 'small')
+    : btn([icon(sc.price.gems ? 'gem' : 'coin'), String(sc.price.gems || sc.price.coins)], () => {
+        const cur = sc.price.gems ? 'gems' : 'coins', price = sc.price.gems || sc.price.coins;
+        confirmSpend(`用 ${price} ${cur === 'gems' ? '钻石' : '金币'}买下场景「${sc.name}」？买下后马上换上。`, cur, price, () => {
+          save.scenes[k] = true; save.scene = k; persist(); sfx('unlock'); toast(`买到场景「${sc.name}」，已经换上啦`); closeModal(); again();
+        });
+      }, 'small ' + (sc.price.gems ? 'gem' : 'gold'));
+  return el('div', { class: 'scard' + (on ? ' on' : '') }, pv, el('div', { class: 'row' }, el('b', {}, sc.name), act), el('div', { class: 'muted' }, sc.desc));
+}
+function showShop(tab = 'deal') {
+  const back = () => { const b = shopBack || showMenu; shopBack = null; b(); };
+  const rail = el('div', { class: 'srail' }, el('img', { src: IMG.stall, alt: '', draggable: 'false' }),
+    ...SHOP_TABS.map(([id, name]) => el('button', { class: 'stab' + (tab === id ? ' on' : ''), onclick: () => { sfx('select'); showShop(id); } },
+      name, id === 'deal' && dealsReady() ? dotEl(1) : null)));
+  const head = (title, ...extra) => el('div', { class: 'shead' }, el('h2', {}, title), ...extra);
+  let body = [];
+  if (tab === 'deal') {
+    body.push(el('div', { class: 'shop-banner' }, el('b', {}, '今日特惠')));
+    if (newbieOpen()) body.push(head('新手特惠', el('span', { class: 'cdown', 'data-cd': save.born + NEWBIE_DAYS * 86400000, 'data-pre': '限时 还剩 ' }, '限时 还剩 ' + fmtLeft(newbieLeft()))),
+      el('div', { class: 'packs' }, ...NEWBIE_PACKS.map(x => packCard(x, 'newbie'))));
+    body.push(head('每日特惠', el('span', { class: 'cdown', 'data-cd': Date.now() + msToMidnight(), 'data-post': ' 后刷新' }, fmtLeft(msToMidnight()) + ' 后刷新')),
+      el('div', { class: 'packs' }, ...DAILY_PACKS.map(x => packCard(x, 'daily'))));
+  } else if (tab === 'gems') {
+    body.push(head('钻石礼包'), el('div', { class: 'goods' },
+      ...GEM_GOODS.map(x => goodEl(el('i', { class: 'ico gift' }), x.name, x.desc, 'gp', [icon('gem'), String(x.price)], () => buyGoods('gems', x.price, x.give, x.name))),
+      goodEl(el('i', { class: 'ico album' }), '自选卡片', `闪卡 ${GEM_CARD.flash} 钻石 · 金卡 ${GEM_CARD.gold} 钻石，在卡册里挑`, 'gp', '去卡册', showAlbum)));
+  } else if (tab === 'coins') {
+    body.push(head('金币小铺'), el('div', { class: 'goods' },
+      ...COIN_GOODS.map(x => { const k = Object.keys(x.give)[0]; return goodEl(itemIcon(k, 44), x.name, ITEMS[k].desc, 'cp', [icon('coin'), String(x.price)], () => buyGoods('coins', x.price, x.give, x.name)); })));
+  } else if (tab === 'scene') {
+    body.push(head('战斗场景', el('span', { class: 'cdown' }, '换掉对局里的餐桌布，买下后随时可以换')), el('div', { class: 'scenes' }, ...SCENE_ORDER.map(k => sceneCard(k))));
+  } else if (tab === 'exchange') {
+    body.push(head('钻石换金币'), el('div', { class: 'goods' }, ...EXCHANGE.map(e => goodEl(icon('coin'), `${e.coins} 金币`, e.tag || '扭蛋要用金币', 'gp', [icon('gem'), String(e.gems)],
+      () => confirmSpend(`用 ${e.gems} 钻石换 ${e.coins} 金币？`, 'gems', e.gems, () => { save.coins += e.coins; persist(); refreshWallet(); sfx('sun'); showGot(`${e.coins} 金币`, { coins: e.coins }, () => showShop('exchange')); }), e.tag ? '划算' : null))));
+  } else {
+    body.push(head('充值钻石', el('span', { class: 'cdown' }, '体验版暂未开放')),
+      el('div', { class: 'goods' }, ...TOPUP.map((t, i) => goodEl(el('span', { class: 'gemstack' }, ...Array.from({ length: Math.min(3, 1 + Math.floor(i / 2)) }, () => icon('gem'))),
+        `${t.gems} 钻石`, t.bonus ? `再送 ${t.bonus} 钻石` : '小小心意', '', `¥${t.rmb}`, () => showTopupInfo(t), t.bonus ? `+${t.bonus}` : null))),
+      el('p', { class: 'muted', style: 'color:#fff;text-shadow:0 1px 2px #c2607e' }, `现在可以免费拿钻石：每日任务全部完成送 ${DAILY_BONUS_GEMS}、每关第一次通关送 20、每个成就送 ${ACH_GEMS}。`));
+  }
+  const self = () => showShop(tab); self.isShop = true;
+  openPage(page('甜品商店', back, el('div', { class: 'shop' }, rail, el('div', { class: 'sbody' }, ...body)), { bodyCls: 'flexcol' }), IMG.menu, self);
+}
+// 倒计时每秒刷新；到点了（比如过了 0 点）就把商店重画一遍
+setInterval(() => {
+  for (const e of document.querySelectorAll('.cdown[data-cd]')) {
+    const left = +e.dataset.cd - Date.now();
+    e.textContent = (e.dataset.pre || '') + fmtLeft(left) + (e.dataset.post || '');
+    if (left <= 0 && curPage && curPage.isShop && modal.hidden) { curPage(); break; }
+  }
+}, 1000);
 
 /* ---------- 每日任务 ---------- */
 function showDaily() {
@@ -4801,7 +5256,7 @@ function showDaily() {
     d.bonus ? el('span', { class: 'muted' }, '已领取') : claim);
   openPage(page('每日任务', showMenu, el('div', { class: 'tasks', style: 'max-width:760px;margin:0 auto;width:100%' },
     el('div', { class: 'muted', style: 'color:#fff;text-shadow:0 1px 2px #c2607e;font-size:13px' }, `每天 0 点（这台设备的时间）刷新 · 今日免费扭蛋：${d.free ? '还没用' : '已使用'}`),
-    ...rows, bonus)), IMG.menu);
+    ...rows, bonus)), IMG.menu, showDaily);
 }
 
 /* ---------- 设置 ---------- */
@@ -4829,8 +5284,9 @@ function showSettings() {
     btn('关闭', () => { save.dev = false; persist(); showSettings(); }, 'small alt')) : null;
   openPage(page('设置', showMenu, el('div', { class: 'sheet', style: 'display:flex;flex-direction:column;gap:10px;max-width:620px;margin:0 auto;width:100%;box-sizing:border-box' },
     el('h2', {}, '声音'), el('div', { class: 'btnrow' }, tog('音效', 'sfx'), tog('音乐', 'music', () => Sound.music(save.music ? 'menu' : null))),
+    el('h2', {}, '战斗场景'), el('div', { class: 'scenes' }, ...SCENE_ORDER.map(k => sceneCard(k, showSettings))),
     el('h2', {}, '存档'), el('p', { class: 'muted' }, '进度保存在这台设备的浏览器里，换设备或清除网站数据会丢失。'), el('div', { class: 'btnrow' }, resetChip),
-    el('h2', {}, '关于'), ver, dev)), IMG.menu);
+    el('h2', {}, '关于'), ver, dev)), IMG.menu, showSettings);
 }
 
 /* ---------- 对局里的道具 ---------- */
@@ -4842,9 +5298,10 @@ function renderTray() {
   for (const id of TRAY_ITEMS) {
     const n = save.items[id] || 0;
     trayEl.append(el('button', { class: 'itm', disabled: n <= 0, title: ITEMS[id].desc, 'aria-label': `${ITEMS[id].name}：${ITEMS[id].desc}，还有 ${n} 个`, onclick: () => useItem(id) },
-      iconCanvas('item', id, 38), el('b', {}, ITEMS[id].name), n ? el('span', { class: 'badge' }, String(n)) : null));
+      itemIcon(id, 38), el('b', {}, ITEMS[id].name), n ? el('span', { class: 'badge' }, String(n)) : null));
   }
   if (!TRAY_ITEMS.some(id => save.items[id] > 0)) trayEl.append(el('span', { class: 'tray-tip' }, '还没有道具，扭蛋机和商店都能拿到'));
+  trayEl.append(el('button', { class: 'tray-x', 'aria-label': '收起道具栏', onclick: () => { sfx('select'); closeTray(); } }, '收起', el('br'), '▾'));
 }
 bagBtn.addEventListener('click', () => {
   if (!playable()) return;
@@ -5038,6 +5495,7 @@ function cellAt(x, y) {
 }
 cv.addEventListener('pointerdown', e => {
   e.preventDefault();
+  if (!trayEl.hidden) closeTray(); // 点餐桌时把道具栏收起来
   if (!playable()) return;
   if (S.tut && TUT[S.tut.step].tap) { nextTut(); return; }
   const { x, y } = toWorld(e);
@@ -5177,7 +5635,7 @@ if (document.fonts && document.fonts.load) document.fonts.load(`20px ${FONT}`).t
 requestAnimationFrame(frame);
 
 window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, startGame, makePlant, spawnZombie, hurtZombie, canReplace, PLANTS, ZDEF, draw, startFlow, advCfg, chalCfg, endlessCfg, luckyCfg, miniCfg, MINIGAMES, rollBox, showMenu, showLevels, showAlmanac, save: () => save, LEVELS,
-  doGacha, pullOnce, grantCard, showGacha, showAlbum, showShop, showDaily, showSettings, showCard, showModes, useItem, renderTray, ensureDaily, battleRewards, cardTier, BOND, PITY };
+  doGacha, pullOnce, grantCard, showGacha, showAlbum, showShop, showDaily, showSettings, showCard, showModes, useItem, renderTray, ensureDaily, battleRewards, cardTier, BOND, PITY, drawIcon, iconCanvas, openShop, SCENES, NEWBIE_PACKS, DAILY_PACKS, grantAll, gachaPay };
 })();
 </script>
 <script>

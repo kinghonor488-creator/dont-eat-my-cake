@@ -82,7 +82,7 @@ button{font:inherit;color:inherit}
 #shovel canvas{width:36px;height:36px}
 #side{display:flex;flex-direction:column;gap:5px}
 #side .tool{width:40px;flex:1;font-family:var(--display);font-size:13px;background:var(--wood-dark);color:var(--paper);border-color:var(--wood-edge)}
-#stage{flex:1 1 auto;min-height:0;position:relative;display:flex;align-items:center;justify-content:center}
+#stage{flex:1 1 auto;min-height:0;min-width:0;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
 #game{display:block;border-radius:8px;box-shadow:0 0 0 3px var(--wood-edge),0 6px 18px rgba(0,0,0,.45);touch-action:none}
 
 /* 浮层 */
@@ -169,12 +169,13 @@ button{font:inherit;color:inherit}
 .chip.hot{background:var(--sun);color:var(--ink);border-color:#c9902a}
 .intel{display:flex;flex-direction:column;gap:6px;background:var(--paper-dim);border-radius:12px;padding:10px 12px}
 .intel h2{font-size:18px}
-.intel-row{display:flex;align-items:center;gap:10px;min-width:0}
+.intel-row{display:grid;grid-template-columns:46px minmax(0,1fr);align-items:center;gap:4px 10px;min-width:0}
+.intel-row > canvas{grid-row:span 2}
 .intel-row > canvas{width:46px;height:46px;flex:none;background:#fff;border-radius:10px}
 .intel-txt{display:flex;flex-direction:column;min-width:0;flex:1}
 .intel-txt b{font-size:14px;color:var(--ink)}
 .intel-txt span{font-size:12px;color:#8a5a6e}
-.intel-ctr{display:flex;align-items:center;gap:4px;flex:none}
+.intel-ctr{display:flex;align-items:center;gap:4px;flex-wrap:wrap;grid-column:2}
 .intel-ctr small{font-size:11px;color:var(--wood-edge);margin-right:2px}
 .intel-ctr canvas{width:30px;height:30px;background:#fff;border-radius:8px}
 .tile .rec{position:absolute;top:-6px;right:-6px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;border-radius:999px;padding:1px 6px;border:2px solid #fff}
@@ -387,6 +388,8 @@ button{font:inherit;color:inherit}
 .deck{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.25fr);gap:10px;height:100%;min-height:0}
 .deck > .sheet{min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .deck-r{display:flex;flex-direction:column;gap:8px}
+.deck-r > *{flex:none}
+.deck .slots .tile{flex:none}
 .deck .slots{background:linear-gradient(#ffb8d0,#f58fb2);border:2px solid #fff;box-shadow:0 0 0 2px #e77ca0;border-radius:14px}
 .deck .tiles{grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:6px}
 .tile.tg-gold{border-color:#e8b64a;box-shadow:0 0 0 2px #ffe7a1,0 0 10px rgba(232,182,74,.7);background:linear-gradient(#fffaf0,#fff1c9)}
@@ -749,8 +752,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.26-2345·8b7762 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.26-2345·8b7762';
+// 版本号：打包时 build.py 会把 2026.11.26-2356·732124 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.26-2356·732124';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');

@@ -843,7 +843,7 @@ Object.assign(ZDEF, {
               lore: '戴着外卖头盔一路狂奔，又硬又快。冰冻果冻、冰淇淋能让它慢下来，冰箱贴磁铁能吸走头盔。' },
   zomboni:  { name: '推车团子',   hp: 1400, armor: 0,    armorType: null,       speed: 12, cost: 7,
               lore: '推着购物车，碰到普通小伙伴直接碾过去；撞上防守墙会停下来一下下地撞，正好趁机把它喂饱。' },
-  digger:   { name: '地鼠团子',   hp: 135,  armor: 0,    armorType: 'helmet',   speed: 22, cost: 4,
+  digger:   { name: '地鼠团子',   hp: 68,  armor: 0,    armorType: 'helmet',   speed: 22, cost: 4,
               lore: '从地下一路钻到最左边，再冒出来掉头往右走，专啃小伙伴的背后。朝前打的小伙伴打不到它，双色冰棒能前后一起打。' },
   dancer:   { name: '跳舞团子',   hp: 500,  armor: 0,    armorType: null,       speed: 16, cost: 6,
               lore: '一进场就跳一段舞，召唤 4 个伴舞团子围在身边。' },
@@ -854,7 +854,7 @@ Object.assign(ZDEF, {
 });
 Object.assign(ZDEF, {
   hide:   { name: '躲猫猫团子', hp: 270, armor: 0, armorType: null, speed: 17, cost: 3,
-            lore: '披着隐身斗篷，前半场谁也瞄不到它。走到餐桌中间才现身。爆炸、熔岩和地上的陷阱照样能对付它。' },
+            lore: '披着隐身斗篷，谁也瞄不到它。一啃小伙伴就藏不住了，啃 2.5 秒或者走到餐桌中间就会现身。爆炸、熔岩和地上的陷阱照样能对付它。' },
   mochi2: { name: '双层大福',   hp: 650, armor: 0, armorType: null, speed: 13, cost: 5,
             lore: '两层叠在一起的大福，被喂饱以后会分成两个小大福继续往前冲。' },
   mini:   { name: '小大福',     hp: 110, armor: 0, armorType: null, speed: 24, cost: 99,
@@ -877,7 +877,7 @@ const ZINFO = {
   dancer:   { color: '#f3e3ff', badge: '舞', badgeColor: '#b69cf0', trait: '一进场就召唤 4 个伴舞', counters: ['cherrypepper', 'icemelon', 'gatlingpea', 'mortar'] },
   garg:     { color: '#f3d2a2', badge: '巨', badgeColor: '#c2601e', trait: '超耐打，每锤很重，防守墙能扛五六下，半血扔小团子', counters: ['icemine', 'chompsquash', 'clockflower', 'laserbean', 'cherrypepper'] },
   imp:      { color: '#fff6ee', badge: null, trait: '面包熊扔出来的小团子，跑得很快', counters: ['gatlingpea', 'twinpop', 'beeflower'] },
-  hide:     { color: '#efeaff', badge: '隐', badgeColor: '#9a8cff', trait: '前半场隐身瞄不到，走到餐桌中间才现身', counters: ['cherrypepper', 'chocolava', 'taffytrap', 'cherrynut', 'chompsquash'] },
+  hide:     { color: '#efeaff', badge: '隐', badgeColor: '#9a8cff', trait: '隐身瞄不到；啃小伙伴 2.5 秒或走到餐桌中间就现身；炸弹类照样能炸到', counters: ['cherrypepper', 'chocolava', 'taffytrap', 'cherrynut', 'chompsquash'] },
   mochi2:   { color: '#fffaf4', badge: '裂', badgeColor: '#ff8fb5', trait: '喂饱后分裂成两个小大福', counters: ['peppershaker', 'gatlingpea', 'icemelon', 'chocolava'] },
   mini:     { color: '#fffaf4', badge: null, trait: '分裂出来的小大福，跑得快', counters: ['gatlingpea', 'peppershaker', 'twinpop'] },
   nurse:    { color: '#ffeef3', badge: '医', badgeColor: '#ff6b8a', trait: '每秒给身边的团子回血，要优先打', counters: ['laserbean', 'lightningvine', 'mortar', 'beeflower'] },
@@ -2331,7 +2331,10 @@ function update(dt) {
     z.stuckCd = Math.max(0, (z.stuckCd || 0) - dt);
     if (z.type === 'hide') {
       const was = z.hid;
-      z.hid = z.x > LX + CW * 5;
+      // 隐身：啃小伙伴累计 2.5 秒就现身；走到餐桌中间也会现身。现身后不再隐身
+      if (z.eating) z.eatT = (z.eatT || 0) + dt;
+      if ((z.eatT || 0) >= 2.5 || z.x <= LX + CW * 5) z.shown = true;
+      z.hid = !z.shown;
       if (was && !z.hid) {
         floatText(z.x, zombieY(z) - 70, '被发现了！', '#d7c8ff', 18);
         for (let i = 0; i < 10; i++) part({ x: z.x, y: zombieY(z) - 30, vx: rnd(-120, 120), vy: rnd(-160, 0), grav: 120, life: 0.5, size: rnd(3, 5), color: '#d7c8ff', shape: 'sparkle' });

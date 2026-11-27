@@ -1,5 +1,5 @@
 // 离线缓存：先用缓存秒开，同时在后台拉取新版本，下次打开生效
-const CACHE = 'cake-defense-4381f98bef';
+const CACHE = 'cake-defense-7e6c585b31';
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-180.png", "./icons/icon-192.png", "./icons/icon-512.png", "./img/album_bg.jpg", "./img/card_back.jpg", "./img/card_flash.webp", "./img/card_gold.webp", "./img/gacha_bg.jpg", "./img/gacha_machine.webp", "./img/ico_album.webp", "./img/ico_bag.webp", "./img/ico_bomb.webp", "./img/ico_capsule.webp", "./img/ico_coin.webp", "./img/ico_flashpick.webp", "./img/ico_freeze.webp", "./img/ico_gear.webp", "./img/ico_gem.webp", "./img/ico_gift.webp", "./img/ico_goldpick.webp", "./img/ico_heal.webp", "./img/ico_robot.webp", "./img/ico_sugar.webp", "./img/ico_tasks.webp", "./img/ico_ticket.webp", "./img/levels_bg.jpg", "./img/menu_bg.jpg", "./img/pack_daily.webp", "./img/pack_newbie.webp", "./img/shop_banner.jpg", "./img/shop_stall.webp"];
 
 self.addEventListener('install', e => {

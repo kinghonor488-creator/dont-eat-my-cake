@@ -458,6 +458,15 @@ button{font:inherit;color:inherit}
 #modal{position:absolute;inset:0;z-index:8;display:flex;align-items:center;justify-content:center;background:rgba(120,40,75,.45);padding:10px max(10px,env(safe-area-inset-right,0px)) 10px max(10px,env(safe-area-inset-left,0px));box-sizing:border-box;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .mbox{position:relative;max-width:min(760px,100%);max-height:100%;width:100%;display:flex;flex-direction:column;gap:10px;box-sizing:border-box;background:linear-gradient(#fffaf4,#fff2f6);border:4px solid #fff;border-radius:24px;box-shadow:0 0 0 3px #f3a6bf,0 8px 0 3px #c2607e,0 18px 40px rgba(120,40,75,.35);padding:14px 16px;color:var(--ink);animation:mpop .28s cubic-bezier(.2,1.3,.4,1)}
 .mbox.narrow{max-width:420px}
+.mbox.wide{max-width:760px}
+.sharewrap{display:flex;gap:14px;align-items:center;width:100%}
+.sharecard{flex:none}
+.sharecard img{display:block;height:calc(var(--ah) * .62);max-height:440px;width:auto;border-radius:12px;box-shadow:0 3px 10px rgba(194,96,126,.3);-webkit-touch-callout:default;user-select:auto}
+.shareside{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;text-align:left}
+.shareside p{margin:0}
+.nickin,.pastein{font:15px/1.3 var(--body);color:var(--ink);background:#fff;border:2px solid #f3b6c9;border-radius:10px;padding:8px 10px;width:100%;box-sizing:border-box;user-select:text;-webkit-user-select:text}
+.pastein{resize:none}
+.sharelink{font:11px/1.3 ui-monospace,monospace;color:#9a6a7c;background:#fff3f6;border-radius:8px;padding:6px 8px;word-break:break-all;flex:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;user-select:text;-webkit-user-select:text}
 @keyframes mpop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
 .mbox h2{margin:0;font:400 22px/1.15 var(--display);color:#d0567f;padding-right:40px}
 .mclose{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:50%;border:2px solid #fff;background:linear-gradient(#ffb8d0,#ff86b0);color:#fff;font:700 18px/1 var(--body);box-shadow:0 0 0 2px #e77ca0,0 3px 0 2px #c2607e;cursor:pointer;z-index:3}
@@ -774,8 +783,8 @@ body{margin:0}
 (() => {
 'use strict';
 const W = 920, H = 500, LX = 110, TOP = 40, CW = 80, CH = 90, ROWS = 5, COLS = 9, MAX_SLOTS = 6, INTRO = 2.4;
-// 版本号：打包时 build.py 会把 2026.11.27-0438·4381f9 换成真实版本（日期 + 内容指纹）
-const BUILD = '2026.11.27-0438·4381f9';
+// 版本号：打包时 build.py 会把 2026.11.27-0445·7e6c58 换成真实版本（日期 + 内容指纹）
+const BUILD = '2026.11.27-0445·7e6c58';
 const BUILD_LABEL = BUILD.startsWith('__') ? '开发版' : BUILD;
 const FONT = '"ZCOOL KuaiLe","PingFang SC","Hiragino Sans GB",sans-serif';
 const cv = document.getElementById('game');
@@ -4750,7 +4759,7 @@ function startFlow(cfg) {
   const back = cfg.back || showMenu;
   const intel = intelBlock(cfg);
   if (cfg.plants.length <= MAX_SLOTS) {
-    const tip = cfg.mode === 'lucky' ? '花方糖买盲盒放在餐桌上，开出什么小伙伴全看运气。后三列更容易开出远程攻击，前三列更容易开出防守。' : cfg.conveyor ? '传送带会不停送来小伙伴，不用花方糖。' : '准备好了就开始吧！';
+    const tip = cfg.friend ? friendGoal(cfg.friend) : cfg.mode === 'lucky' ? '花方糖买盲盒放在餐桌上，开出什么小伙伴全看运气。后三列更容易开出远程攻击，前三列更容易开出防守。' : cfg.conveyor ? '传送带会不停送来小伙伴，不用花方糖。' : '准备好了就开始吧！';
     openPage(page(cfg.label, back, el('div', { class: 'deck' }, el('div', { class: 'sheet' }, intel.node),
       el('div', { class: 'sheet deck-r' }, el('h2', {}, '准备好了吗？'), el('p', {}, tip),
         cfg.mode === 'lucky' ? null : el('div', { class: 'slots' }, ...cfg.plants.map(k => { const t = cardTier(k); return el('div', { class: 'tile' + (t ? ' tg-' + t : '') }, iconCanvas('plant', k, 44), el('span', { class: 'tn' }, PLANTS[k].name), t ? el('span', { class: 'tgb' }, TIER_NAME[t]) : null); })),
@@ -4787,6 +4796,207 @@ function startFlow(cfg) {
     el('div', { class: 'sheet deck-r' }, el('p', { class: 'muted' }, `${cfg.label} · 最多带 ${MAX_SLOTS} 种。标「推荐」的能克制这关的团子，带闪卡、金卡的小伙伴更强。`), slots, tiles,
       el('div', { class: 'startbar' }, bagSummary(), go))), { bodyCls: 'flexcol' }), IMG.levels, () => startFlow(cfg));
 }
+
+
+/* ---------- 好友挑战：把关卡 + 阵容（或摆好的残局）编进链接，朋友点开就能开局，不需要服务器 ---------- */
+const SHARE_BASE = 'https://kinghonor488-creator.github.io/dont-eat-my-cake/';
+const PKEYS = Object.keys(PLANTS);
+const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const pch = k => ALPHA[PKEYS.indexOf(k)];
+const deckStr = deck => deck.filter(k => PKEYS.includes(k)).map(pch).join('');
+function gridStr() { let out = ''; for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) { const q = S.plants[r][c]; out += q && PLANTS[q.type] && !PLANTS[q.type].special && !PLANTS[q.type].box ? pch(q.type) : '.'; } return out; }
+function b64u(str) { let b = ''; for (const x of new TextEncoder().encode(str)) b += String.fromCharCode(x); return btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+function unb64u(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; return new TextDecoder().decode(Uint8Array.from(atob(t), ch => ch.charCodeAt(0))); }
+// 只把需要的字段编进链接
+function encodeShare(o) { const x = { v: 1, t: o.t, l: o.l, n: o.n }; for (const k of ['d', 's', 'k', 'w', 'g']) if (o[k] != null && o[k] !== '') x[k] = o[k]; return b64u(JSON.stringify(x)); }
+function decodeShare(code) {
+  try {
+    code = String(code || '').trim();
+    const m = code.match(/[#&?]f=([A-Za-z0-9_-]+)/);
+    if (m) code = m[1];
+    if (!/^[A-Za-z0-9_-]{8,}$/.test(code)) return null;
+    const o = JSON.parse(unb64u(code));
+    if (!o || o.v !== 1 || (o.t !== 'c' && o.t !== 'p')) return null;
+    o.raw = code;
+    o.n = String(o.n || '一位朋友').slice(0, 10);
+    o.deck = [...String(o.d || '')].map(ch => PKEYS[ALPHA.indexOf(ch)]).filter(k => k && PICKABLE.includes(k)).slice(0, MAX_SLOTS);
+    o.s = Math.max(1, Math.min(3, o.s | 0)); o.k = Math.max(0, o.k | 0); o.w = Math.max(0, o.w | 0);
+    if (o.l === 'E') { if (o.t !== 'c' || !o.deck.length) return null; o.idx = -1; return o; }
+    o.idx = LEVELS.findIndex(L => L.id === o.l);
+    if (o.idx < 0) return null;
+    if (o.t === 'p') {
+      const g2 = String(o.g || '');
+      if (g2.length !== ROWS * COLS) return null;
+      o.grid = [...g2].map(ch => { const k = PKEYS[ALPHA.indexOf(ch)]; return k && PLANT_ORDER.includes(k) && !PLANTS[k].special ? k : null; });
+      if (!o.grid.some(Boolean)) return null;
+    } else if (!o.deck.length && !LEVELS[o.idx].conveyor) return null;
+    return o;
+  } catch (e) { return null; }
+}
+function friendCfg(o) {
+  const tag = o.t === 'p' ? '残局挑战' : '好友挑战';
+  const base = o.idx < 0 ? endlessCfg() : advCfg(o.idx);
+  const conveyor = o.t === 'p' ? null : base.conveyor;
+  return Object.assign(base, { mode: 'friend', friend: o, back: showMenu, label: `${tag} · ${o.idx < 0 ? '无尽' : LEVELS[o.idx].id}`,
+    conveyor, plants: o.t === 'p' || conveyor ? [] : o.deck.slice(), preset: o.t === 'p' ? o.grid : null });
+}
+function friendGoal(o) {
+  if (o.t === 'p') return `${o.n} 摆好了一个阵：这局不能再种小伙伴（道具和飞镖可以用），守住就算赢！`;
+  if (o.idx < 0) return `${o.n} 用这套阵容在无尽模式撑到了第 ${o.w} 波，超过 TA 就算赢！`;
+  return `${o.n} 用这套阵容 ${starText(o.s)} 通关了 ${LEVELS[o.idx].id}，拿到 ${o.s} 颗星就算赢！`;
+}
+function shareText(o) {
+  if (o.t === 'p') return `我在《别偷吃我的蛋糕！》摆了一个 ${o.l} 的残局，不能再种小伙伴，你能守住吗？`;
+  if (o.l === 'E') return `我在《别偷吃我的蛋糕！》无尽模式撑到了第 ${o.w} 波，用同样的阵容你能超过我吗？`;
+  return `我在《别偷吃我的蛋糕！》用这套阵容 ${starText(o.s)} 通关了冒险 ${o.l}，你也来试试！`;
+}
+// 战绩图：720×920 的分享卡片
+function drawShareCard(o) {
+  const c = document.createElement('canvas'); c.width = 720; c.height = 920;
+  const x = c.getContext('2d');
+  const bg = x.createLinearGradient(0, 0, 0, 920); bg.addColorStop(0, '#ffe3ec'); bg.addColorStop(1, '#ffc4d6');
+  x.fillStyle = bg; x.fillRect(0, 0, 720, 920);
+  for (let i = 0; i < 26; i++) { x.fillStyle = ['#fff', '#ffd56a', '#a8ecd1', '#b69cf0'][i % 4]; x.globalAlpha = 0.55; x.beginPath(); x.arc((i * 137) % 720, (i * 263) % 920, 3 + (i % 4) * 2, 0, Math.PI * 2); x.fill(); }
+  x.globalAlpha = 1;
+  const rrect = (a, b, w, h, r) => { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); };
+  rrect(36, 36, 648, 848, 40); x.fillStyle = '#fffaf4'; x.fill(); x.lineWidth = 6; x.strokeStyle = '#f39ab5'; x.stroke();
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  const txt = (t, y, size, color, max = 600) => { let sz = size; x.font = `${sz}px ${FONT}`; while (x.measureText(t).width > max && sz > 14) { sz -= 2; x.font = `${sz}px ${FONT}`; } x.fillStyle = color; x.fillText(t, 360, y); };
+  txt('别偷吃我的蛋糕！', 112, 56, '#e0678f');
+  const tag = o.t === 'p' ? '残局挑战' : '好友挑战';
+  x.font = `28px ${FONT}`; const tw = x.measureText(tag).width + 48;
+  rrect(360 - tw / 2, 158, tw, 50, 25); x.fillStyle = o.t === 'p' ? '#b69cf0' : '#f47aa3'; x.fill();
+  txt(tag, 184, 28, '#fff');
+  const L = o.l === 'E' ? null : LEVELS.find(L2 => L2.id === o.l);
+  txt(L ? `冒险 ${L.id}「${L.name}」` : '无尽模式', 262, 42, '#5a3446');
+  let y = 340;
+  if (o.t === 'p') txt('不能再种小伙伴，守住它！', y, 38, '#d0567f');
+  else if (o.l === 'E') txt(`撑到第 ${o.w} 波`, y, 64, '#d0567f');
+  else {
+    x.font = `84px ${FONT}`;
+    for (let i = 0; i < 3; i++) { x.fillStyle = i < o.s ? '#ffc94a' : '#f3dbe2'; x.fillText('★', 250 + i * 110, y); }
+  }
+  if (o.k && o.t !== 'p') txt(`喂饱了 ${o.k} 只团子`, 412, 28, '#9a6a7c');
+  if (o.t === 'p') {
+    // 残局：9×5 的小餐桌
+    const cs = 58, gx = 360 - cs * COLS / 2, gy = 420;
+    for (let r = 0; r < ROWS; r++) for (let cc = 0; cc < COLS; cc++) {
+      x.fillStyle = (r + cc) % 2 ? '#ffe1ea' : '#fff3f6'; x.fillRect(gx + cc * cs, gy + r * cs, cs, cs);
+      const k = (o.grid ? o.grid[r * COLS + cc] : null) || null;
+      if (k) x.drawImage(iconCanvas('plant', k, 54), gx + cc * cs + 2, gy + r * cs + 2, 54, 54);
+    }
+    x.lineWidth = 3; x.strokeStyle = '#f39ab5'; x.strokeRect(gx, gy, cs * COLS, cs * ROWS);
+  } else {
+    const deck = o.deck || [];
+    txt(deck.length ? '阵容' : '传送带关卡', 480, 26, '#b0701a');
+    const n = deck.length, sz = 88, gap = 16, x0 = 360 - (n * sz + (n - 1) * gap) / 2;
+    deck.forEach((k, i) => {
+      const cx = x0 + i * (sz + gap);
+      rrect(cx - 4, 512, sz + 8, sz + 8, 18); x.fillStyle = '#ffeef3'; x.fill();
+      x.drawImage(iconCanvas('plant', k, sz), cx, 516, sz, sz);
+      x.font = `18px ${FONT}`; x.fillStyle = '#7a4a5c'; let nm = PLANTS[k].name; while (x.measureText(nm).width > sz + 14 && nm.length > 2) nm = nm.slice(0, -1);
+      x.fillText(nm, cx + sz / 2, 632);
+    });
+    txt(o.l === 'E' ? '用同样的阵容，你能撑得更久吗？' : '用同样的阵容，你能拿几颗星？', 700, 30, '#d0567f');
+  }
+  txt(`—— ${o.n} 向你发起挑战 ——`, 790, 30, '#5a3446');
+  txt('kinghonor488-creator.github.io/dont-eat-my-cake', 842, 20, '#b98a9b');
+  return c;
+}
+function copyText(t) {
+  const ok = () => toast('已复制，去微信或 QQ 粘贴给朋友吧');
+  const fallback = () => { const ta = el('textarea', { style: 'position:fixed;left:-9999px' }); ta.value = t; document.body.append(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) { toast('复制失败，请长按链接手动复制'); } ta.remove(); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok, fallback); else fallback();
+}
+// 发起挑战：生成链接和战绩图
+function openShare(o) {
+  o.v = 1;
+  if (o.d != null && !o.deck) o.deck = [...o.d].map(ch => PKEYS[ALPHA.indexOf(ch)]).filter(Boolean);
+  if (o.g && !o.grid) o.grid = [...o.g].map(ch => ch === '.' ? null : PKEYS[ALPHA.indexOf(ch)]);
+  const nickIn = el('input', { class: 'nickin', placeholder: '你的昵称（选填，最多 8 个字）', maxlength: 8, 'aria-label': '你的昵称' });
+  nickIn.value = save.nick || '';
+  const imgBox = el('div', { class: 'sharecard' });
+  const linkBox = el('div', { class: 'sharelink' });
+  let url = '', img = null;
+  const refresh = () => {
+    save.nick = nickIn.value.trim().slice(0, 8); persist();
+    o.n = save.nick || '甜品店长';
+    url = SHARE_BASE + '#f=' + encodeShare(o);
+    img = el('img', { src: drawShareCard(o).toDataURL('image/png'), alt: '战绩图' });
+    imgBox.innerHTML = ''; imgBox.append(img);
+    linkBox.textContent = url;
+  };
+  nickIn.addEventListener('change', refresh);
+  refresh();
+  openModal(el('div', { class: 'cstage share' },
+    el('h2', { style: 'padding:0' }, o.t === 'p' ? '把这个残局发给朋友' : '向朋友发起挑战'),
+    el('div', { class: 'sharewrap' }, imgBox,
+      el('div', { class: 'shareside' },
+        el('p', {}, o.t === 'p' ? '朋友会从第 1 波开始，用你现在摆好的阵守这一关，而且不能再种新的小伙伴。' : '朋友点开链接，就能用同样的关卡和阵容开局，打完会和你的成绩比一比。'),
+        nickIn, linkBox,
+        el('div', { class: 'btnrow' },
+          navigator.share ? btn('分享链接', () => { navigator.share({ title: '别偷吃我的蛋糕！', text: shareText(o), url }).catch(() => {}); }) : null,
+          btn('复制链接', () => copyText(shareText(o) + ' ' + url), navigator.share ? 'alt' : ''),
+          btn('保存图片', () => { const a = el('a', { href: img.src, download: 'cake-challenge.png' }); document.body.append(a); a.click(); a.remove(); toast('手机上也可以长按图片保存'); }, 'alt')),
+        el('p', { class: 'muted' }, '小提示：先保存图片，再把链接一起发过去，朋友更容易点开。')))), 'wide');
+}
+// 收到挑战：先看一眼是谁发的、什么关卡
+function openFriend(o) {
+  const card = el('img', { src: drawShareCard(o).toDataURL('image/png'), alt: '挑战卡片' });
+  openModal(el('div', { class: 'cstage share' },
+    el('h2', { style: 'padding:0' }, o.t === 'p' ? `${o.n} 给你出了个残局` : `${o.n} 向你发起挑战`),
+    el('div', { class: 'sharewrap' }, el('div', { class: 'sharecard' }, card),
+      el('div', { class: 'shareside' }, el('p', {}, friendGoal(o)),
+        el('p', { class: 'muted' }, '挑战不需要解锁这一关，也可以用你还没拿到的小伙伴。第一次挑战成功额外奖励 100 金币。'),
+        el('div', { class: 'btnrow' }, btn('接受挑战', () => { closeModal(); startFlow(friendCfg(o)); }), btn('以后再说', closeModal, 'alt'))))), 'wide');
+}
+// 主页「好友挑战」：粘贴朋友发来的链接或挑战码
+function showFriendEntry() {
+  const inp = el('textarea', { class: 'pastein', rows: 3, placeholder: '把朋友发来的链接粘贴到这里', 'aria-label': '挑战链接' });
+  if (save.pendingFriend) { inp.value = SHARE_BASE + '#f=' + save.pendingFriend; delete save.pendingFriend; persist(); }
+  const go = () => { const o = decodeShare(inp.value); if (!o) { toast('这个链接看不懂，确认一下有没有复制完整'); sfx('cant'); return; } openFriend(o); };
+  openModal(el('div', { class: 'cstage', style: 'gap:10px;text-align:left;align-items:stretch' },
+    el('h2', { style: 'padding:0;text-align:center' }, '好友挑战'),
+    el('p', {}, '怎么发起挑战：'),
+    el('ul', { class: 'rules' },
+      el('li', {}, '冒险通关后点「向朋友发起挑战」，朋友会用你的阵容打同一关，比谁的星星多。'),
+      el('li', {}, '无尽模式结束后也能发，比谁撑的波数多。'),
+      el('li', {}, '冒险对局里点「暂停 → 出个残局」，把你现在摆好的阵发给朋友，看 TA 能不能不种新的小伙伴守住。')),
+    el('p', {}, '收到挑战：直接点开朋友发的链接就行。如果你是从主屏幕图标打开的游戏，可以把链接粘贴在下面：'),
+    inp, el('div', { class: 'btnrow', style: 'justify-content:center' }, btn('打开挑战', go))), 'narrow');
+}
+function friendOver(won) {
+  const o = CFG.friend, endless = o.idx < 0;
+  let mine = 0, beat = false, line;
+  if (endless) { mine = S.waveNum; beat = mine > o.w; line = `你撑到第 ${mine} 波，${o.n} 是第 ${o.w} 波。`; }
+  else if (o.t === 'p') { beat = won; line = won ? `不种新的小伙伴也守住了 ${o.l}！` : `${o.n} 的阵没守住，被团子突破了。`; }
+  else { mine = won ? 1 + (S.mowerUsed ? 0 : 1) + (S.lost <= 2 ? 1 : 0) : 0; beat = won && mine >= o.s; line = won ? `你拿了 ${starText(mine)}，${o.n} 是 ${starText(o.s)}。` : `没守住 ${o.l}，${o.n} 拿了 ${starText(o.s)}。`; }
+  const rw = battleRewards(won, false);
+  save.friendWon = save.friendWon || {};
+  let bonus = 0;
+  if (beat && !save.friendWon[o.raw]) { save.friendWon[o.raw] = 1; bonus = 100; save.coins += bonus; rw.coins += bonus; persist(); }
+  sfx(beat ? 'win' : 'lose');
+  if (beat) for (let i = 0; i < 40; i++) part({ x: rnd(LX, W), y: TOP - 10, vx: rnd(-40, 40), vy: rnd(0, 120), grav: 150, life: rnd(1.2, 2), size: rnd(3, 6), color: ['#ffd23f', '#ff9ec0', '#7fd14a', '#7fd3ff', '#fff3d1'][i % 5], shape: 'rect', vr: rnd(-8, 8) });
+  const again = () => {
+    if (o.t === 'p') openShare({ t: 'p', l: o.l, g: o.g });
+    else if (endless) openShare({ t: 'c', l: 'E', d: deckStr(S.deck), w: mine, k: S.kills });
+    else openShare({ t: 'c', l: o.l, d: deckStr(S.deck), s: mine, k: S.kills });
+  };
+  const canShare = o.t === 'p' || endless || won;
+  setTimeout(() => openOverlay(panel('', el('h1', {}, beat ? '挑战成功！' : won ? '守住了，就差一点！' : '挑战失败'), el('p', { class: 'sub' }, CFG.label),
+    el('p', {}, line + ` 喂饱 ${S.kills} 只团子。`), bonus ? el('p', {}, `第一次挑战成功，额外奖励 ${bonus} 金币！`) : null,
+    rewardBlock(rw),
+    el('div', { class: 'btns' }, btn('再试一次', () => startGame(CFG, S.deck)), canShare ? btn(o.t === 'p' ? '转发这个残局' : '回敬一个挑战', again, 'alt') : null, btn('主页', showMenu, 'alt')))), 900);
+}
+function checkShareHash() {
+  if (!/[#&]f=/.test(location.hash)) return;
+  const o = decodeShare(location.hash);
+  try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+  if (!o) { toast('这个挑战链接打不开，可能复制得不完整'); return; }
+  if (running) { toast('收到好友挑战，打完这局去主页「好友挑战」看看'); save.pendingFriend = o.raw; persist(); return; }
+  openFriend(o);
+}
+window.addEventListener('hashchange', checkShareHash);
 
 /* ---------- 新手指南 ---------- */
 function showGuide() {
@@ -5174,6 +5384,7 @@ function showMenu() {
       dbtn(cvIcon('plant', 'peaflower'), '图鉴', () => showAlmanac('plants'), 0),
       dbtn(icon('medal'), '成就', () => showAlmanac('ach'), 0),
       dbtn(sceneIco, '战斗场景', () => openShop('scene'), 0),
+      dbtn(cvIcon('plant', 'twinpop'), '好友挑战', showFriendEntry, 0),
       dbtn(cvIcon('zombie', 'normal'), '新手指南', showGuide, 0),
       el('span', { class: 'hub-ver' }, '体验版 · 原创角色与美术')));
   openPage(hub, IMG.menu, showMenu);
@@ -5580,7 +5791,9 @@ function setPaused(v) {
   paused = v;
   pauseBtn.textContent = v ? '继续' : '暂停';
   if (v) openOverlay(panel('', el('h1', {}, '已暂停'), el('p', { class: 'sub' }, CFG.label),
-    el('div', { class: 'btns' }, btn('继续', () => setPaused(false)), btn('重新开始', () => startGame(CFG, S.deck), 'alt'), btn('主菜单', showMenu, 'alt'))));
+    el('div', { class: 'btns' }, btn('继续', () => setPaused(false)), btn('重新开始', () => startGame(CFG, S.deck), 'alt'),
+      CFG.mode === 'adventure' ? btn('出个残局', () => { const gs = gridStr(); if (!/[^.]/.test(gs)) { toast('餐桌上还没有小伙伴，先摆几个再出残局'); return; } openShare({ t: 'p', l: LEVELS[CFG.idx].id, g: gs }); }, 'alt') : null,
+      btn('主菜单', showMenu, 'alt'))));
   else closeOverlay();
 }
 
@@ -5596,6 +5809,7 @@ function gameOver(won) {
   const body = [];
   const btns = [];
   const back = CFG.back || showMenu;
+  if (CFG.mode === 'friend') { friendOver(won); return; }
   const backLabel = CFG.mode === 'adventure' ? '关卡地图' : CFG.mode === 'challenge' ? '挑战列表' : CFG.mode === 'mini' ? '小游戏列表' : '返回';
   if (CFG.mode === 'endless' || CFG.mode === 'lucky') {
     const key = CFG.mode === 'lucky' ? 'luckyBest' : 'bestWave';
@@ -5607,7 +5821,9 @@ function gameOver(won) {
     body.push(el('p', {}, `撑到了第 ${wave} 波，喂饱 ${S.kills} 只团子。${best ? '刷新了最高纪录！' : `最高纪录：第 ${save[key]} 波。`}`));
     if (CFG.mode === 'lucky') body.push(el('p', {}, `图鉴里已经开出过 ${Object.keys(save.boxGot).length}/${PLANT_ORDER.length} 种小伙伴${S.boxZombies ? `，这局盒子里跳出过 ${S.boxZombies} 只团子` : ''}。`));
     body.push(rewardBlock(rw));
-    btns.push(btn('再来一局', () => startGame(CFG, S.deck)), btn('主页', showMenu, 'alt'));
+    btns.push(btn('再来一局', () => startGame(CFG, S.deck)));
+    if (CFG.mode === 'endless') btns.push(btn('向朋友发起挑战', () => openShare({ t: 'c', l: 'E', d: deckStr(S.deck), w: wave, k: S.kills }), 'alt'));
+    btns.push(btn('主页', showMenu, 'alt'));
     setTimeout(() => openOverlay(panel('', el('h1', {}, '蛋糕失守啦'), el('p', { class: 'sub' }, CFG.label), ...body, el('div', { class: 'btns' }, ...btns))), 700);
     return;
   }
@@ -5653,7 +5869,7 @@ function gameOver(won) {
     body.unshift(el('p', {}, `守住了 ${CFG.waves} 波进攻，喂饱 ${S.kills} 只团子。本章星星 ${cs}/${chapterLevels(ch).length * 3}${nextChest ? (cs >= nextChest.need ? '，有章节宝箱可以领啦！' : `，再拿 ${nextChest.need - cs} 颗开下一个宝箱`) : ''}`));
     body.push(rewardBlock(rw));
     if (i + 1 < LEVELS.length) btns.push(btn(`下一关 ${LEVELS[i + 1].id}`, () => startFlow(advCfg(i + 1))));
-    btns.push(btn('关卡地图', () => showLevels(ch), 'alt'), btn('主页', showMenu, 'alt'));
+    btns.push(btn('向朋友发起挑战', () => openShare({ t: 'c', l: L.id, d: deckStr(S.deck), s: st, k: S.kills }), 'alt'), btn('关卡地图', () => showLevels(ch), 'alt'), btn('主页', showMenu, 'alt'));
   } else if (CFG.mode === 'mini') {
     const first = !save.mini[CFG.id];
     save.mini[CFG.id] = true;
@@ -5677,6 +5893,8 @@ function startGame(cfg, deck) {
   S = newState(cfg, deck);
   // 开局赠送的小伙伴（目前没有模式使用）
   if (cfg.freeRow) for (let r = 0; r < ROWS; r++) { const p = makePlant(cfg.freeRow); p.age = 1; S.plants[r][0] = p; }
+  // 残局挑战：按朋友摆好的阵放好小伙伴
+  if (cfg.preset) cfg.preset.forEach((k, i) => { if (k) { const p = makePlant(k); p.age = 1; S.plants[Math.floor(i / COLS)][i % COLS] = p; } });
   if (cfg.conveyor) buildBelt(); else buildCards(deck);
   sunbox.hidden = !!cfg.conveyor;
   bankEl.hidden = false;
@@ -5878,12 +6096,13 @@ function frame(now) {
 }
 
 showMenu();
+checkShareHash();
 fit();
 if (document.fonts && document.fonts.load) document.fonts.load(`20px ${FONT}`).then(() => {}, () => {});
 requestAnimationFrame(frame);
 
 window.__pvz = { get S() { return S; }, get CFG() { return CFG; }, update, startGame, makePlant, spawnZombie, hurtZombie, canReplace, PLANTS, ZDEF, draw, startFlow, advCfg, chalCfg, endlessCfg, luckyCfg, miniCfg, MINIGAMES, rollBox, showMenu, showLevels, showAlmanac, save: () => save, LEVELS, CHAPTERS, chapterStars,
-  doGacha, pullOnce, grantCard, showGacha, showAlbum, showShop, showDaily, showSettings, showCard, showModes, useItem, renderTray, ensureDaily, battleRewards, cardTier, BOND, PITY, drawIcon, iconCanvas, openShop, SCENES, NEWBIE_PACKS, DAILY_PACKS, grantAll, gachaPay };
+  doGacha, pullOnce, grantCard, showGacha, showAlbum, showShop, showDaily, showSettings, showCard, showModes, useItem, renderTray, ensureDaily, battleRewards, cardTier, BOND, PITY, drawIcon, iconCanvas, openShop, SCENES, NEWBIE_PACKS, DAILY_PACKS, grantAll, gachaPay, openShare, decodeShare, encodeShare, friendCfg, openFriend, showFriendEntry, gameOver, checkShareHash, setPaused };
 })();
 </script>
 <script>
